@@ -1,0 +1,30 @@
+
+;; ----- smex-history -----
+(
+ man
+ shell
+ term
+ package-refresh-contents
+ make-directory
+ list-packages
+ package-list-packages
+)
+
+;; ----- smex-data -----
+(
+ (cider-jack-in . 20)
+ (moe-theme-select-color . 1)
+ (list-packages . 15)
+ (eclim-mode . 2)
+ (ispell . 2)
+ (ispell-change-dictionary . 1)
+ (auto-complete . 1)
+ (package-install . 3)
+ (package-list-packages . 2)
+ (locate-library . 1)
+ (make-directory . 1)
+ (package-refresh-contents . 1)
+ (term . 2)
+ (shell . 1)
+ (man . 1)
+)

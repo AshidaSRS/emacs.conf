@@ -1,0 +1,138 @@
+* Inicializa el SP y el PC
+**************************
+        ORG     $0
+        DC.L    $8000           * Pila
+        DC.L    INICIO          * PC
+        ORG     $400
+
+* Definición de equivalencias
+*********************************
+*A*
+MR1A    EQU     $effc01         * de modo A (escritura)
+MR2A    EQU     $effc01         * de modo A (2º escritura)
+SRA     EQU     $effc03         * de estado A (lectura)
+CSRA    EQU     $effc03         * de seleccion de reloj A (escritura)
+CRA     EQU     $effc05         * de control A (escritura)
+TBA     EQU     $effc07         * buffer transmision A (escritura)
+RBA     EQU     $effc07         * buffer recepcion A  (lectura)
+*B*
+MR1B    EQU     $effc11         * de modo B (escritura)
+MR2B    EQU     $effc11         * de modo B (2º escritura)
+SRB     EQU     $effc13         * de estado B (lectura)
+CSRB    EQU     $effc13         * de seleccion de reloj B (escritura)
+CRB     EQU     $effc15         * de control B (escritura)
+TBB     EQU     $effc17         * buffer transmision B (escritura)
+RBB     EQU     $effc17         * buffer recepcion B (lectura)
+*AMBAS*
+IVR     EQU     $effc19         * vector de interrupcion
+ACR	EQU	$effc09	        * de control auxiliar
+IMR     EQU     $effc0B         * de mascara de interrupcion A (escritura)
+ISR     EQU     $effc0B         * de estado de interrupcion A (lectura)
+*VARIABLES*
+
+T_BUF   EQU     2001            * tamaño del buffer
+        
+PUNTEA: DS.W	2		* punteros de escritura de A
+BUFFERA: DS.B   T_BUF           * buffer interno escritura A
+
+PUNTEB: DS.W	2		* punteros de escritura de B
+BUFFERB: DS.B   T_BUF           * buffer interno escritura B
+
+PUNTLA: DS.W	2		* punteros de lectura de A
+BUFFERAL:DS.B   T_BUF           * buffer interno lectura A
+
+PUNTLB: DS.W	2		* punteros de lectura de B
+BUFFERBL:DS.B   T_BUF           * buffer interno lectura B
+
+   
+*CRA Y CRB PRIMER BYTE: SI ES A(0) O B(1)
+*CRA Y CRB SEGUNDO BYTE: SI ES RECEPCION(0) O TRANSMISION(1)
+*CSRA Y CSRB 4 PRIMEROS VEL DE TRANSMISION, 4 ULTIMOS VEL DE RECEPCION
+*PUNTA:  LEA     BUFFERA,A5      * A5 <- puntero a bufferA
+*Tener en cuenta las operaciones con la instruccion .L ya que las divide en dos	
+      
+**************************** INIT *************************************************************
+INIT:
+        MOVE.B          #%00010000,CRA          * Reinicia el puntero MR1
+        MOVE.B          #%00000011,MR1A         * 8 bits por caracter.
+        MOVE.B          #%00000000,MR2A         * Eco desactivado.
+        MOVE.B          #%11001100,CSRA         * Velocidad = 38400 bps.
+        MOVE.B          #%00000000,ACR          * Velocidad = 38400 bps.
+        MOVE.B		#%00000101,CRA          * Transmision y recepcion activados.
+        MOVE.W          4,D1                    * contador a 4 para los punteros
+	MOVE.B 		#$40,IVR		* vector de interrupciones
+	MOVE.B 		#RTI,$100		* asignamos la direccion RTI del periferico
+        LEA             PUNTEA,A5               *
+        MOVE.W          0,A5                    *
+        MOVE.W          0,2(A5)                 *
+        RTS
+**************************** FIN INIT *********************************************************
+**************************** PROGRAMA PRINCIPAL ***********************************************
+INICIO: BSR             INIT                    * Inicia el controlador
+        BREAK
+OTRO:  	MOVE.L          #$5000,-(A7)            * Prepara la dirección del buffer
+        BSR             SCAN                    * Recibe la linea
+        ADD.L           #4,A7                   * T_BUFRestaura la pila
+        MOVE.L          #$5000,-(A7)            * Prepara la dirección del buffer
+        BSR             PRINT                   * Imprime línea
+        ADD.L           #4,A7                   * Restaura la pila
+	BRA		OTRO
+        BREAK
+**************************** FIN PROGRAMA PRINCIPAL *******************************************
+**************************** LINEA ************************************************************
+LINEA:  
+        RTS
+**************************** FIN DE LINEA *****************************************************
+**************************** PRINT ************************************************************
+PRINT:  
+        RTS
+**************************** FIN DE PRINT *****************************************************
+**************************** RTI **************************************************************
+RTI:        
+        RTE
+**************************** FIN DE RTI *******************************************************
+**************************** SCAN *************************************************************
+SCAN:   *LINK y UNLINK para marco de pila
+        RTS
+**************************** FIN SCAN *********************************************************
+**************************** LEECAR ***********************************************************
+LEECAR: 	BTST            #0,D0		* Comparamos el primer bit del buffer pasado por parametro de entrada
+                BNE             LEEB		* Comparamos que el primer bit sea distinto de 0
+                BTST		#1,D0		* Comparamos el segundo bit del buffer pasado por parametro de entrada
+                BNE		TRANSA		* Comparamos que el segundo bit sea distinto de 0
+		LEA		BUFFERAL,A5	* Cargamos el buffer de lectura de A
+		LEA		PUNTLA,A4	* Cargamos el puntero inicial de lectura de A
+		BRA		SECLEE
+LEEB:	        BTST            #1,D0		* Comparamos el segundo bit del buffer pasado por parametro de entrada
+                BNE             TRANSB		* Comparamos que el segundo bit sea distinto de 0
+	        LEA		BUFFERBL,A5	* Cargamos los punteros de lectura de B
+		LEA		PUNTLB,A4	* Cargamos el puntero inicial de lectura de A
+		BRA		SECLEE
+TRANSA: 	LEA		BUFFERA,A5	* Cargamos los punteros de escritura de A
+		LEA		PUNTEA,A4	* Cargamos el puntero inicial de lectura de A
+		BRA		SECLEE
+TRANSB:	        LEA		BUFFERB,A5	* Cargamos los punteros de escritura de A
+		LEA		PUNTEB,A4	* Cargamos el puntero inicial de lectura de A
+		BRA		SECLEE
+SECLEE:	        MOVE.W		(A4),D1		* Cargamos el puntero de lectura 
+		MOVE.W		2(A4),D2	* Cargamos el puntero de la escritura
+		CMP.W		D1,D2		* Comparamos los dos punteros en el buffer
+		BEQ		LEELLENO	* Si son iguales los punteros saltamos a LEELLENO
+		MOVE.B	        (A5,D1),D0	* Cargamos el dato que hemos leido
+		ADD.B		1,D1		* Avanzamos una posicion el puntero
+		CMP.W		2001,D1 	* Miramos que no estemos al final del buffer circular,que no nos hayamos pasado de rosca
+		BEQ		LEERST
+	        BRA             FINLEE
+LEELLENO:       MOVE.W		$FFFFFFFF,D0    * En el caso en que hemos llegado al final no tenemos datos que leer
+		BRA		FINLEE
+LEERST:	        MOVE.W		0,D1		* Resetamos el contador del puntero a cero
+		BRA		FINLEE
+FINLEE:	        MOVE.W		D1,(A4)		* Actualizamos el puntero
+		RTS
+
+**************************** FIN DE LEECAR ****************************************************
+**************************** ESCCAR ***********************************************************
+ESCCAR: 
+        RTS
+**************************** FIN DE ESCCAR ****************************************************
+

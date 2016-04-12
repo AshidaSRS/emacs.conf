@@ -1,0 +1,142 @@
+package org.upm.cc.monitor;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+
+import es.upm.babel.cclib.*;
+import es.upm.babel.cclib.Monitor.Cond;
+
+public class ControlFabricaMonitor implements ControlFabricaInterface {
+	// TODO Crear los atributos para el recurso
+	private Monitor mutex;
+
+	private boolean[] enMantenimiento;
+	private boolean[] pedidosEnEspera;	
+
+	private HashMap<Integer, LinkedList<Integer>> colaRobots;	
+	private LinkedList<Integer>[] colaPedidos;
+	private int PID, RID;	
+	private int[] numProcesados;
+
+	private Cond[] condRobots;
+	private Cond[] condPedidos;
+	private Cond[] condMecanicos;
+
+
+	public ControlFabricaMonitor (int nPedidos, int nRobots) {
+		// TODO IMPLEMENTAR!	
+		this.mutex=new Monitor();	
+
+		this.RID=nRobots;
+		this.PID=nPedidos;
+
+		this.pedidosEnEspera=new boolean[PID];
+		this.enMantenimiento=new boolean [RID];
+		this.colaRobots =  new HashMap<Integer,LinkedList<Integer>>();
+		this.numProcesados=new int[RID];
+		this.colaPedidos= (LinkedList<Integer>[])new LinkedList[RID];
+
+		this.condRobots=new Cond[RID];
+		this.condPedidos=new Cond[PID];
+		this.condMecanicos=new Cond[RID];
+
+		for (int i = 0; i < RID; i++){
+			condRobots[i] = mutex.newCond();
+		}
+		for (int i = 0; i < RID; i++){
+			condMecanicos[i] = mutex.newCond();
+		}
+		for (int i = 0; i < PID; i++){
+			condPedidos[i] = mutex.newCond();
+		}
+		for (int i = 0; i < RID; i++){
+			colaPedidos[i] = new LinkedList<Integer>();
+		} 
+		for (int i = 0; i < RID ; i++) { 
+			colaRobots.put(i, new LinkedList<Integer>()); 
+		}
+	}
+
+	@Override
+	public void notificarLlegadaPedido(int pid, int rid) {
+		//POST	
+		mutex.enter();
+		this.pedidosEnEspera[pid]=true;
+		this.colaPedidos[rid].add(pid);
+		this.colaRobots.put(rid,colaPedidos[rid]);
+		desbloquear();
+		mutex.leave();
+	}
+
+	@Override
+	public void pasarControl(int pid) {
+
+		mutex.enter();
+		//if !CPRE
+		if(this.pedidosEnEspera[pid]){
+			this.condPedidos[pid].await();
+		}
+		mutex.leave();
+	}
+
+	@Override
+	public int procesarPedido(int rid) {
+
+		int pedido=0;
+		mutex.enter();
+		//if CPRE
+		if (this.enMantenimiento[rid] || this.colaRobots.get(rid).size() <= 0 ){
+			this.condRobots[rid].await();
+		}	
+		pedido = (int) this.colaPedidos[rid].poll();
+		this.numProcesados[rid]++;
+		this.pedidosEnEspera[pedido] = false;
+		if(((this.numProcesados[rid]) % TipoFabrica.N_PROCS(rid))== 0){
+			this.enMantenimiento[rid]=true;
+		}		
+		desbloquear();
+		mutex.leave();		
+		return pedido;
+	}
+
+	@Override
+	public int verificarRobot(int rid) {
+		// TODO IMPLEMENTAR!
+		mutex.enter();	
+		//if CPRE
+		if(!this.enMantenimiento[rid]){
+			this.condMecanicos[rid].await();
+		}
+		mutex.leave();
+		return this.numProcesados[rid];
+	}
+
+	@Override
+	public void notificarFinMantenimiento(int rid) {
+		// TODO IMPLEMENTAR!
+		mutex.enter();
+		this.enMantenimiento[rid] = false;		
+		desbloquear();		
+		mutex.leave();
+	}
+	public void desbloquear(){
+		boolean signalSend = false;
+		for(int i=0;i<RID && !signalSend;i++){
+			if(!this.enMantenimiento[i] && this.colaRobots.get(i).size() > 0 && this.condRobots[i].waiting()>0 && !signalSend){
+				this.condRobots[i].signal();
+				signalSend=true;
+			}
+			if(this.enMantenimiento[i] && this.condMecanicos[i].waiting()>0 && !signalSend){
+				this.condMecanicos[i].signal();
+				signalSend=true;
+		}
+			}				
+		for(int j=0;j<PID && !signalSend;j++){
+			if(!this.pedidosEnEspera[j] && this.condPedidos[j].waiting()>0 && !signalSend){
+				this.condPedidos[j].signal();
+				signalSend=true;
+			}
+		}
+	}
+
+}

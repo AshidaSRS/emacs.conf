@@ -1,0 +1,21 @@
+package main
+
+import(
+	"io"
+	"http"
+	"net/url"
+	"strings"
+)
+
+type TgBot struct{
+	Token   string
+}
+
+func New(token string) *TgBot {
+	bot, err := NewWithError(token)
+	if err != nil {
+		panic(err)
+	}
+	return bot
+}
+

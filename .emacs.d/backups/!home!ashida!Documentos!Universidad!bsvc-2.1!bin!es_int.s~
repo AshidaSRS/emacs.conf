@@ -1,0 +1,527 @@
+* Inicializa el SP y el PC
+**************************
+        ORG     $0
+        DC.L    $8000           * Pila
+        DC.L    PRUEBA15        * PC
+        ORG     $400
+* Faltan las pruebas 11,13,14,15 *
+* Definición de equivalencias
+*********************************
+*A*
+MR1A    EQU     $effc01         * de modo A (escritura)
+MR2A    EQU     $effc01         * de modo A (2º escritura)
+SRA     EQU     $effc03         * de estado A (lectura)
+CSRA    EQU     $effc03         * de seleccion de reloj A (escritura)
+CRA     EQU     $effc05         * de control A (escritura)
+TBA     EQU     $effc07         * buffer transmision A (escritura)
+RBA     EQU     $effc07         * buffer recepcion A  (lectura)
+*B*
+MR1B    EQU     $effc11         * de modo B (escritura)
+MR2B    EQU     $effc11         * de modo B (2º escritura)
+SRB     EQU     $effc13         * de estado B (lectura)
+CSRB    EQU     $effc13         * de seleccion de reloj B (escritura)
+CRB     EQU     $effc15         * de control B (escritura)
+TBB     EQU     $effc17         * buffer transmision B (escritura)
+RBB     EQU     $effc17         * buffer recepcion B (lectura)
+*AMBAS*
+IVR     EQU     $effc19         * vector de interrupcion
+ACR	EQU	$effc09	        * de control auxiliar
+IMR     EQU     $effc0B         * de mascara de interrupcion A (escritura)
+ISR     EQU     $effc0B         * de estado de interrupcion A (lectura)
+*VARIABLES*
+
+T_BUF   EQU     2001            * tamaño del buffer
+        
+PUNTEA: DS.L	2		* punteros de escritura de A
+BUFFERA: DS.B   T_BUF           * buffer interno escritura A
+
+PUNTEB: DS.L	2		* punteros de escritura de B
+BUFFERB: DS.B   T_BUF           * buffer interno escritura B
+
+PUNTLA: DS.L	2		* punteros de lectura de A
+BUFFERAL:DS.B   T_BUF           * buffer interno lectura A
+
+PUNTLB: DS.L	2		* punteros de lectura de B
+BUFFERBL:DS.B   T_BUF           * buffer interno lectura B
+
+FLAGS:  DS.L    2               * reservamos espacio para el flag del periferico de transmision A/B [10 -> TA, 11-> TB, 00 -> RA, 01 -> RB] y para el flag de salto de linea [0 -> sin, con -> 1]
+   
+*CRA Y CRB PRIMER BYTE: SI ES A(0) O B(1)
+*CRA Y CRB SEGUNDO BYTE: SI ES RECEPCION(0) O TRANSMISION(1)
+*CSRA Y CSRB 4 PRIMEROS VEL DE TRANSMISION, 4 ULTIMOS VEL DE RECEPCION
+*PUNTA:  LEA     BUFFERA,A5      * A5 <- puntero a bufferA
+*Tener en cuenta las operaciones con la instruccion .L ya que las divide en dos	
+* IMR tener una copia siempre porque no podemos leerla nunca. ( Ternerlo en cuenta en concurrencia )      
+
+**************************** INIT *************************************************************
+INIT:   LINK            A6,#0
+        MOVE.B          #%00010000,CRA          * Reinicia el puntero MR1
+        MOVE.B          #%00000011,MR1A         * 8 bits por caracter.
+        MOVE.B          #%00000000,MR2A         * Eco desactivado.
+        MOVE.B          #%11001100,CSRA         * Velocidad = 38400 bps.
+        MOVE.B          #%00000000,ACR          * Velocidad = 38400 bps.
+        MOVE.B		#%00000101,CRA          * Transmision y recepcion activados.
+        MOVE.B          #%00010000,CRB          * Reinicia el puntero MR1
+        MOVE.B          #%00000011,MR1B         * 8 bits por caracter.
+        MOVE.B          #%00000000,MR2B         * Eco desactivado.
+        MOVE.B          #%11001100,CSRB         * Velocidad = 38400 bps.
+        MOVE.B		#%00000101,CRB          * Transmision y recepcion activados.        
+        MOVE.W          #4,D1                    * contador a 4 para los punteros
+        MOVE.B		#$40,IVR		* vector de interrupciones
+        MOVE.B		#RTI,$100		* asignamos la direccion RTI del periferico
+        LEA		PUNTLA,A4		* Cargamos el puntero memoria
+        MOVE.W		#0,A4			* Inicializamos el puntero de lectura
+        MOVE.W		#0,2(A4)		* Inicializamos el puntero de escritura
+        LEA		PUNTLB,A4		* Cargamos el puntero memoria
+        MOVE.W		#0,A4			* Inicializamos el puntero de lectura
+        MOVE.W		#0,2(A4)		* Inicializamos el puntero de escritura
+        LEA		PUNTEA,A4		* Cargamos el puntero memoria
+        MOVE.W		#0,A4			* Inicializamos el puntero de lectura
+        MOVE.W		#0,2(A4)		* Inicializamos el puntero de escritura
+        LEA		PUNTEB,A4		* Cargamos el puntero memoria
+        MOVE.W		#0,A4			* Inicializamos el puntero de lectura
+        MOVE.W		#0,2(A4)		* Inicializamos el puntero de escritura
+        LEA             FLAGS,A4
+        MOVE.W          #$000000FF,A4
+        MOVE.W          #$0000000F,2(A4)
+        UNLK            A6
+        RTS
+**************************** FIN INIT **********************************************************
+**************************** PROGRAMA PRINCIPAL ***********************************************
+INICIO: BSR             INIT                    * Inicia el controlador
+        BREAK
+OTRO:   MOVE.L          #$5000,-(A7)            * Prepara la dirección del buffer
+        BSR             SCAN                    * Recibe la linea
+        ADD.L           #4,A7                   * T_BUFRestaura la pila
+        MOVE.L          #$5000,-(A7)            * Prepara la dirección del buffer
+        BSR             PRINT                   * Imprime línea
+        ADD.L           #4,A7                   * Restaura la pila
+        BRA		OTRO
+        BREAK
+**************************** FIN PROGRAMA PRINCIPAL *******************************************
+**************************** LINEA ***********************************************************
+LINEA:  LINK            A6,#0           * MARCO DE PILA
+        BTST            #0,D0		* Comparamos el primer bit del buffer pasado por parametro de entrada
+        BNE             LINB		* Comparamos que el primer bit sea distinto de 0
+        BTST		#1,D0		* Comparamos el segundo bit del buffer pasado por parametro de entrada
+        BNE		LINTA		* Comparamos que el segundo bit sea distinto de 0
+        LEA		BUFFERAL,A5	* Cargamos el buffer de lectura de A
+        LEA		PUNTLA,A4	* Cargamos los punteros de lectura de A
+        BRA		SECLIN
+LINB:	BTST            #1,D0		* Comparamos el segundo bit del buffer pasado por parametro de entrada
+        BNE             LINTB		* Comparamos que el segundo bit sea distinto de 0
+        LEA		BUFFERBL,A5	* Cargamos el buffer de lectura de B
+        LEA		PUNTLB,A4	* Cargamos los punteros de lectura de B
+        BRA		SECLIN
+LINTA:	LEA		BUFFERA,A5	* Cargamos el buffer de escritura de A
+        LEA		PUNTEA,A4	* Cargamos los punteros de escritura de A
+        BRA		SECLIN
+LINTB:	LEA		BUFFERB,A5	* Cargamos el buffer de escritura de B
+        LEA		PUNTEB,A4	* Cargamos los punteros de escritura de B
+        BRA		SECLIN
+SECLIN:	MOVE.W		(A4),D2		* Cargamos el puntero de lectura
+        MOVE.W          2(A4),D3        * Cargamos el puntero de escritura
+        MOVE.W		#0,D5		* Inicializamos el contador de caracteres a 0
+BUCLIN: MOVE.B          (A5,D2),D0      * Guardamos en D0 el caracter leido
+        CMP.W           #13,D0          * Comprobamos si es salto de linea
+        BEQ             FINLIN          * Saltamos a fin
+        ADD.W           #1,D2           * Avanzamos puntero
+        ADD.W           #1,D5           * cont++
+        CMP.W           #2000,D5        * Comprobamos si hemos vaciado el buffer y no hemos encontrado CR
+        BEQ             FINLIN2         * Saltamos a otro fin
+        CMP.W           #2000,D2        * Comprobamos si hemos llegado al final.
+        BEQ             RESLIN          * Reseteamos el puntero
+        BRA             BUCLIN
+FINLIN: ADD.W           #1,D5           * Sumamos el CR
+        ADD.W           #1,D2           * Avanzamos puntero
+        MOVE.W          D5,D0           * Devolvemos en D0
+        UNLK            A6
+        RTS
+FINLIN2:MOVE.W          #0,D0           * 0 a D0 porque no hay CR
+        UNLK            A6
+        RTS
+RESLIN: MOVE.W          #0,D2           * Lectura al principio del buffer again
+        BRA             BUCLIN
+**************************** FIN DE LINEA *****************************************************
+**************************** PRINT ************************************************************
+PRINT:  LINK            A6,#-16		* MARCO DE PILA
+        MOVE.L          (A6)+,A3        * buffer elegido(4B)
+        MOVE.L          (A6)+,A4        * descriptor (2B), dispositivo donde se realiza la lectura (0 = A, 1 = B, X [cualquier otro] = error)
+        MOVE.L          (A6)+,D5        * tamaño
+        MOVE.L          #0,D3           * Pones a 0 el contador
+        MOVE.L          (A3),D0         * buffer interno
+        CMP.L           #$00000000,(A4)
+        BEQ             PPA
+        CMP.L           #$00000001,(A4)
+        BEQ             PPB
+        BRA             ERPRINT
+PPA:    LEA             BUFFERA,A4      * buffer transmision de A
+BPPA:   MOVE.L          (A4)+,D1
+        BSR             ESCCAR
+        CMP             #13,D1
+        BEQ             FLAGPRIA
+        CMP             #$FFFFFFFF,D0
+        BEQ             FINPRINT
+BPPAF:  ADD.L           #1,D3
+        CMP             D5,D3
+        BNE             BPPA
+        BRA             FINPRINT
+PPB:    LEA             BUFFERB,A4      * buffer transmision de B
+BPPB:   MOVE.L          (A4)+,D1
+        BSR             ESCCAR
+        CMP             #13,D1
+        BEQ             FLAGPRIB
+        CMP             #$FFFFFFFF,D0
+        BEQ             FINPRINT
+BPPBF:  ADD.L           #1,D3
+        CMP             D5,D3
+        BNE             BPPB
+FINPRINT:MOVE.L         D3,D0
+        UNLK          	A6
+        RTS
+ERPRINT:MOVE.L          #$FFFFFFFF,D0
+        BRA             FINPRINT
+FLAGPRIA:LEA            FLAGS,A4
+        MOVE.L          #$00000010,(A3)       
+        BRA             BPPAF
+FLAGPRIB:LEA            FLAGS,A4
+        MOVE.L          #$00000011,(A3)       
+        BRA             BPPBF
+       
+**************************** FIN DE PRINT *****************************************************
+**************************** RTI **************************************************************
+RTI:    LINK            A6,#0
+        MOVE.L          ISR,D2
+        MOVE.L          IMR,D3             
+        AND.L           D2,D3
+        BTST            #0,D3
+        BNE             TxRDYA
+        BTST            #1,D3
+        BNE             RxRDYA
+        BTST            #4,D3
+        BNE             TxRDYB
+        BTST            #5,D3
+        BNE             RxRDYB
+        BRA             FINRTI
+TxRDYA: 
+        
+RxRDYA:
+        
+TxRDYB:
+        
+RxRDYB:
+        
+FINRTI: UNLK            A6
+        RTE
+**************************** FIN DE RTI *******************************************************
+**************************** SCAN *************************************************************
+SCAN:   LINK            A6,#-16		* MARCO DE PILA
+        MOVE.L          (A6)+,A3        * buffer elegido
+        MOVE.L          (A6)+,A4        * descriptor, dispositivo donde se realiza la lectura (0 = A, 1 = B, X [cualquier otro] = error)
+        MOVE.L          (A6)+,D5        * tamaño
+        CMP.L           #$00000000,(A4)
+        BEQ             SPA
+        CMP.L           #$00000001,(A4)
+        BEQ             SPB
+        BRA             ERSCAN
+SPA:    MOVE.L          #$00000000,D0
+        BSR             LINEA
+        CMP             #0,D0
+        BEQ             SCAN0
+        CMP             D0,D5
+        BLT             SCAN0
+        MOVE.L          D0,D5
+        MOVE.L          D0,D3
+        MOVE.L          #$00000000,D0
+BSPA:   BSR             LEECAR
+        MOVE.L          D0,(A3)+
+        SUB.L           #1,D3
+        CMP             #0,D3
+        BNE             BSPA
+        BRA             SALSCAN
+SPB:    MOVE.L          #$00000001,D0
+        BSR             LINEA
+        CMP             #0,D0
+        BEQ             SCAN0
+        CMP             D0,D5
+        BLT             SCAN0
+        MOVE.L          D0,D5
+        MOVE.L          D0,D3
+        MOVE.L          #$00000001,D0        
+BSPB:   BSR             LEECAR
+        MOVE.L          D0,(A3)+
+        SUB.L           #1,D3
+        CMP             #0,D3
+        BNE             BSPB
+SALSCAN:MOVE.L          D5,D0
+FINSCAN:UNLK          	A6
+        RTS
+ERSCAN: MOVE.L          #$FFFFFFFF,D0
+        BRA             FINSCAN
+SCAN0:  MOVE.L          #0,D0
+        BRA             FINSCAN        
+**************************** FIN SCAN *********************************************************
+**************************** LEECAR ***********************************************************
+LEECAR: BTST            #0,D0		* Comparamos el primer bit del buffer pasado por parametro de entrada
+        BNE             LEEB		* Comparamos que el primer bit sea distinto de 0
+        BTST		#1,D0		* Comparamos el segundo bit del buffer pasado por parametro de entrada
+        BNE		TRANSA		* Comparamos que el segundo bit sea distinto de 0
+        LEA		BUFFERAL,A5	* Cargamos el buffer de lectura de A
+        LEA		PUNTLA,A4	* Cargamos los punteros de lectura de A
+        BRA		SECLEE
+LEEB:	BTST            #1,D0		* Comparamos el segundo bit del buffer pasado por parametro de entrada
+        BNE             TRANSB		* Comparamos que el segundo bit sea distinto de 0
+        LEA	        BUFFERBL,A5	* Cargamos el buffer de lectura de B
+        LEA     	PUNTLB,A4	* Cargamos los punteros de lectura de B
+        BRA		SECLEE
+TRANSA: LEA		BUFFERA,A5	* Cargamos el buffer de escritura de A
+        LEA	        PUNTEA,A4	* Cargamos los punteros de lectura de A
+        BRA		SECLEE
+TRANSB: LEA		BUFFERB,A5	* Cargamos el buffer de escritura de B
+        LEA		PUNTEB,A4	* Cargamos los punteros de lectura de B
+        BRA		SECLEE
+SECLEE:	MOVE.W          (A4),D1		* Cargamos el puntero de lectura
+        MOVE.W	        2(A4),D2	* Cargamos el puntero de la escritura
+        CMP.W		D1,D2		* Comparamos los dos punteros en el buffer
+        BEQ		LEEVAC  	* Si son iguales los punteros saltamos a LEELLENO
+        MOVE.L          #$00000000,D0   * Machacamos el valor para asegurar
+        MOVE.B		(A5,D1),D0	* Cargamos el dato que hemos leido
+        ADD.W		#1,D1		* Avanzamos una posicion el puntero
+        CMP.W		#2001,D1	* Miramos que no estemos al final del buffer circular,que no nos hayamos pasado de rosca
+        BEQ		LEERST		* Reseteamos el puntero si el buffer esta lleno
+        BRA		FINLEE
+LEEVAC: MOVE.L          #$FFFFFFFF,D0	* En el caso en que hemos llegado al final no tenemos datos que leer
+        BRA		FINLEE
+LEERST:	MOVE.W          #0,D1		* Resetamos el contador del puntero a cero
+        BRA		FINLEE
+FINLEE: MOVE.W          D1,(A4)		* Actualizamos el puntero
+        RTS
+**************************** FIN DE LEECAR ****************************************************
+**************************** ESCCAR ***********************************************************
+ESCCAR: LINK            A6,#0           * MARCO DE PILA
+        BTST            #0,D0		* Comparamos el primer bit del buffer pasado por parametro de entrada
+        BNE             ESCB		* Comparamos que el primer bit sea distinto de 0
+        BTST		#1,D0		* Comparamos el segundo bit del buffer pasado por parametro de entrada
+        BNE		TRANA		* Comparamos que el segundo bit sea distinto de 0
+        LEA		BUFFERAL,A5	* Cargamos el buffer de lectura de A
+        LEA		PUNTLA,A4	* Cargamos los punteros de lectura de A
+        BRA		SECESC
+ESCB:   BTST            #1,D0		* Comparamos el segundo bit del buffer pasado por parametro de entrada
+        BNE             TRANB		* Comparamos que el segundo bit sea distinto de 0
+        LEA		BUFFERBL,A5	* Cargamos el buffer de lectura de B
+        LEA		PUNTLB,A4	* Cargamos los punteros de lectura de B
+        BRA		SECESC
+TRANA:  LEA		BUFFERA,A5	* Cargamos el buffer de escritura de A
+        LEA		PUNTEA,A4	* Cargamos los punteros de escritura de A
+        BRA		SECESC
+TRANB:  LEA		BUFFERB,A5	* Cargamos el buffer de escritura de B
+        LEA		PUNTEB,A4	* Cargamos los punteros de escritura de B
+SECESC: MOVE.W          (A4),D2	        * Cargamos el puntero de lectura
+        MOVE.W	        2(A4),D3	* Cargamos el puntero de la escritura
+        CMP.W           #0,D2           * Comprobamos lectura = 0
+        BEQ             CE2K            * Comprobamos que el de escritura esté en 2k
+        SUB.W           #1,D2           * Restamos 1 al puntero de lectura (por el espacio en blanco)
+        CMP.W           D2,D3           * Miramos que no estemos al final del buffer circular,que no nos hayamos pasado de rosca
+        BEQ             ESCLL           * Reseteamos si son iguales, el puntero de escritura
+        CMP.W		#2001,D3        * miramos si el de escritura está al final
+        BEQ             RPESC
+ESCP:   MOVE.B          D1,(A5,D3)      * Cargamos el dato que hemos leido
+        ADD.W           #1,D3           * Avanzamos una posicion el puntero
+        CMP.W           #2001,D3        * Comprobamos si el puntero a llegado al final
+        BNE             FINESC          * Si no, salimos
+	BTST		#1,D0		* Comparamos el segundo bit del buffer pasado por parametro de entrada
+	BNE		FINESC
+        MOVE.W          #0,D3
+        BRA             FINESC
+CE2K:   CMP.W           #2000,D3        * Comprobamo que el de escritura está en 2k
+        BEQ             ESCLL           * Si es así, buffer lleno.
+        BRA             ESCP             
+FINESC:	MOVE.W          D3,2(A4)	* Actualizamos el puntero
+        UNLK          	A6
+        RTS
+ESCLL:  MOVE.L          #$FFFFFFFF,D0   * No se ha podido escribir
+        BRA             FINESC
+RPESC:  MOVE.L          #0,D3
+        BRA             ESCP
+**************************** FIN DE ESCCAR ****************************************************
+*************************** PRUEBAS ***********************************************************
+
+PRUEBA: BSR             INIT             * Inicia el controlador
+        BREAK
+        MOVE.L          #$00000000,D0    * Caso 5 prueba manual
+        MOVE.L          #$0000002a,D1    * A en ASCII hexadecimal
+        BSR             ESCCAR
+        MOVE.L          #$00000000,D0   * Caso 5 prueba manual
+        MOVE.L          #$b1,D1         * A en ASCII hexadecimal
+        BSR             ESCCAR
+        MOVE.L          #$00000000,D0   * Caso para leer el caso 5
+        BSR             LEECAR
+        MOVE.L          #$00000000,D0   * Caso para leer el caso 5
+        BSR             LEECAR
+        BREAK
+
+* Pruebas Bastas
+PRUEBA4:BSR             INIT
+        MOVE.L          #0,D5
+BUCPRU2:MOVE.L          #$00000000,D0    * Caso 5 prueba manual
+        MOVE.L          #$0000002a,D1    * Caso 5 prueba manual
+        BSR             ESCCAR
+        ADD.B           #1,D5
+        CMP             #2000,D5
+        BNE             BUCPRU2
+        MOVE.L          #$00000000,D0    * Caso 5 prueba manual
+        BSR             LINEA
+        BREAK
+
+* Prueba 6 *
+PRUEBA6:BSR             INIT             * Inicia el controlador
+	MOVE.L		#0,D6
+BB61:   MOVE.L          #$0000011,D0    * Caso 5 prueba manual
+        MOVE.L          #$0000002a,D1    * A en ASCII hexadecimal
+        BSR             ESCCAR
+	ADD.L		#1,D6
+	CMP		#2200,D6
+	BNE		BB61
+        BREAK
+
+* Prueba 7 *
+PRUEBA7:BSR             INIT             * Inicia el controlador
+	MOVE.L          #$00000011,D0   * Caso para leer el caso 5
+        BSR             LEECAR
+        BREAK
+
+* Prueba 11 *
+PRUEBA11:BSR             INIT             * Inicia el controlador
+	MOVE.L		#0,D6
+BB111:  MOVE.L          #$0000011,D0    * Caso 5 prueba manual
+        MOVE.L          #$0000002a,D1    * A en ASCII hexadecimal
+        BSR             ESCCAR
+	ADD.L		#1,D6
+	CMP		#2000,D6
+	BNE		BB111
+	MOVE.L		#0,D6
+BB112	MOVE.L          #$00000011,D0   * Caso para leer el caso 5
+        BSR             LEECAR
+	ADD.L		#1,D6
+	CMP		#2000,D6
+	BNE		BB112        
+	BREAK
+
+* Prueba 13 *
+PRUEBA13:BSR             INIT             * Inicia el controlador
+	MOVE.L		#0,D6
+BB131:  MOVE.L          #$00000001,D0    * Caso 5 prueba manual
+        MOVE.L          #$0000002a,D1    * A en ASCII hexadecimal
+        BSR             ESCCAR
+	ADD.L		#1,D6
+	CMP		#2000,D6
+	BNE		BB131
+	MOVE.L          #$00000001,D0   * Caso para leer el caso 5
+        BSR             LEECAR       
+	MOVE.L		#0,D6
+BB132:  MOVE.L          #$00000001,D0    * Caso 5 prueba manual
+        MOVE.L          #$0000002a,D1    * A en ASCII hexadecimal
+        BSR             ESCCAR
+	ADD.L		#1,D6
+	CMP		#2,D6
+	BNE		BB132	
+	BREAK
+
+* Prueba 14 *
+PRUEBA14:BSR             INIT             * Inicia el controlador
+	MOVE.L		#0,D6
+BB141:  MOVE.L          #$00000010,D0    * Caso 5 prueba manual
+        MOVE.L          #$0000002a,D1    * A en ASCII hexadecimal
+        BSR             ESCCAR
+	ADD.L		#1,D6
+	CMP		#2000,D6
+	BNE		BB141
+	MOVE.L		#0,D6
+BB142:  MOVE.L          #$00000001,D0   * Caso para leer el caso 5
+        BSR             LEECAR       
+	ADD.L		#1,D6
+	CMP		#10,D6
+	BNE		BB142
+	MOVE.L		#0,D6
+BB143:  MOVE.L          #$00000010,D0    * Caso 5 prueba manual
+        MOVE.L          #$0000002a,D1    * A en ASCII hexadecimal
+        BSR             ESCCAR
+	ADD.L		#1,D6
+	CMP		#10,D6
+	BNE		BB143	
+	BREAK
+
+* Prueba 15 *
+PRUEBA15:BSR             INIT            * Inicia el controlador
+	MOVE.L		#0,D6
+        MOVE.L          #0,D1            * A en ASCII hexadecimal
+BB151:  MOVE.L          #$00000011,D0    * Caso 5 prueba manual
+        BSR             ESCCAR
+	ADD.L		#1,D6
+        ADD.L           #1,D1
+        CMP             #9,D1
+        BEQ             YEY
+	CMP		#2000,D6
+	BNE		BB151
+        BREAK
+	MOVE.L		#0,D6
+BB152:  MOVE.L          #$00000011,D0    * Caso para leer el caso 5
+        BSR             LEECAR       
+	ADD.L		#1,D6
+	CMP		#10,D6
+	BNE		BB152
+        BREAK
+	MOVE.L		#0,D6
+        MOVE.L          #0,D1
+BB153:  MOVE.L          #$00000011,D0    * Caso 5 prueba manual
+        BSR             ESCCAR
+	ADD.L		#1,D6
+        ADD.L           #1,D1
+        CMP             #9,D1
+        BEQ             YAY
+	CMP		#10,D6
+	BNE		BB153
+	BREAK
+	MOVE.L		#0,D6
+BB154:  MOVE.L          #$00000011,D0   * Caso para leer el caso 5
+        BSR             LEECAR       
+	ADD.L		#1,D6
+	CMP		#2000,D6
+	BNE		BB154
+	BREAK
+YEY:    MOVE.L          #0,D1
+        BRA             BB151
+YAY:    MOVE.L          #0,D1
+        BRA             BB153
+PRUEBA16:BSR             INIT            * Inicia el controlador
+	MOVE.L		#0,D6
+BB161:  MOVE.L          #$00000011,D0    * Caso 5 prueba manual
+        MOVE.L          #1,D1            * A en ASCII hexadecimal
+        BSR             ESCCAR
+	ADD.L		#1,D6
+	CMP		#2000,D6
+	BNE		BB161
+        BREAK
+	MOVE.L		#0,D6        
+BB162:  MOVE.L          #$00000011,D0   * Caso para leer el caso 5
+        BSR             LEECAR       
+	ADD.L		#1,D6
+	CMP		#10,D6
+	BNE		BB162
+	BREAK
+	MOVE.L		#0,D6
+BB163:  MOVE.L          #$00000011,D0    * Caso 5 prueba manual
+        MOVE.L          #1,D1            * A en ASCII hexadecimal
+        BSR             ESCCAR
+	ADD.L		#1,D6
+	CMP		#10,D6
+	BNE		BB163
+        BREAK
+	MOVE.L		#0,D6        
+BB164:  MOVE.L          #$00000011,D0   * Caso para leer el caso 5
+        BSR             LEECAR       
+	ADD.L		#1,D6
+	CMP		#2000,D6
+	BNE		BB164
+	BREAK
+**************************** FIN PRUEBAS ******************************************************
