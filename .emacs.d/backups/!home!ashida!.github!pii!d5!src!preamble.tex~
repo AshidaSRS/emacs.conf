@@ -1,0 +1,37 @@
+\documentclass[11pt]{report}
+
+\usepackage{standalone}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,activeacute]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{anysize}
+\usepackage{emptypage}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{lastpage, etoolbox}
+\usepackage{color, xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{titlesec, blindtext}
+\usepackage{multicol}
+\definecolor{gray75}{gray}{0.75}
+
+\newcommand{\hsp}{\hspace{10pt}}
+\titleformat{\chapter}[hang]{\huge\bfseries}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\huge\bfseries}
+\titlespacing*{\chapter}{10pt}{-25pt}{10pt}
+
+\marginsize{2.5cm}{2.5cm}{2.5cm}{2.5cm}
+\setcounter{secnumdepth}{3} %para que ponga 1.1.1.1 en subsubsecciones
+\setcounter{tocdepth}{3} % para que ponga subsubsecciones en el indice
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\setlength{\parindent}{0cm}
+
+% editamos los encabezados para el resto de capítulos
+\lhead[\thepage]{CAPÍTULO \thechapter. \rightmark}
+\chead[]{}
+\rhead[CAPÍTULO \thechapter. \leftmark]{\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+
+\lfoot[]{\today}

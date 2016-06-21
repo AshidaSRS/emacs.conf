@@ -1,0 +1,23 @@
+case class Door (
+  id: Int,
+  state: String
+)
+
+type StateDoor : Door => Boolean
+
+def filterDoors (doors: Seq[Door], s: StateDoor) = doors.filter(s)
+
+val openDoor: Seq[Door] => StateDoor = doors.state = "Open"
+val closedDoor: Seq[Door] => StateDoor = doors.state = "Closed"
+
+def changeStateDoors (doors: Seq[Door]) = {
+  val filterO: StateDoor = openDoor(doors)
+  filter0.map(x => x.state = "Closed"
+  val filterC: StateDoor = closedDoor(doors)
+  filterC.map(x => x.state = "Open"
+}
+
+
+
+val doors = Seq(Door(id = 1, state = "Open"), Door(id = 2, state = "Closed"))
+

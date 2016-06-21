@@ -1,0 +1,5 @@
+object test3 {
+  def hello (name: String) = {
+    println("Hello" + name)
+  }
+}

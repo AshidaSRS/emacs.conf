@@ -1,0 +1,70 @@
+% Created 2016-05-06 vie 12:46
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\date{\today}
+\title{memoriaPipelines}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs 24.5.1 (Org mode 8.2.10)}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Sesion 1}
+\label{sec-1}
+\subsection{Analizar las dependencias existentes en el programa original.}
+\label{sec-1-1}
+\begin{description}
+\item[{Tipo}] - DD: Dependencias de Datos\\ - DC: Dependencias de Control
+\item[{Instrucciones}] Número correspondiente a las intrucciones que
+producen la dependencia
+\item[{Registros}] Registros que se ven afectados en las dependencias.
+\item[{Parones}] NOP's del programa
+\item[{Veces}] Cuantas veces se repite la dependencia
+\item[{ToT}] Cuantas veces en el programa entero
+\item[{Parones con AD}] Parones con ADelantamientos activados
+\item[{Tipos de AD}] Tipos de ADelantamiento
+\end{description}
+\begin{center}
+\begin{tabular}{lrlrrrrl}
+Tipo & Instrucciones & Registros & Parones & Veces & ToT & Parones con AD & Tipos de AD\\
+\hline
+DD & 14-15 & R14 & 2 & 8 & 16 & 0 & ALU-ALU\\
+DD & 15-16 & R15 & 2 & 64 & 128 & 0 & ALU-ALU\\
+DD & 16-17 & R15 & 2 & 64 & 128 & 1(64) & MEM-ALU\\
+DC & 17 & PC & 3 & 64 & 192 & 3 & -\\
+DD & 18-19 & R9 & 2 & 42 & 84 & 0 & ALU-ALU\\
+DD & 19-20 & R17 & 2 & 42 & 84 & 0 & ALU-ALU\\
+DD & 21-22 & R17 & 2 & 42 & 84 & 0 & ALU-ALU\\
+DD & 24-26 & R22 & 0 & 42 & 84 & 0 & ALU-ALU\\
+DD & 25-26 & R23 & 2 & 42 & 84 & 0 & ALU-ALU\\
+DD & 27-28 & R24 & 2 & 64 & 128 & 1(64) & MEM-ALU\\
+DD & 29-30 & R25 & 2 & 64 & 128 & 0 & ALU-ALU\\
+DD & 31-33 & R4 & 1 & 64 & 128 & 0 & ALU-ALU\\
+DD & 33-34 & R26 & 2 & 64 & 128 & 0 & ALU-ALU\\
+DC & 34 & PC & 3 & 64 & 128 & 3(192) & -\\
+DD & 35-36 & R18 & 2 & 8 & 16 & 0 & ALU-ALU\\
+DD & 37-39 & R2 & 1 & 8 & 16 & 0 & ALU-ALU\\
+DD & 39-40 & R26 & 2 & 8 & 16 & 0 & ALU-ALU\\
+DD & 40 & PC & 3 & 8 & 16 & 3(24) & -\\
+\end{tabular}
+\end{center}
+% Emacs 24.5.1 (Org mode 8.2.10)
+\end{document}

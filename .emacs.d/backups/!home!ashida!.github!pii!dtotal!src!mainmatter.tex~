@@ -1,0 +1,63 @@
+\makeatletter% macro local para eliminar el titulo de la bibliografia
+
+\renewenvironment{thebibliography}[1]
+     {\refname%
+      \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}%
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+\makeatother
+
+\pagestyle{fancy}
+
+\begin{document}
+\input{src/cover}
+
+\thispagestyle{empty}
+\setcounter{page}{1}
+
+\addtocontents{toc}{\hspace{-7.5mm} \textbf{Estructura}}%poner capitulos y paginas en la tabla de contenidos
+\addtocontents{toc}{\hfill \textbf{P\'{a}ginas} \par}
+\addtocontents{toc}{\vspace{-2mm} \hspace{-7.5mm} \hrule \par}
+\tableofcontents
+
+\chapter{Introducción}
+\label{introduccion}
+\input{tex/introduccion}
+
+\chapter{Proyecto de definición}
+\section{Alcance del proyecto}
+\label{alcance-del-proyecto}
+\input{tex/objetivos}
+
+\section{Criterios y prioridades}
+\label{criterios-y-prioridades}
+\input{tex/criterios}
+
+\section{Aspectos legislativos y de normativa}
+\label{Aspectos-legislativos-y-de-normativa}
+\input{tex/aspectos-legales}
+
+\chapter{Conclusiones}
+\label{conclusiones}
+\input{tex/conclusiones}
+
+\newpage
+\section{Referencias}
+\label{referencias}
+\input{referencias}
+
+\end{document}

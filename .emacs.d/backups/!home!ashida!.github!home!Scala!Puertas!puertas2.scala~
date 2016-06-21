@@ -1,0 +1,20 @@
+sealed trait Door
+final class case Open extends Door
+final class case Closed extends Door 
+
+object Door = (
+  id: Int,
+  state: Door
+
+  def open (d: Door): Door = {
+    d match {
+      case Open => d.copy(state == Closed)
+    }
+  }
+  def close (d: Door): Door = {
+    d match {
+      case Closed => d.copy(state == Open)
+    }
+  }
+)
+

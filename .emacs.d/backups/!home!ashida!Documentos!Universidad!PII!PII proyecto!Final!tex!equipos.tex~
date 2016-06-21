@@ -1,0 +1,66 @@
+Como bien hemos observado en el capítulo de infraestructura,
+(referencia) en esta tabla podemos observar que componentes son,
+cuanto consume cada uno y el consumo total del CPD. % \ref{Nodos-del-CPD}
+
+\begin{table}[h!]
+  \centering
+  \begin{adjustbox}{max width=\textwidth}
+    \begin{tabular}{ | l | l | l | l |}
+      \hline
+      \textbf{Nodo} & \textbf{Cantidad} & \textbf{Precio total} & \textbf{Consumo total}\\ \hline
+      Principal & 2 & 3226 € & 1020 W\\ \hline
+      CPU & 24 & 138192 € & 4310 4W\\ \hline
+      CPU/GPU & 20 & 183732 € & 13000 W\\ \hline
+      Dev & 4 & 49424 € & 3280 W\\ \hline
+      Haswell-E nodes & 3 & 11874 € & 1090 W\\ \hline
+      AMD APU node & 2 & 2994 € & 1495 W\\ \hline
+      Nvidia Jetson TX1 & 1 & 600 € & 30 W\\ \hline
+      Router & 1 & 10784 € & 6000 W\\ \hline
+      Infiniband Switch & 1 & 5735 € & 226 W\\ \hline
+      Switch & 2 & 142678 € & 600 W\\ \hline
+      Sistema de archivos & 24 & 133800 € & 820 W\\ \hline    
+      Total del CPD & 59 & 683039 € & 66365 W\\ \hline  % 77340W total           
+    \end{tabular}
+  \end{adjustbox}
+  \caption*{Nodos del CPD}
+  \label{Nodos-del-CPD-2}
+\end{table}
+
+Nuestro CPD está basado en el computo, para poder llevar a cabo las
+simulaciones correspondientes a los clientes, por lo que centraremos
+todo nuestro esfuerzo en mantener el computo al máximo en caso de
+problema.
+Para ello hemos decidido un SAI On-Line Conversion Delta con una
+capacidad bastante mayor a la que consume nuestro CPD para que en caso
+de fallo este pueda seguir al máximo de computo.
+uestro almacenamiento no es tan importante ya que solo necesitariamos
+almacenar los datos de las simulaciones antes, durante y después por
+lo que mantendremos un 50\% el almacenamiento.
+
+Los equipos elegidos para suministrar nuestro sistema son:
+\begin{table}[h!]
+  \centering
+  \begin{adjustbox}{max width=\textwidth}
+    \begin{tabular}{*{3}{|l}|}%%{|l|l|l|l|}
+      \hline
+      \textbf{Tipo} & \textbf{Modelo} & \textbf{Capacidades}\\ \hline
+      UPS & Sistemas UPS Pure Wave & 1250-2000 kW \\ \hline
+    \end{tabular}
+  \end{adjustbox}
+  \caption*{Sistemas UPS}
+  \label{sistemas-ups}
+\end{table}
+Estos modelos están compuestos por baterías de plomo­ácido diseñadas
+para un plazo de suministro básico de alta potencia. 
+Estos UPS pueden acumular, cada uno, hasta 50 baterías interconectadas
+dependiendo de la capacidad deseada. 
+ 
+Como en el tema anterior de infraestructura detallamos los consumos de
+nuestra instalación, calculamos una cantidad aproximada de 1 UPS para
+todo el sistema, pero hemos decidido usar 2 redundantes para evitar
+problemas de suministro, centrar 1 y medio para el computo y la otra
+mitad para almacenamiento.
+No necesitaremos la inclusión de baterías o generadores extra,
+contaremos con 2 acometidas eléctricas de distinto proveedor con los
+cuales estableceremos un contrato de servicios mínimos y prioridad al
+restablecimiento del suministro.

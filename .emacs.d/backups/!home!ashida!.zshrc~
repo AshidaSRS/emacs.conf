@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/home/ashida/.oh-my-zsh
+  export ZSH=/home/ashida/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -9,6 +9,10 @@ ZSH_THEME="tonotdo"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion. Case
+# sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
 # DISABLE_AUTO_UPDATE="true"
@@ -49,8 +53,16 @@ plugins=(git)
 
 # User configuration
 
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/ashida/go/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
+
+# go
+export PATH=$PATH:/usr/local/go/bin   
+export GOPATH=$HOME/.github/Go-things
+# ruby gem
+GEM_HOME=$(ls -t -U | ruby -e 'puts Gem.user_dir')
+GEM_PATH=$GEM_HOME
+export PATH=$PATH:$GEM_HOME/bin
 
 source $ZSH/oh-my-zsh.sh
 
@@ -79,3 +91,7 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias yrt="yaourt"
+alias gpull="git pull"
+#alias rungo="$GOPATH/bin/"
+alias aktualiza="yaourt -SSyyuua"
+alias arquitecra="~/Documentos/Universidad/bsvc-2.1/bin//68kasm -l ~/Documentos/Universidad/bsvc-2.1/bin/es_int.s;bsvc ~/Documentos/Universidad/bsvc-2.1/bin/practica.setup &"

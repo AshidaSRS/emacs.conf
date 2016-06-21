@@ -1,0 +1,27 @@
+Contabilizando la potencia de todos los nodos del CPD como hemos recopilado en la siguiente tabla, hemos calculado 66,365 kW totales.
+\begin{table}[h!]
+  \centering
+  \begin{adjustbox}{max width=\textwidth}
+  \begin{tabular}{*{3}{|c}|}%%{|l|l|l|l|}
+  \hline
+\textbf{Tipo} & \textbf{Número} & \textbf{Consumo total}\\ \hline
+Principal & 2 & 1120 W\\ \hline
+CPU & 72 & 100800 W\\ \hline % 65844 €, 25200 W
+CPU/GPU & 40 & 56000 W\\ \hline
+Dev1 & 10 & 14000 W\\ \hline
+Dev2 & 28 & 39200 W\\ \hline % +8, 93234 €, 11200 W + 14000 W no puestos
+Haswell-E nodes & 28 & 22400 W\\ \hline % +7, 19796 €, 5600 W
+AMD APU node & 18 & 10080 W\\ \hline % +6, 8982 €, 3360 W
+Nvidia Jetson TX1 & 6 & 180 W\\ \hline
+Router & 2 & 12000 W\\ \hline 
+Infiniband Switch & 1 & 226 W\\ \hline
+Switch & 5 & 2000 W\\ \hline 
+Sistema de archivos & 40 & 22400 W\\ \hline    
+Total del CPD & 252 & 280406 W\\ \hline
+\end{tabular}
+\end{adjustbox}
+  \caption*{Potencia del CPD}
+  \label{potencia-cpd}
+\end{table}
+
+En total hemos calculado 24 kW/rack contando con un margen de seguridad y sabiendo que los racks conflictivos tendrán su atención pertinente. Contaremos la carga de refrigeración a 1 kW consumo = 1 kW de refrigeración por lo que la carga de refrigeración total estimada será de 330 kW frente a los 280,406 kW de consumo. Gracias a este margen de seguridad podemos garantizar la integridad de los racks del CPD y de las propias enfriadoras.

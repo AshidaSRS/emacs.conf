@@ -1,0 +1,13 @@
+(use-package plantuml-mode
+  :ensure t
+  :init
+  (setq plantuml-jar-path (expand-file-name "/opt/plantuml/plantuml.jar"))
+  (setq puml-plantuml-jar-path (expand-file-name "/opt/plantuml/plantuml.jar"))
+  (setq org-plantuml-jar-path) (expand-file-name "/opt/plantuml/plantuml.jar"))
+
+;
+;; Enable puml-mode for PlantUML files
+(add-to-list 'auto-mode-alist '("\\.puml\\'" . puml-mode))
+(add-to-list 'auto-mode-alist '("\\.plantuml\\'" . puml-mode))
+
+(add-to-list 'org-src-lang-modes ("plantuml" . 'puml))

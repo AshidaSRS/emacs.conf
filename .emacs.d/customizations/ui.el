@@ -29,6 +29,9 @@
 ;; Tamaño de letra
 (set-face-attribute 'default nil :height 80)
 
+;; kill BUFFERS
+(require 'clean_buffers)
+
 ;; In every buffer, the line which contains the cursor will be fully
 ;; highlighted
 (global-hl-line-mode 1)

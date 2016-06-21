@@ -1,0 +1,258 @@
+\subsection{Equipamiento de computación}
+Para este proyecto necesitaremos de los siguientes equipos para llevar a cabo la correcta configuración del CPD:
+
+\begin{enumerate}
+\item Nodo principal
+\item Nodo CPU GPU
+\item Nodo AMD
+\item Nodo Dev
+\item Nodo Intel 5960x
+\item Nodo AMD APU
+\item Nodo Jetson TX1
+\item Nodo Router
+\item Nodo Infiniband Switch
+\item Nodo Switch
+\item Nodo Sistema de archivos 
+\end{enumerate}\vspace{0.1in}
+
+\begin{table}[h!]
+  \centering
+  \begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{ | l | l | l | l |}
+\hline
+\textbf{Nodo} & \textbf{Cantidad} & \textbf{Precio total} & \textbf{Consumo total}\\ \hline
+Principal & 2 & 3226 € & 1020 W\\ \hline
+CPU & 24 & 138192 € & 4310 4W\\ \hline
+CPU/GPU & 20 & 183732 € & 13000 W\\ \hline
+Dev & 4 & 49424 € & 3280 W\\ \hline
+Haswell-E nodes & 3 & 11874 € & 1090 W\\ \hline
+AMD APU node & 2 & 2994 € & 1495 W\\ \hline
+Nvidia Jetson TX1 & 1 & 600 € & 30 W\\ \hline
+Router & 1 & 21568 € & 12000 W\\ \hline % 10784, 6000
+Infiniband Switch & 1 & 5735 € & 226 W\\ \hline
+Switch & 4 & 285356 € & 1200 W\\ \hline % 142678, 600
+Sistema de archivos & 24 & 133800 € & 820 W\\ \hline    
+Total del CPD & 59 & 836501 € & 72965 W\\ \hline  % 83940W total, PARC EQU: 10975 W   
+\end{tabular}
+\end{adjustbox}
+  \caption*{Nodos del CPD}
+  \label{Nodos-del-CPD}
+\end{table}
+
+\pagebreak
+
+Las tarjetas gráficas utilizadas son:
+
+\begin{table}[h!]
+  \centering
+  \begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{ | l | l | }
+\hline
+\textbf{Tarjeta gráfica} & \textbf{Cantidad}\\ \hline
+Nvidia Quadro K1200 & 64 \\ \hline % 180
+Nvidia Quadro K2200 & 20 \\ \hline % 500
+Nvidia GTX 980 Ti & 1 \\ \hline % 700
+Nvidia Tesla M40 & 8 \\ \hline % 2.648
+Nvidia Tesla M60 & 8 \\ \hline % 6.471
+Nvidia Tesla K40 & 4 \\ \hline % 2.648
+Nvidia Tesla K80 & 4 \\ \hline % 3.530
+\end{tabular}
+\end{adjustbox}
+  \caption*{Gráficas del CPD}
+  \label{Graficas-del-CPD}
+\end{table}
+
+Los nodos están configurados con los siguientes componentes:\\
+
+\begin{itemize}
+
+\item Nodo principal, ocupando una unidad de rack, y costando en total 1613€ :
+\begin{enumerate}
+\item 1 x Supermicro 6016T-NTF SuperServer (838 €)[20.9 kg][43x437x650 mm][560W AC]
+\item 2 x Intel Xeon E5620 Processor 2.4 GHz processor (264 €)[160 W]%ya los dos
+\item 48GB DDR3 ECC Registered (300 €)
+\item 1 x Mellanox ConnectX-2 MHQH19B-XTR Infiniband (211 €)
+\end{enumerate}\vspace{0.1in}
+
+
+\item Nodo CPU GPU, ocupando 4 unidades del rack: % 2655
+\begin{enumerate}
+\item 1 x Supermicro 7046GT-TRF SuperServer (1.616 €)[32.7 kg][452x178x673 mm][1400 W high-efficiency]
+\item 2 x Intel Xeon E5620 Processor 2.4 GHz processor (264 €)
+\item 16 nodos: 4x NVIDIA Quadro K1200 GPUs (4 x 180 €)
+\item 5 nodos: 4x NVIDIA Quadro K2200 GPUs (4 x 500 €)
+\item 2 nodo: 4x NVIDIA Tesla M40 GPUs (4 x 2648 €)
+\item 2 nodo: 4x NVIDIA Tesla M60 GPUs (4 x 6471 €)
+\item 48 GB DDR3 ECC Registered (300 €)
+\item 1 x Mellanox ConnectX-2 MHQH19B-XTR Infiniband HCA (40 Gb/s) (211 €)
+\end{enumerate}\vspace{0.1in}
+
+Los precios de cada nodo quedarían de la siguiente manera:
+
+\begin{table}[h!]
+  \centering
+  \begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{ | l | l | l | l | l |}
+\hline
+\textbf{Nodo + Gráficas} & \textbf{Precio/nodo} & \textbf{Consumo/nodo} & \textbf{Precio total} & \textbf{Consumo total}\\ \hline
+Nodo CPU + Nvidia Quadro K1200 & 3375 € & 180 W & 60300 € & 3200 W\\ \hline  
+Nodo CPU + Nvidia Quadro K2200 & 4655 € & 300 W & 29240 € & 2600 W\\ \hline 
+Nodo CPU + Nvidia Tesla M40 & 13247 € & 1000 W & 31804 € & 3400 W\\ \hline 
+Nodo CPU + Nvidia Tesla M60 & 28539 € & 1020 W-1200 W & 62388 € & 3440 W-3800 W\\ \hline
+\end{tabular}
+\end{adjustbox}
+  \caption*{Gráficas del nodo CPU/GPU}
+  \label{Graficas-del-nodo-CPU/GPU}
+\end{table}
+
+\pagebreak
+
+\item Nodo CPU, ocupando una unidad de rack, y costando en total 5758 €:
+\begin{enumerate}
+\item 1 x Supermicro 1042-LTF SuperServer (1.247 €)[19.5 kg][43x437x705 mm][1400 W high-efficiency]
+\item 4 x AMD Opteron 6370P 2.2 GHz 16 core processor (700 €)[396 W]%ya los 4
+\item 128 GB (4 x 32 GB) DDR3 ECC Registered (1500 €)
+\item 1 x Mellanox ConnectX-2 MHQH19B-XTR Infiniband HCA (40 Gb/s) (211 €)
+\end{enumerate}\vspace{0.1in}
+
+\item Nodo Development1, ocupando una unidad de rack, y costando en total 10592€:
+\begin{enumerate}
+\item 1 x Supermicro 6016T-NTF SuperServer (838 €)[20.9 kg][43x437x650 mm][560 W AC]
+\item 2 x Intel Xeon E5-2690v2 (1826 €)[260 W]%ya los dos
+\item 64 GB DDR3 ECC Registered (370 €)
+\item 1 x Mellanox ConnectX-2 MHQH19B-XTR Infiniband HCA (40 Gb/s) (211 €)
+\item 4 x NVIDIA Tesla K40 (2648 €)[235 W]
+\end{enumerate}\vspace{0.1in}
+
+\item Nodo Development2, ocupando una unidad de rack, y costando en total 14120 €:
+\begin{enumerate}
+\item 1 x Supermicro 6016T-NTF SuperServer (838 €)[20.9 kg][43x437x650 mm][560 W AC]
+\item 2 x Intel Xeon E5-2690v2 (1826 €)[260 W]%ya los dos
+\item 64 GB DDR3 ECC Registered (370 €)
+\item 1 x Mellanox ConnectX-2 MHQH19B-XTR Infiniband HCA (40 Gb/s) (211 €)
+\item 4 x NVIDIA Tesla K80 (3530 €)[300 W]
+\end{enumerate}\vspace{0.1in}
+
+\item Nodo Haswell-E, ocupando una unidad de rack, y costando en total 3958 €:
+\begin{enumerate}
+\item 1 x Supermicro 6016T-NTF SuperServer (838 €)[20.9 kg][43x437x650 mm][560 W AC]
+\item 2 x Intel i7 5960X (1130 €)[280 W]%ya los dos
+\item 32 GB DDR4 (110 €)
+\item 1 x NVIDIA GTX 980 Ti (750 €)[250 W]
+\end{enumerate}\vspace{0.1in}
+
+\item Nodo AMD APU, ocupando una unidad de rack, y costando en total 1497 €:
+\begin{enumerate}
+\item 1 x Supermicro 1042-LTF SuperServer (1.247 €)[19.5 kg][43x437x705 mm][1400 W high-efficiency]
+\item 1 x AMD A10-7890K (170 €)[95 W]
+\item 16 GB DDR3 (80€)
+\item AMD Radeon R7
+\end{enumerate}\vspace{0.1in}
+
+\item Nodo Jetson TX1, ocupando una unidad de rack, y costando en total 600 €:
+\begin{enumerate}
+\item 1 x ARM Cortex A57
+\item 4 GB LPDDR4
+\item 1 x NVIDIA Maxwell (256 NVIDIA CUDA Cores) 
+\end{enumerate}\vspace{0.1in}
+
+\subsection{Equipamiento de comunicaciones}
+
+\textbf{Routers}:\\
+
+Para conectar los equipos a la red necesitamos conectarnos con el operador contratado, y para ello necesitaremos un router principal que se conecte con él. En nuestro caso, debido a que tenemos que ofrecer un Tier 3/4, en vez de 1 conexión a los equipos necesarios, se duplicará solamente por seguridad de la integridad del sistema. No obstante, para realizar una arquitectura de interconexión del tipo TORUS, necesitaremos los suficientes puertos para realizar las conexiones redundantes en los equipos del CPD.
+
+\item Nodo Router, ocupando 21 unidades de rack y costando en total 21568 €:
+\begin{enumerate}
+\item Cisco ASR-9910 (10784 €)[70.73 kg][933x441x737mm][6000W]
+\end{enumerate}\vspace{0.1in}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.6]{img/torus.png}
+\caption*{Ejemplo de una conexión TORUS de 2x2x2}
+\end{figure}
+
+\textbf{Switches}:\\
+
+El nodo que tenemos de comunicaciones cuenta con 36 puertos infiniband, dotantonos de las conexiones más que necesarias para configurar este sistema CPD.\\
+
+\item Nodo Infiniband, ocupando una unidad de rack y costando en total 5735 €:
+\begin{enumerate}
+\item QLogic 12200-BS01 (5735 €)[6,8 kg][43x440x362 mm][226 W]
+\end{enumerate}\vspace{0.1in}
+
+\item Nodo switch, 2 unidades de rack y costando 285356 €:
+\begin{enumerate}
+\item Cisco MDS 9250i (71339 €)[10,2 kg][97x437x543 mm][300 W]
+\end{enumerate}\vspace{0.1in}
+
+
+\subsection{Equipamiento de almacenamiento}
+
+El nodo de almacenamiento de datos, no esta pensado para almacenar una gran cantidad de datos, si no que cada cliente pueda almacenar los datos necesarios para realizar los cálculos necesarios que precise. Con estos dos nodos de almacenamiento tenemos hasta 816TB de espacio para los directorios /home de todos los usuarios.\\
+
+\item Nodo Archivos, ocupando dos unidades de rack y costando en total 5575€:
+\begin{enumerate}
+\item OS: Scientific Linux 7.2
+\item 1 x Supermicro 6016T-NTF SuperServer (838 €)[20.9 kg][43x437x650 mm][560 W AC]
+\item 2 x Intel Xeon X5680 3.33 GHz processor (1.324 €)[260 W]%los dos ya
+\item 24 x W.D. 2 TB 7200 64MB SATAII – WD2003FYYS (65 €) % 1560
+\item 6 x 8GB DDR3-1333 ECC REG. (53 €) % 318
+\item 3ware 9690SA-4I battery-backed RAID controller
+\item 34 TB for home directories, backed by RAID6
+\item 1 x Mellanox ConnectX-2 MHQH19B-XTR Infiniband HCA (40 Gb/s) (211 €)
+\item Interconnect: Gigabit Ethernet, Infiniband 
+\end{enumerate}\vspace{0.1in}
+
+\subsection{Equipamiento general}
+
+\begin{table}[h!]
+  \centering
+  \begin{adjustbox}{max width=\textwidth}
+  \begin{tabular}{*{7}{|l}|}%%{|l|l|l|l|}
+  \hline
+\textbf{Tipo} & \textbf{Cantidad} & \textbf{Precio/unidad} & \textbf{Fabricante} & \textbf{Modelo} & \textbf{Consumo/unidad} & \textbf{Interfaz}\\ \hline %  6675
+MAC & 20 & 2629 € & Apple & iMAC & 240 W & Ethernet RJ-45\\ \hline %  4800           
+Impresión & 5 & 279 € & HP & LaserJet Pro M252dw & 375 W & Ethernet RJ-45\\ \hline %  1875W  
+\end{tabular}
+\end{adjustbox}
+  \caption*{Equipos del edificio}
+  \label{equipos-edificio}
+\end{table}
+
+Necesitamos impresoras en un entorno de trabajo, así mismo como ordenadores para que los desarrolladores del centro puedan realizar las tareas que pueden realizar gracias al acceso que tienen directo a nuestro CPD.
+
+\subsection{Equipamiento racks}
+
+\begin{table}[h!]
+  \centering
+  \begin{adjustbox}{max width=\textwidth}
+  \begin{tabular}{*{5}{|l}|}%%{|l|l|l|l|}
+  \hline
+\textbf{Marca} & \textbf{Modelo} & \textbf{Carácteristicas} & \textbf{Precio/unidad} & \textbf{Cantidad}\\ \hline
+EQUINSA NETWORKING & EQN-EN RB6810XY & 42 U, 600 x 1200 & 1705 € & 11\\ \hline              
+\end{tabular}
+\end{adjustbox}
+  \caption*{Armarios rack}
+  \label{armarios-rack}
+\end{table}
+
+\item Armario rack 19" ImServ:
+\begin{enumerate}
+\item Armario creado para albergar servidores y otros equipamientos activos.
+Soportan hasta 1000 kg. de carga.
+\item Perfilería delantera y trasera ajustable con hasta 3 niveles de profundidad y ancho ampliado.
+\item Profundidad de hasta 1200 mm 
+\item Puertas traseras y frontales de cristal, chapa y doble chapa microperforada (nido de abeja).
+\item Diseño del bastidor en forma de aspa para maximizar la entrada de cableado superior e inferior. 
+\item Reductores 1000 mm delanteros y traseros en los modelos de ancho 800.
+\item Material en acero laminado en frío de 1,2 a 2 mm.
+\item Medidas (H x A x F): 42 U (2025 mm) - 47 U (2250 mm) x 600-800 x 1000-1100-1200 mm.
+\item Peso en vacío 150 kg.
+\item Paneles laterales completos con apertura desde el interior.
+\item Entrada de cables superior e inferior con posibilidad de cepillo.
+\item Pies regulables en altura (ruedas opcionales).
+\end{enumerate}\vspace{0.1in}
+
+\end{itemize}

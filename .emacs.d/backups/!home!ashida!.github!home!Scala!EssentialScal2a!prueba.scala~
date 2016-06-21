@@ -1,0 +1,7 @@
+def sum (list: IntList):Int = {
+  list match {
+    case End => 0
+    case Pair(head, tail) => head + sum(tail)
+    case T(head, tail) => (head * 2) + sum(tail)
+}
+}

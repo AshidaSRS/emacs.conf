@@ -14,6 +14,7 @@
 
 ;;packages to install
 (defvar my-packages'(
+    use-package
     paredit
     clojure-mode
     clojure-mode-extra-font-locking
@@ -42,6 +43,8 @@
     go-mode
     go-autocomplete
     ac-haskell-process
+    plantuml-mode
+    puml-mode
     ))
 
 (dolist (p my-packages)
@@ -50,6 +53,18 @@
 
 
 (add-to-list 'load-path "~/.emacs.d/extras")
+
+;;;;;;;;;;;;;;;;;;;
+;; Tegmacs ;;
+;;;;;;;;;;;;;;;;;;;
+
+(defun tegmacs-load ()
+  (add-to-list 'load-path "~/.github/tegmacs")
+  (load-file "~/.github/tegmacs/tegmacs.el")
+  (require 'tegmacs)
+  (setq tegmacs-message-mark-as-read t))
+
+(tegmacs-load)
 
 ;;;;;;;;;;;;;;;;;;;
 ;; Customization ;;
@@ -88,3 +103,6 @@
 (load "setup-java.el")
 (load "setup-go.el")
 (load "setup-scala.el")
+(load "uml-steup.el")
+(load "org-setup.el")
+(load "setup-reveal.el")
