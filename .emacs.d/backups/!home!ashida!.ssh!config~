@@ -1,2 +1,2 @@
 Host github.com
-    IdentityFile ~/.ssh/_miGit
+	IdentityFile ~/.ssh/_myGit

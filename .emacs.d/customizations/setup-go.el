@@ -6,11 +6,11 @@
 (require 'go-autocomplete)
 (require 'auto-complete-config)
 
-(setenv "GOPATH" "/home/ashida/.github/Go-things")
+;(setenv "GOPATH" "/home/ashida/.github/Go-things")
 
-(load-file "$GOPATH/src/golang.org/x/tools/cmd/oracle/oracle.el")
-(load-file "$GOPATH/src/github.com/dougm/goflymake/go-flymake.el")
-(load-file "$GOPATH/src/github.com/dougm/goflymake/go-flycheck.el")
+;(load-file "$GOPATH/src/golang.org/x/tools/cmd/oracle/oracle.el")
+;(load-file "$GOPATH/src/github.com/dougm/goflymake/go-flymake.el")
+;(load-file "$GOPATH/src/github.com/dougm/goflymake/go-flycheck.el")
 
 ;(add-to-list 'load-path "$GOPATH/src/github.com/dougm/goflymake")
 ;(require 'go-flymake)

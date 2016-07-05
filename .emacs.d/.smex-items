@@ -1,38 +1,33 @@
 
 ;; ----- smex-history -----
 (
- multi-term
- tegmacs
- eval-buffer
  list-packages
+ ensime
+ package-install
  make-directory
- package-menu-describe-package
+ man
  cider-jack-in
+ term
 )
 
 ;; ----- smex-data -----
 (
  (cider-jack-in . 20)
  (moe-theme-select-color . 1)
- (list-packages . 18)
+ (list-packages . 17)
  (eclim-mode . 2)
  (ispell . 2)
  (ispell-change-dictionary . 1)
  (auto-complete . 1)
- (package-install . 6)
+ (package-install . 4)
  (package-list-packages . 2)
  (locate-library . 1)
- (make-directory . 4)
+ (make-directory . 3)
  (package-refresh-contents . 1)
  (term . 2)
  (shell . 1)
  (man . 1)
- (lua-mode . 1)
- (multi-term . 7)
- (org-latex-export-to-pdf . 8)
- (plantuml-run . 2)
- (package-menu-describe-package . 1)
- (eval-buffer . 2)
- (clean-buffers . 1)
- (tegmacs . 4)
+ (ensime . 8)
+ (ensime-server-update . 5)
+ (ensime-sbt . 1)
 )

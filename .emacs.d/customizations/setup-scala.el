@@ -18,8 +18,8 @@
      (reusable-frames . 0)
      (window-height . 8) (window-width . nil))))
 
-(use-package scala-mode
-  :ensure t)
+(add-to-list 'load-path "/home/ashida/.github/emacs.conf/.emacs.d/extras/scala-mode2/")
+(require 'scala-mode2)
 
 (use-package ensime
   :ensure t
@@ -27,4 +27,4 @@
   (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
   :bind ("C-c C-e" . eval-scala))
 
-(provide 'setup-scala)
+(provide 'scala-settings)

@@ -5,12 +5,11 @@
 (add-to-list 'package-archives
              '("tromey" . "http://tromey.com/elpa/") t)
 (add-to-list 'package-archives
-  			 '("marmalade" . "http://marmalade-repo.org/packages/"))
+             '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (package-initialize)
 
 (when (not package-archive-contents)
   (package-refresh-contents))
-
 
 ;;packages to install
 (defvar my-packages'(
