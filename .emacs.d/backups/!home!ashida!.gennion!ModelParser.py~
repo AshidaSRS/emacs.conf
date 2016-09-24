@@ -1,0 +1,138 @@
+import csv
+import pprint
+import sys
+
+
+PROJECT_NAME = sys.argv[2]
+
+pp = pprint.PrettyPrinter(indent = 4)
+
+csvInf = open(sys.argv[1], 'rt')
+
+dest_file = open("sensors.scala", "w+")
+dest_file.truncate()
+dest_file.write("import com.gennion.miau.logic._\n")
+dest_file.write("class "+PROJECT_NAME+" {\n")
+
+
+
+RandomID = int(sys.argv[3])
+sensorID = str(RandomID)
+zoneID = str(RandomID)
+
+listSensorId = []
+listLocalId = []
+listShopName = []
+listSensorMac = []
+listMacName = []
+
+zones = []
+sensors = dict()
+
+def parserCSV(reader):
+    for row in reader:
+        listSensorId.append(row[0])
+        listLocalId.append(row[1])
+        listShopName.append(row[3])
+        listSensorMac.append(row[4])
+        listMacName.append(row[5])
+    del listSensorId[0]
+    del listLocalId[0]
+    del listShopName[0]
+    del listSensorMac[0]
+    del listMacName[0]
+
+    SensorToList()
+    #pp.pprint(sensors)
+    ZoneToList()
+
+
+#Sensors
+
+def SensorToList():
+    for idS, macS in zip(listSensorId, listSensorMac):
+        if macS is not "":
+            sensors[macS] = SensorFormat(idS, "wifi", macS)
+
+nivel1="     "
+nivel2="        "
+nivel3="               "
+nivel3_5 = "                       "
+nivel4="                             "
+#idRandom = id dada por el instalador
+def SensorFormat(idRandom, tipo, mac, minor = "-1", point="Point(id = 0,\n"+nivel4+"order = 0,\n"+nivel4+"latitude = 100.0,\n"+nivel4+"longitude = 100.0)"):
+    global sensorID
+    
+    if tipo == "wifi": 
+        tipe = "Wlan"+sensorID
+    elif tipo == "ble": 
+        tipe = "BT"+sensorID
+
+    sensor = ""+nivel2+"Sensor(id = "+sensorID+",\n"\
+    ""+nivel3+"name = \"sensor"+idRandom+""+tipe+"\",\n"\
+    ""+nivel3+"description = Option(\"sensor"+tipe+"\"),\n"\
+    ""+nivel3+"minor = Option("+minor+"),\n"\
+    ""+nivel3+"`type` = \""+tipo+"\",\n"\
+    ""+nivel3+"mac = \""+mac+"\",\n"\
+    ""+nivel3+"point = "+point+")"
+
+    sensorID = str(int(sensorID)+1)
+    return sensor
+
+
+#Zones
+
+def ZoneFormat(localId, tienda, sensors, configuration = "None", tags ="Nil", major = "0", polygon = "Polygon(id = -1,\n"+nivel3_5+"color = \"black\",\n"+nivel3_5+"points = Nil)", zones = "Nil", imageId = "0"):
+    global zoneID
+    
+
+    zone = "Zone(id = "+zoneID+",\n"\
+    ""+nivel1+"name = \""+localId+"\",\n"\
+    ""+nivel1+"description = Option(\""+tienda+"\"),\n"\
+    ""+nivel1+"imageId ="+imageId+",\n"\
+    ""+nivel1+"sensors = List(\n" + str(sensors)+"),\n"\
+    ""+nivel1+"zones = "+zones+",\n"\
+    ""+nivel1+"polygon = "+polygon+",\n"\
+    ""+nivel1+"major = "+major+",\n"\
+    ""+nivel1+"configuration = "+configuration+",\n"\
+    ""+nivel1+"tags = "+tags+")"
+    zonesFile = dict()
+    dest_file.write(zone+"\n")
+    zoneID = str(int(zoneID)+1)
+    return zone
+
+def ZoneToList():
+    global sensors
+    sensorsZone = dict()
+    for localId, macS in zip(listLocalId, listSensorMac):
+        if localId not in sensorsZone:
+            sensorsZone[localId] = sensors[macS]
+        else:
+            sensorsZone[localId] = sensorsZone[localId] + ",\n" + sensors[macS]
+
+    #pp.pprint(sensorsZone)
+    for localId, nameShop in zip(listLocalId, listShopName):
+        zones.append(ZoneFormat(localId, nameShop, sensorsZone[localId]))
+
+
+
+def printLists():
+    pp.pprint(listSensorId)
+    pp.pprint(listLocalId)
+    pp.pprint(listShopName)
+    pp.pprint(listSensorMac)
+    pp.pprint(listMacName)
+
+#Main
+def main():
+    try:
+        reader = csv.reader(csvInf)
+        parserCSV(reader)
+        dest_file.write("}")
+    finally:
+        csvInf.close()
+        dest_file.close()
+
+if __name__ == "__main__":
+    main()
+    #tester()

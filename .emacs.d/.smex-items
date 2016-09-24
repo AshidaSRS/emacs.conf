@@ -1,20 +1,20 @@
 
 ;; ----- smex-history -----
 (
+ package-menu-mark-upgrades
  list-packages
  ensime
  package-install
  make-directory
  man
  cider-jack-in
- term
 )
 
 ;; ----- smex-data -----
 (
  (cider-jack-in . 20)
  (moe-theme-select-color . 1)
- (list-packages . 17)
+ (list-packages . 18)
  (eclim-mode . 2)
  (ispell . 2)
  (ispell-change-dictionary . 1)
@@ -30,4 +30,5 @@
  (ensime . 8)
  (ensime-server-update . 5)
  (ensime-sbt . 1)
+ (package-menu-mark-upgrades . 1)
 )
