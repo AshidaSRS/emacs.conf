@@ -460,7 +460,7 @@
 	     [(12)
 	      nil "A theme loosely based on Tron: Legacy colors" single])
  (transmission .
-	       [(0 9)
+	       [(0 10)
 		((emacs
 		  (24 4))
 		 (let-alist
@@ -1408,7 +1408,7 @@
 	   [(0 0 1)
 	    nil "get stuff from pinboard" single])
  (picpocket .
-	    [(22)
+	    [(25)
 	     nil "Image viewer" single])
  (pickup .
 	 [(0 0 3)
@@ -1531,7 +1531,7 @@
 		  [(0 8)
 		   nil "Various deletion strategies when editing" single])
  (palimpsest .
-	     [(0 8)
+	     [(0 9)
 	      nil "Various deletion strategies when editing" single])
  (pager-default-keybindings .
 			    [(1 1)
@@ -1571,6 +1571,9 @@
  (outlined-elisp-mode .
 		      [(1 0 5)
 		       nil "outline-minor-mode settings for emacs lisp" single])
+ (outer-spaces .
+	       [(20161029 2230)
+		nil "A minimalistic minor-mode to highlight redundant spaces" single])
  (otter-mode .
 	     [(1 2)
 	      nil "Major mode for source files of the Otter automated theorem prover" single])
@@ -1672,7 +1675,7 @@
 	       (6 1)))
 	     "basic support for magit links" single])
  (org-journal .
-	      [(1 11 1)
+	      [(1 11 2)
 	       nil "a simple org-mode based journaling mode" single])
  (org-gnome .
 	    [(0 1)
@@ -1894,7 +1897,7 @@
 	       (1 1)))
 	     "Mote minor mode" single])
  (monroe .
-	 [(0 2 0)
+	 [(0 3 1)
 	  nil "Yet another client for nREPL" single])
  (monokai-theme .
 		[(0 0 12)
@@ -2054,7 +2057,7 @@
 	       [(1 0 0)
 		nil "collection of faces for markup language modes" single])
  (markdown-toc .
-	       [(0 1 0)
+	       [(0 1 2)
 		((markdown-mode
 		  (2 1))
 		 (dash
@@ -2997,6 +3000,11 @@
  (fsvn .
        [(0 9 13)
 	nil "Another frontend of subversion." tar])
+ (fsbot-data-browser .
+		     [(0 1)
+		      ((dash
+			(2 12 1)))
+		      "browse the fsbot database using tabulated-list-mode" single])
  (fringe-helper .
 		[(1 0 1)
 		 nil "helper functions for fringe bitmaps" single])
@@ -3366,7 +3374,7 @@
        (2 2 0)))
      "Modern API for working with files and directories" single])
  (eyebrowse .
-	    [(0 7 0)
+	    [(0 7 1)
 	     ((dash
 	       (2 7 0))
 	      (emacs
@@ -3765,7 +3773,7 @@
 	       [(0 2 2)
 		nil "Aspell extra dictionary for Drupal" tar])
  (drupal-mode .
-	      [(0 7 0)
+	      [(0 7 1)
 	       ((php-mode
 		 (1 5 0)))
 	       "Advanced minor mode for Drupal development" tar])
@@ -3941,7 +3949,7 @@
 	 [(0 1 1)
 	  nil "Table component for Emacs Lisp" single])
  (csharp-mode .
-	      [(0 8 12)
+	      [(0 9 0)
 	       ((cl-lib
 		 (0 5)))
 	       "C# mode derived mode" tar])
@@ -4513,7 +4521,7 @@
 		 (24 1)))
 	       "Ansible documentation Minor Mode" single])
  (annotate .
-	   [(0 4 4)
+	   [(0 4 6)
 	    nil "annotate files without changing them" single])
  (angular-snippets .
 		   [(0 2 3)

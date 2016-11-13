@@ -1,0 +1,62 @@
+% Created 2015-12-04 vie 12:05
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{multicol}
+\tolerance=1000
+\date{}
+\title{LISTA COMIDA ACM}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs 24.5.1 (Org mode 8.2.10)}}
+\begin{document}
+
+\maketitle
+\begin{multicols}{2}
+\section{COMIDA}
+\label{sec-1}
+Palomitas SAL\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.0.40€\\
+Palomitas MANTEQUILLA\ldots{}\ldots{}\ldots{}..0.40€\\
+Palomitas DULCES\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.0.80€\\
+Kit kat\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.0.40€\\
+Kinder Bueno\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}..1.00€\\
+Donuts\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}..0.60€\\
+Picotas\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.0.05€\\
+Regaliz\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.0.05€\\
+Oreo\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.0.50€\\
+Ensaimadas\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.0.25€\\
+Croissants\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.0.20€\\
+Conchas\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.0.30€\\
+Patatas\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.1.00€\\
+Chips Ahoy\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.0.50€\\
+Dinosaurios\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}0.30€\\
+Dinosaurios Choco\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}0.50€\\
+\section{BEBIDA}
+\label{sec-2}
+Agua 50cl\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}..0.50€\\
+Coca Cola\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}..0.60€\\
+Nestea Limon\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}..0.70€\\
+Fanta Naranja\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.0.60€\\
+Bebida energetica\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}IDK\\
+\section{ESPECIALES}
+\label{sec-3}
+Pizza congelada\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}..3.00€\\
+Pizza fresca\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}..3.00€\\
+Café\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.0.50€/0.65€\\
+\end{multicols}
+% Emacs 24.5.1 (Org mode 8.2.10)
+\end{document}

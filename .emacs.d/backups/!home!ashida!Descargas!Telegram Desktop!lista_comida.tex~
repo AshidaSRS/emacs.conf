@@ -1,0 +1,75 @@
+yy
+% Created 2015-12-04 vie 12:05
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{multicol}
+\tolerance=1000
+\begin{document}
+\date{}
+\begin{figure}
+  \raggedright
+    \includegraphics{acm_mono.png}
+  \label{fig:acmlogo}
+\end{figure}
+\title{LISTA COMIDA ACM}
+
+\maketitle
+\setlength{\columnsep}{1.5cm}
+\begin{multicols}{2}
+\section{COMIDA}
+\label{sec-1}
+Palmeras dulces.................0.10€
+Panteras Rosas..................0.60€
+Palomitas Sal\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.0.50€\\
+Palomitas Mantequilla\ldots{}\ldots{}\ldots{}..0.60€\\
+Palomitas Dulces\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.0.70€\\
+Kit kat\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.0.40€\\
+Kinder Bueno\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}..0.70€\\
+Donuts\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}..0.50€\\
+Picotas\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.0.05€\\
+Regaliz\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.0.05€\\
+Oreo\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.0.50€\\
+Oreo Carrefour \ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.0.40€\\
+Ensaimadas\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.0.20€\\
+Croissants\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.0.15€\\
+Conchas\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.0.30€\\
+Patatas\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.1.00€\\
+Chips Ahoy\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.0.50€\\
+Dinosaurios\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}0.35€\\
+Dinosaurios Choco\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}0.45€\\
+Barritas Energeticas\ldots{}\ldots{}\ldots{}\ldots{}0.25€\\
+Twix\ldots{}\ldots{}\ldots{}\ldots{}0.40€\\
+\subsection{BEBIDA}
+\label{sec-1-2}
+Coca Cola\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}..0.60€\\
+Nestea Limon\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}..0.60€\\
+Fanta Naranja\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.0.60€\\
+Bebida energetica\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.0.60€\\
+Aquarius\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}..0.70€\\
+Pepsi...........................0.50€
+Kas.............................0.50€
+\subsection{ESPECIALES}
+\label{sec-1-3}
+Pizza congelada\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}..3.00€\\
+Pizza fresca\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}..3.00€\\
+Café\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}.0.40€/0.50€*\\
+Nesquick\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}0.40€/0.55€*\\
+Té\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}0.20€/0.35€*\\
+*Incluye vaso (0.10€) y\\ cucharilla. (0.05€)\\
+\end{multicols}
+% Emacs 24.5.1 (Org mode 8.2.10)
+\end{document}

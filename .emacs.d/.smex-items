@@ -1,34 +1,31 @@
 
 ;; ----- smex-history -----
 (
- package-menu-mark-upgrades
- list-packages
- ensime
  package-install
- make-directory
- man
- cider-jack-in
+ company-mode
+ elm-mode
+ package-refresh-contents
+ helm-mode
+ ielm
+ multi-term
 )
 
 ;; ----- smex-data -----
 (
- (cider-jack-in . 20)
- (moe-theme-select-color . 1)
- (list-packages . 18)
- (eclim-mode . 2)
- (ispell . 2)
- (ispell-change-dictionary . 1)
- (auto-complete . 1)
- (package-install . 4)
- (package-list-packages . 2)
- (locate-library . 1)
- (make-directory . 3)
- (package-refresh-contents . 1)
- (term . 2)
- (shell . 1)
- (man . 1)
- (ensime . 8)
- (ensime-server-update . 5)
- (ensime-sbt . 1)
- (package-menu-mark-upgrades . 1)
+ (ensime . 12)
+ (package-install . 16)
+ (multi-term . 17)
+ (term-mode . 2)
+ (term-terminal-menu . 1)
+ (list-packages . 3)
+ (make-directory . 2)
+ (jedi-mode . 4)
+ (jedi:install-server . 9)
+ (jedi:ac-setup . 5)
+ (ensime-server-update . 1)
+ (package-refresh-contents . 2)
+ (ielm . 1)
+ (helm-mode . 1)
+ (elm-mode . 1)
+ (company-mode . 1)
 )

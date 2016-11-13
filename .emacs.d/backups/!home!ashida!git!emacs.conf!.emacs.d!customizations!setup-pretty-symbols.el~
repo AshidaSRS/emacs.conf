@@ -1,0 +1,4 @@
+(global-prettify-symbols-mode +1)
+
+(defconst lisp--prettify-symbols-alist
+  '(("lambda"  . ?λ)))

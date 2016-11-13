@@ -1,0 +1,9 @@
+(use-package alchemist
+  :ensure t)
+
+(use-package ac-alchemist
+:ensure t
+:init (ac-alchemist-setup)
+:config (add-hook 'elixir-mode-hook (lambda () (ac-alchemist-setup)))b)
+
+(provide 'setup-elixir)

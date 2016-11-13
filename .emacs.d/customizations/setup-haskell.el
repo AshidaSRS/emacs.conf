@@ -1,92 +1,161 @@
-;; Haskell mode
-;; custom variables
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(TeX-PDF-mode t)
- '(delete-selection-mode t)
- '(ergoemacs-mode t)
- '(haskell-mode-hook (quote (turn-on-haskell-indent turn-on-haskell-doc interactive-haskell-mode)))
- '(org-CUA-compatible nil)
- '(org-replace-disputed-keys nil)
- '(recentf-mode t)
- '(shift-select-mode nil))
+;;; bodil-haskell.el --- FIRE ALL MONAD TRANSFORMERS
 
-;; Haskel-mode YAY ;;;;;;;;;;;;;;;
+;; Use Unicode arrows in place of ugly ASCII arrows
+(defun setup-haskell-arrows (mode mode-map)
+  (font-lock-replace-symbol mode "\\(->\\)" "→")
+  (font-lock-replace-symbol mode "\\(<-\\)" "←")
+  (font-lock-replace-symbol mode "\\(=>\\)" "⇒")
 
-;; autocomplete
-(require 'ac-haskell-process) ; if not installed via package.el
-(add-hook 'interactive-haskell-mode-hook 'ac-haskell-process-setup)
-(add-hook 'haskell-interactive-mode-hook 'ac-haskell-process-setup)
-(eval-after-load "auto-complete"
-  '(add-to-list 'ac-modes 'haskell-interactive-mode))
+  (define-key mode-map (kbd "→") (lambda () (interactive) (insert "->")))
+  (define-key mode-map (kbd "←") (lambda () (interactive) (insert "<-")))
+  (define-key mode-map (kbd "⇒") (lambda () (interactive) (insert "=>"))))
 
-(defun set-auto-complete-as-completion-at-point-function ()
-  (add-to-list 'completion-at-point-functions 'auto-complete))
-(add-hook 'auto-complete-mode-hook 'set-auto-complete-as-completion-at-point-function)
-(add-to-list 'ac-modes 'haskell-interactive-mode)
-(add-hook 'haskell-interactive-mode-hook 'set-auto-complete-as-completion-at-point-function)
-(add-hook 'haskell-mode-hook 'set-auto-complete-as-completion-at-point-function)
-
-
-;; more autocomplete
-(defun set-auto-complete-as-completion-at-point-function ()
-  (add-to-list 'completion-at-point-functions 'auto-complete))
-(add-hook 'auto-complete-mode-hook 'set-auto-complete-as-completion-at-point-function)
-(add-to-list 'ac-modes 'haskell-interactive-mode)
-(add-hook 'haskell-interactive-mode-hook 'set-auto-complete-as-completion-at-point-function)
-(add-hook 'haskell-mode-hook 'set-auto-complete-as-completion-at-point-function)
-
-;; pop up documentation
-(eval-after-load 'haskell-mode
-  '(define-key haskell-mode-map (kbd "C-c C-d") 'ac-haskell-process-popup-doc))
-
-;; indentation mode
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-(add-hook 'haskell-mode-hook 'structured-haskell-mode)
-;; aligning code
-(global-set-key (kbd "C-x a r") 'align-regexp)
-
-;; Non interactive commands
-(eval-after-load 'haskell-mode
-  '(define-key haskell-mode-map [f8] 'haskell-navigate-imports))
-
-;; Hashtags (M-.)
-(let ((my-cabal-path (expand-file-name "~/.cabal/bin")))
-  (setenv "PATH" (concat my-cabal-path ":" (getenv "PATH")))
-  (add-to-list 'exec-path my-cabal-path))
-(custom-set-variables '(haskell-tags-on-save t))
-
-;; Interactive commands
-(custom-set-variables
-  '(haskell-process-suggest-remove-import-lines t)
-  '(haskell-process-auto-import-loaded-modules t)
-  '(haskell-process-log t))
-(eval-after-load 'haskell-mode '(progn
-  (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
+(use-package haskell-mode
+  :ensure t
+  :config
+  (custom-set-variables
+   '(haskell-mode-hook
+     '(;; turn-on-haskell-indentation
+       turn-on-haskell-doc
+       ;; structured-haskell-mode
+       )))
+  (setup-haskell-arrows 'haskell-mode haskell-mode-map)
+  ;; Variables
+  (custom-set-variables
+   '(haskell-process-suggest-remove-import-lines t)
+   '(haskell-process-auto-import-loaded-modules t)
+   '(haskell-process-log t)
+   ;; '(haskell-process-type 'cabal-repl)    ; CABAL
+   '(haskell-process-type 'stack-ghci))
+  (define-key haskell-mode-map (kbd "C-x C-d") nil)
   (define-key haskell-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
-  (define-key haskell-mode-map (kbd "C-c C-n C-t") 'haskell-process-do-type)
-  (define-key haskell-mode-map (kbd "C-c C-n C-i") 'haskell-process-do-info)
-  (define-key haskell-mode-map (kbd "C-c C-n C-c") 'haskell-process-cabal-build)
-  (define-key haskell-mode-map (kbd "C-c C-n c") 'haskell-process-cabal)
-  (define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)))
-(eval-after-load 'haskell-cabal '(progn
-  (define-key haskell-cabal-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
-  (define-key haskell-cabal-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
-  (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
-  (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal)))
+  (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-file)
+  (define-key haskell-mode-map (kbd "C-c C-b") 'haskell-interactive-switch)
+  (define-key haskell-mode-map (kbd "C-c C-t") 'haskell-process-do-type)
+  (define-key haskell-mode-map (kbd "C-c C-i") 'haskell-process-do-info)
+  (define-key haskell-mode-map (kbd "C-c C-s") (lambda () (interactive) (haskell-process-do-type t)))
+  (define-key haskell-mode-map (kbd "C-c M-.") nil)
+  (define-key haskell-mode-map (kbd "C-c TAB") 'ghc-show-info-popup)
+  (define-key haskell-mode-map (kbd "C-c C-i") 'ghc-show-info-popup)
+  (define-key haskell-mode-map (kbd "C-c C-S-i") 'ghc-show-info)
+  (define-key haskell-mode-map (kbd "C-c C-d") nil)
+  (define-key haskell-mode-map (kbd "C-c C-,") 'haskell-mode-run-test-suite)
+  (define-key haskell-mode-map (kbd "C-c f") 'haskell-mode-stylish-buffer))
 
-(custom-set-variables '(haskell-process-type 'cabal-repl))
 
-;; ghc-mod
-;;(let ((my-cabal-path (expand-file-name "~/.cabal/bin")))
-;;  (setenv "PATH" (concat my-cabal-path ":" (getenv "PATH")))
-;;  (add-to-list 'exec-path my-cabal-path))
-;;     no furula :(
-;;(autoload 'ghc-init "ghc" nil t)
-;;(autoload 'ghc-debug "ghc" nil t)
-;;(add-hook 'haskell-mode-hook (lambda () (ghc-init)))
+(use-package ghc
+  :ensure t
+  :config
+  (autoload 'ghc-init "ghc" nil t)
+  (autoload 'ghc-debug "ghc" nil t)
+  (add-hook 'haskell-mode-hook (lambda () (ghc-init)))
+  (package-require 'company)
+  (add-hook 'after-init-hook 'global-company-mode)
+  (add-to-list 'company-backends 'company-ghc)
+  (custom-set-variables '(company-ghc-show-info t)))
 
-;; end haskell mode YAY ;;;;;;;;;;;;;;;;;;;;;
+(use-package hi2
+  :ensure t
+  :config
+  (add-hook 'haskell-mode-hook 'turn-on-hi2))
+
+(use-package hindent
+  :ensure t
+  :config
+  (add-hook 'haskell-mode-hook #'hindent-mode))
+
+(use-package shm
+  :ensure t)
+
+
+
+;; (package-require 'haskell-mode)
+;; (package-require 'ghc)
+;; (package-require 'hi2)
+;; (package-require 'hindent)
+;; (package-require 'shm)
+
+;; ;; Setup haskell-mode hooks
+;; (eval-after-load "haskell-mode"
+;;   '(custom-set-variables
+;;     '(haskell-mode-hook
+;;       '(;; turn-on-haskell-indentation
+;;         turn-on-haskell-doc
+;;         ;; structured-haskell-mode
+;;         ))))
+
+;; (let ((my-cabal-path (expand-file-name "~/.cabal/bin")))
+;;     (setenv "PATH" (concat my-cabal-path ":" (getenv "PATH")))
+;;     (add-to-list 'exec-path my-cabal-path))
+
+;; (autoload 'ghc-init "ghc" nil t)
+;; (autoload 'ghc-debug "ghc" nil t)
+;; (add-hook 'haskell-mode-hook (lambda () (ghc-init)))
+
+
+;; (add-hook 'haskell-mode-hook 'turn-on-hi2)
+;; (add-hook 'haskell-mode-hook #'hindent-mode)
+
+
+;; (eval-after-load "haskell-mode"
+;;   '(setup-haskell-arrows 'haskell-mode haskell-mode-map))
+
+;; ;; Variables
+;; (custom-set-variables
+;;  '(haskell-process-suggest-remove-import-lines t)
+;;  '(haskell-process-auto-import-loaded-modules t)
+;;  '(haskell-process-log t)
+;;  ;; '(haskell-process-type 'cabal-repl)    ; CABAL
+;;  '(haskell-process-type 'stack-ghci))
+
+;; Setup haskell-interactive-mode
+;; (eval-after-load "haskell-mode"
+;;   '(progn
+;;     (define-key haskell-mode-map (kbd "C-x C-d") nil)
+;;     (define-key haskell-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
+;;     (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-file)
+;;     (define-key haskell-mode-map (kbd "C-c C-b") 'haskell-interactive-switch)
+;;     (define-key haskell-mode-map (kbd "C-c C-t") 'haskell-process-do-type)
+;;     (define-key haskell-mode-map (kbd "C-c C-i") 'haskell-process-do-info)
+;;     (define-key haskell-mode-map (kbd "C-c C-s") (lambda () (interactive) (haskell-process-do-type t)))
+;;     (define-key haskell-mode-map (kbd "C-c M-.") nil)
+;;     (define-key haskell-mode-map (kbd "C-c TAB") 'ghc-show-info-popup)
+;;     (define-key haskell-mode-map (kbd "C-c C-i") 'ghc-show-info-popup)
+;;     (define-key haskell-mode-map (kbd "C-c C-S-i") 'ghc-show-info)
+;;     (define-key haskell-mode-map (kbd "C-c C-d") nil)
+;;     (define-key haskell-mode-map (kbd "C-c C-,") 'haskell-mode-run-test-suite)
+;;     (define-key haskell-mode-map (kbd "C-c f") 'haskell-mode-stylish-buffer)))
+
+(eval-after-load 'haskell-cabal
+  '(progn
+     (define-key haskell-cabal-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
+     (define-key haskell-cabal-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
+     (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
+     (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal)))
+
+;; Put ghc-show-info in a popup
+(defun ghc-show-info-popup ()
+  (package-require 'popup)
+  (interactive)
+  (popup-tip (ghc-get-info (ghc-things-at-point))
+             :around t :scroll-bar t))
+
+;; Use standard keybinding for inferior-haskell-find-definition
+;; (define-key haskell-mode-map (kbd "M-.")
+;;     (lambda () (interactive)
+;;       (inferior-haskell-find-definition (haskell-ident-at-point))))
+
+;; Run test suite
+(defun haskell-mode-run-test-suite ()
+  (interactive)
+  (require 'compile)
+  (compile (concat "cd " (projectile-project-root) "; cabal test")))
+
+;; Flycheck addons
+(use-package flycheck-haskell
+  :ensure t
+  :config (add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
+;; (package-require 'flycheck-haskell)
+;; (eval-after-load 'flycheck
+;;   '(add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
+(provide 'setup-haskell)

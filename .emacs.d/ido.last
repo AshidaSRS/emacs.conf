@@ -2,369 +2,96 @@
 
 ;; ----- ido-last-directory-list -----
 (
- ("/home/ashida/.github/ClojureKoans/clojure-koans/src/" . "koans/")
- ("/home/ashida/.github/ClojureKoans/clojure-koans/" . "src/")
- ("/home/ashida/.github/ClojureKoans/" . "clojure-koans/")
- ("/home/ashida/.github/awesome.conf/awesome/" . "awesome-copycats/")
- ("/home/ashida/.github/awesome.conf/" . "awesome/")
- ("/home/ashida/.gennion/nutshell-apirest/src/test/scala/com/gennion/nutshell/storage/actor/" . "project/")
- ("/home/ashida/.gennion/nutshell-apirest/src/test/scala/com/gennion/nutshell/storage/" . "actor/")
- ("/home/ashida/.gennion/nutshell-apirest/src/test/scala/com/gennion/nutshell/http/" . "routes/")
- ("/home/ashida/.gennion/nutshell-apirest/src/main/scala/com/gennion/nutshell/http/" . "routes/")
- ("/home/ashida/.gennion/nutshell-apirest/src/main/scala/com/gennion/nutshell/logic/" . "domain/")
- ("/home/ashida/.gennion/nutshell-apirest/src/test/scala/com/gennion/nutshell/" . "http/")
- ("/home/ashida/.gennion/nutshell-apirest/src/main/scala/com/gennion/nutshell/" . "http/")
- ("/home/ashida/.gennion/nutshell-apirest/project/project/target/" . "config-classes/")
- ("/home/ashida/.gennion/nutshell-apirest/project/project/" . "target/")
- ("/home/ashida/.gennion/nutshell-apirest/project/" . "project/")
- ("/home/ashida/.gennion/nutshell-apirest/src/test/scala/com/gennion/" . "nutshell/")
- ("/home/ashida/.gennion/nutshell-apirest/src/test/scala/com/" . "gennion/")
- ("/home/ashida/.gennion/nutshell-apirest/src/test/scala/" . "com/")
- ("/home/ashida/.gennion/nutshell-apirest/src/test/" . "scala/")
- ("/home/ashida/.gennion/nutshell-apirest/src/main/resources/" . "local/")
- ("/home/ashida/.gennion/nutshell-apirest/src/main/scala/com/gennion/" . "nutshell/")
- ("/home/ashida/.gennion/nutshell-apirest/src/main/scala/com/" . "gennion/")
- ("/home/ashida/.gennion/nutshell-apirest/src/main/scala/" . "com/")
- ("/home/ashida/.gennion/nutshell-apirest/src/main/" . "scala/")
- ("/home/ashida/.gennion/nutshell-apirest/src/" . "main/")
- ("/home/ashida/.gennion/nutshell-apirest/" . "src/")
- ("/home/ashida/.sbt/0.13/" . "plugins/")
- ("/home/ashida/.sbt/" . "0.13/")
- ("/home/ashida/Documents/Scala/" . "hello/")
- ("/home/ashida/Documents/" . "Scala/")
- ("/home/ashida/.gennion/" . "nutshell-apirest/")
- ("/home/ashida/.github/emacs.conf/.emacs.d/" . "customizations/")
- ("/home/ashida/.github/emacs.conf/" . ".emacs.d/")
- ("/home/ashida/.github/ACMbot/" . "data/")
- ("/home/ashida/Dropbox/compartida roberto/server/" . "private/")
- ("/home/ashida/Dropbox/compartida roberto/" . "server/")
- ("/home/ashida/Dropbox/" . "compartida roberto/")
- ("/home/ashida/.github/NuevaWeb/public/" . "javascripts/")
- ("/home/ashida/.github/NuevaWeb/project/" . "project/")
- ("/home/ashida/.github/NuevaWeb/app/" . "views/")
- ("/home/ashida/.github/NuevaWeb/" . "public/")
- ("/home/ashida/Documentos/.emacs.d/" . "settings/")
+ ("/home/ashida/git/emacs.conf/.emacs.d/" . "customizations/")
+ ("/home/ashida/git/emacs.conf/" . ".emacs.d/")
+ ("/home/ashida/git/elm-music-player/src/public/" . "static/")
  ("/home/" . "ashida/")
- ("/etc/" . "vpnc/")
- ("/usr/share/" . "GConf/")
- ("/usr/" . "local/")
- ("/" . "home/")
- ("/home/ashida/Documentos/Universidad/bsvc-2.1/bin/" . "practica_arquitecTUra/")
- ("/home/ashida/Documentos/Universidad/bsvc-2.1/" . "bin/")
- ("/home/ashida/Documentos/Universidad/" . "IS1/")
- ("/home/ashida/.github/Go-things/src/github.com/dougm/" . "goflymake/")
- ("/home/ashida/.github/Go-things/src/github.com/AshidaSRS/" . "hello/")
- ("/home/ashida/.github/Go-things/src/github.com/" . "dougm/")
- ("/home/ashida/.github/Go-things/src/" . "github.com/")
- ("/home/ashida/.github/Go-things/" . "src/")
- ("/home/ashida/.github/home/.emacs.d/" . "customizations/")
- ("/home/ashida/.github/home/" . ".emacs.d/")
- ("/home/ashida/.github/" . "ClojureKoans/")
- ("d:/Ashida/Go/src/github.com/AshidaSRS/Go-things/" . "hello/")
- ("d:/Ashida/Go/src/github.com/AshidaSRS/" . "Go-things/")
- ("d:/Ashida/Go/src/github.com/" . "AshidaSRS/")
- ("d:/Ashida/Go/src/" . "github.com/")
- ("d:/Ashida/Go/" . "src/")
- ("d:/Ashida/Documents/GitHub/ssoo/DATSI/so/" . "filtrar.2014a/")
- ("d:/Ashida/Documents/GitHub/ssoo/DATSI/" . "so/")
- ("d:/Ashida/Documents/GitHub/ssoo/" . "DATSI/")
- ("d:/Ashida/Documents/GitHub/concurrencia/Practicas/Practica/src/org/upm/cc/" . "monitor/")
- ("d:/Ashida/Documents/GitHub/concurrencia/Practicas/Practica/src/org/upm/" . "cc/")
- ("d:/Ashida/Documents/GitHub/concurrencia/Practicas/Practica/src/org/" . "upm/")
- ("d:/Ashida/Documents/GitHub/concurrencia/Practicas/Practica/src/" . "org/")
- ("d:/Ashida/Documents/GitHub/concurrencia/Practicas/Practica/" . "src/")
- ("d:/Ashida/Documents/GitHub/concurrencia/Practicas/" . "Practica/")
- ("d:/Ashida/Documents/GitHub/concurrencia/" . "Practicas/")
- ("d:/Ashida/" . "Documents/")
- ("d:/" . "Ashida/")
- ("d:/Ashida/Documents/GitHub/home/.emacs.d/" . "customizations/")
- ("d:/Ashida/Documents/GitHub/home/" . ".emacs.d/")
- ("d:/Ashida/Documents/GitHub/" . "home/")
- ("d:/Ashida/Documents/" . "GitHub/")
- ("/home/ashida/Documentos/Git/home/Clojure/predicates/" . "src/")
- ("/home/ashida/Documentos/Git/home/Clojure/" . "predicates/")
- ("/home/ashida/Documentos/Git/ssoo/DATSI/so/" . "filtrar.2014a/")
- ("/home/ashida/Documentos/Git/ssoo/DATSI/" . "so/")
- ("/home/ashida/Documentos/Git/ssoo/" . "DATSI/")
- ("/home/ashida/Documentos/Git/home/.emacs.d/elpa/" . "helm-flyspell-20150413.1318/")
- ("/home/ashida/Documentos/Git/home/.emacs.d/" . "customizations/")
- ("/home/ashida/.emacs.d/" . "extras/")
- ("/home/ashida/Documentos/Git/concurrencia/" . "EjerciciosCortos/")
- ("/home/ashida/" . ".github/")
- ("/home/ashida/Documentos/Git/home/" . ".emacs.d/")
- ("/home/ashida/Documentos/Git/" . "home/")
- ("/home/ashida/Documentos/" . "Universidad/")
+ ("/home/ashida/git/elm-music-player/src/" . "public/")
+ ("/home/ashida/git/elm-music-player/" . "src/")
+ ("/home/ashida/.emacs.d/" . "customizations/")
+ ("/home/ashida/Descargas/" . "Telegram Desktop/")
+ ("/home/ashida/Documentos/Universidad/" . "SEGTI/")
+ ("/home/ashida/Documentos/" . "TallerElm/")
+ ("/home/ashida/git/" . "emacs.conf/")
+ ("/home/ashida/" . ".emacs.d/")
 )
 
 ;; ----- ido-work-directory-list -----
 (
- "/home/ashida/.github/ClojureKoans/clojure-koans/src/koans/"
- "/home/ashida/.github/ClojureKoans/clojure-koans/"
- "/home/ashida/.github/awesome.conf/awesome/"
- "/home/ashida/Documentos/Universidad/IS1/"
- "/home/ashida/.github/emacs.conf/.emacs.d/customizations/"
- "/home/ashida/.github/emacs.conf/.emacs.d/"
- "/home/ashida/"
- "/home/ashida/.gennion/nutshell-apirest/src/main/scala/com/gennion/nutshell/http/routes/"
- "/home/ashida/.gennion/nutshell-apirest/src/test/scala/com/gennion/nutshell/http/routes/"
- "/home/ashida/.gennion/nutshell-apirest/src/test/scala/com/gennion/nutshell/http/bridge/"
- "/home/ashida/.gennion/nutshell-apirest/src/test/scala/com/gennion/nutshell/http/domain/"
- "/home/ashida/.gennion/nutshell-apirest/src/main/scala/com/gennion/nutshell/http/bridge/"
- "/home/ashida/.gennion/nutshell-apirest/src/main/scala/com/gennion/nutshell/http/"
- "/home/ashida/.gennion/nutshell-apirest/src/main/scala/com/gennion/nutshell/http/domain/"
- "/home/ashida/.gennion/nutshell-apirest/src/test/scala/com/gennion/nutshell/logic/"
- "/home/ashida/.gennion/nutshell-apirest/"
- "/home/ashida/.sbt/0.13/plugins/"
- "/home/ashida/.gennion/nutshell-apirest/src/main/scala/com/gennion/nutshell/logic/"
- "/home/ashida/.gennion/nutshell-apirest/src/main/scala/com/gennion/nutshell/logic/domain/"
- "/home/ashida/.gennion/nutshell-apirest/src/test/scala/com/gennion/nutshell/"
- "/home/ashida/Documents/Scala/hello/"
- "/home/ashida/bin/"
- "/home/ashida/.github/home/.emacs.d/customizations/"
- "/home/ashida/.github/home/.emacs.d/"
- "/home/ashida/.github/home/Clojure/"
- "/home/ashida/Documentos/ACM/Cursos/11-4-2016/"
- "/home/ashida/.github/ACMbot/data/"
- "/home/ashida/.github/ACMbot/"
- "/home/ashida/Dropbox/compartida roberto/server/private/"
- "/home/ashida/Dropbox/compartida roberto/server/bin/"
- "/home/ashida/Dropbox/compartida roberto/server/"
- "/home/ashida/Documentos/Universidad/bsvc-2.1/bin/"
- "/home/ashida/.github/NuevaWeb/public/javascripts/"
- "/home/ashida/.github/NuevaWeb/app/views/"
- "/home/ashida/.github/NuevaWeb/"
+ "/home/ashida/git/emacs.conf/.emacs.d/customizations/"
+ "/home/ashida/.emacs.d/customizations/"
  "/home/ashida/.emacs.d/"
- "/home/ashida/Documentos/.emacs.d/settings/"
- "/home/ashida/Documentos/BACKAP/"
- "/etc/vpnc/"
- "/usr/bin/"
- "/home/ashida/Documentos/Universidad/bsvc-2.1/bin/practica_arquitecTUra/"
- "/home/ashida/.github/Go-things/src/github.com/dougm/goflymake/"
- "/home/ashida/.github/Go-things/src/github.com/AshidaSRS/hello/"
- "/home/ashida/.ssh/"
- "d:/Ashida/Documents/GitHub/home/.emacs.d/customizations/"
- "d:/Ashida/Go/src/github.com/AshidaSRS/Go-things/hello/"
- "d:/Ashida/Go/src/github.com/AshidaSRS/Go-things/t-bot/"
- "/"
- "d:/Ashida/Go/src/github.com/AshidaSRS/Go-things/server-client/"
- "d:/Ashida/Go/src/github.com/AshidaSRS/Go-things/gowiki/"
+ "/home/ashida/git/elm-music-player/src/public/static/"
+ "/home/ashida/git/elm-music-player/src/public/"
+ "/home/ashida/git/elm-music-player/src/elm/"
+ "/home/ashida/git/emacs.conf/.emacs.d/"
+ "/home/ashida/Documentos/TallerElm/"
+ "/home/ashida/git/elm-music-player/"
+ "/home/ashida/Descargas/Telegram Desktop/"
+ "/home/ashida/Documentos/Universidad/SEGTI/"
+ "/home/ashida/Documentos/ACM/"
+ "/home/ashida/git/PisitoBot/"
 )
 
 ;; ----- ido-work-file-list -----
 (
- "01_equalities.clj"
- "project.clj"
- "rc.lua"
- "modeloConceptual2.org"
- "setup-scala.el"
- "init.el"
  "editing.el"
+ "misc.el"
  "ui.el"
- ".gitignore"
- ".gitconfig"
+ "navigation.el"
+ "init.el"
+ "setup-helm.el"
+ "setup-elm.el"
+ "main.css"
+ "index.html"
+ "Router.elm"
 )
 
 ;; ----- ido-dir-file-cache -----
 (
- ("/home/ashida/.github/ClojureKoans/clojure-koans/src/koans/" (22500 8496 633887 236000) "10_runtime_polymorphism.clj" "08_conditionals.clj" "19_datatypes.clj" "07_functions.clj" "01_equalities.clj" "05_sets.clj" "23_meta.clj" "09_higher_order_functions.clj" "../" "03_lists.clj" "13_creating_functions.clj" "21_partition.clj" "14_recursion.clj" "04_vectors.clj" "16_refs.clj" "22_group_by.clj" "./" "15_destructuring.clj" "12_sequence_comprehensions.clj" "17_atoms.clj" "11_lazy_sequences.clj" "02_strings.clj" "06_maps.clj" "24_macros.clj" "20_java_interop.clj" "18_quote.clj")
+ ("/home/ashida/git/emacs.conf/.emacs.d/customizations/" (22567 39403 210105 139000) "ui.el" "elisp-editing.el" "setup-elixir.el" "clean_buffers.el" "org-setup.el" "setup-reveal.el" "setup-js.el" "misc.el" "setup-color-id.el" "uml-steup.el" "setup-python.el" "setup-web.el" "shell-integration.el" "setup-go.el" "./" "setup-clojure.el" "setup-java.el" "../" "setup-scala.el" "navigation.el" "setup-css.el" "setup-lua.el" "setup-haskell.el" "setup-helm.el" "setup-theme.el" "setup-ocaml.el" "setup-ruby.el" "setup-flycheck.el" "editing.el" "setup-elm.el" "setup-yaml.el")
 
- ("/home/ashida/.github/ClojureKoans/clojure-koans/src/" (22500 8496 633887 236000) "koans/" "../" "./")
+ ("/home/ashida/.emacs.d/customizations/" (22567 39403 210105 139000) "ui.el" "elisp-editing.el" "setup-elixir.el" "clean_buffers.el" "org-setup.el" "setup-reveal.el" "setup-js.el" "misc.el" "setup-color-id.el" "uml-steup.el" "setup-python.el" "setup-web.el" "shell-integration.el" "setup-go.el" "./" "setup-clojure.el" "setup-java.el" "../" "setup-scala.el" "navigation.el" "setup-css.el" "setup-lua.el" "setup-haskell.el" "setup-helm.el" "setup-theme.el" "setup-ocaml.el" "setup-ruby.el" "setup-flycheck.el" "editing.el" "setup-elm.el" "setup-yaml.el")
 
- ("/home/ashida/.github/ClojureKoans/clojure-koans/script/" (22500 8496 633887 236000) "run.clj" "run" "repl" "test.clj" "../" "./" "test" "test.bat" "run.bat" "repl.bat" "deploy.sh")
+ ("/home/ashida/.emacs.d/" (22567 39687 333453 408000) ".recentf" "backups/" "init.el" "session.104f1c1963460230f6143222412480663000000005340029" "session.101d435c1032fe9d5f145961231222575300000007300038" "session.10844ea3e5a1662b3f146065154737204400000276170029" "session.106e98a2aa9a73e27d147712969291631700000006900036" "projectile-bookmarks.eld" "extras/" "session.103aa6650ad02fa71a145794653683459100000007130029" "auto-save-list/" "session.10dd85cfe59c29f2d0146118662056253000000009110029" "ido.last" "session.1041343b0aed2bc8fa146065262725050500000037770029" "session.10d64d87b33a80f6a614605845872493600000010910029" "session.1044ac12c5c9670007143212967343901100000020170036" "session.1068a5174d5d4b4bf146064407837902800000108320029" "session.10d687795da196d779146013967260556600000006970029" "session.10f4e459d8b259162a146064184576919900000022460029" "session.108f544a7f32203125146058401790523200000313470029" "session.1076536da3dea7029145994688492904900000006470027" "session.102b608d51fd5caa1146055218927312900000019940029" ".python-environments/" ".smex-items" "session.10ae50d6ada491d0e114605840777351000000318190029" "session.104b0787a14c2800cf146064394695467600000101470029" "session.10d5481e8096eb23c146064378131552400000094390028" "session.10e649540641b2ade1147567910712250000000006820038" "ac-comphist.dat" "cider-history" "session.102d69b937fdf22291146083759882584500000006460115" "session.10d0ea7ec51bce77146063813429259300000006380029" "session.106d5c9fdcc92c9f70146099970686028800000006630049" "session.10d9dc0135a606439f146088610999036400000006440030" "session.104a0343ca746d18f8146064427628538700000117720029" "./" "../" "projectile.cache" "session.10cb06251385a5ae13146065016566350400000178610029" "ensime/" "session.10e1ee3ef6c31ebca3145685770791919200000006080043" "session.1047e473b94fca2fe5146045123998641900000006220032" "session.109e747ee387799d0f146064568786144900000105150028" "elpa/" "network-security.data" "customizations/" "session.10d5700cc87138d7d1147655369875629500000009010038" "session.107d06da9799590698146010549943527400000006740029" "places" "session.102ae6041983f4350b147716722420272400000007040031" "session.10df7ff2dd3440091c146058492046511200000020500029" "session.107465c3b88dc3ed1b146058433161718100000324640029" "session.10f4f6bd0717e3bab7146064259914710100000087470029" "session.10bf2c6cdcc4120473146058254227034500000121870028")
 
- ("/home/ashida/.github/ClojureKoans/clojure-koans/" (22500 8654 787180 81000) "ideaboard.txt" "epl-v10.html" "../" "target/" ".gitignore" ".git/" "project.clj" "./" "src/" "script/" "README.md" "resources/")
+ ("/home/ashida/" (22567 37619 473344 712000) ".ghc/" "Documentos/" ".electron/" ".java/" ".zshrc.pre-oh-my-zsh" ".pki/" ".gnome2/" "test.tiff" "Música/" ".gnupg/" ".python_history" ".cache/" ".macromedia/" ".zcompdump-ashidaPC-5.2" ".emacs.d/" ".credentials/" ".TelegramDesktop/" ".hplip/" "Escritorio/" ".ICEauthority" ".steam/" ".IdeaIC2016.2/" ".config/" ".gnome2_private/" "IdeaProjects/" ".bash_profile" ".dropbox-dist/" ".npm/" ".zsh-update" "Vídeos/" ".bashrc" ".gnome/" ".ivy2/" ".subversion/" ".scala_history" ".zsh_history" ".oh-my-zsh/" ".bash_logout" ".steampid" "Público/" ".hex/" ".elm/" ".sbt/" ".gitconfig" "git/" ".nvm/" ".m2/" "./" "texput.log" "../" "gennion/" "prueba.sh" ".mysql_history" ".thunderbird/" ".dropbox/" ".bash_history" ".steampath" "test2.tiff" ".xsession-errors.old" ".mozilla/" ".xscreensaver" ".zshrc" ".lein/" "Dropbox/" ".mysql/" "Firefox_wallpaper.png" ".esd_auth" "Plantillas/" "Imágenes/" "minicom.cap" ".dmrc" ".ssh/" ".adobe/" ".android/" ".mix/" ".coursier/" ".xsession-errors" ".idea-build/" ".Xauthority" "Descargas/" ".local/")
 
- ("/home/ashida/.github/ClojureKoans/" (22500 8485 847223 330000) "../" ".git/" "./" "clojure-koans/" "README.md")
+ ("/home/ashida/git/emacs.conf/.emacs.d/" (22557 45588 344554 960000) ".recentf" "backups/" "init.el" "session.104f1c1963460230f6143222412480663000000005340029" "session.101d435c1032fe9d5f145961231222575300000007300038" "session.10844ea3e5a1662b3f146065154737204400000276170029" "session.106e98a2aa9a73e27d147712969291631700000006900036" "projectile-bookmarks.eld" "extras/" "session.103aa6650ad02fa71a145794653683459100000007130029" "auto-save-list/" "session.10dd85cfe59c29f2d0146118662056253000000009110029" "ido.last" "session.1041343b0aed2bc8fa146065262725050500000037770029" "session.10d64d87b33a80f6a614605845872493600000010910029" "session.1044ac12c5c9670007143212967343901100000020170036" "session.1068a5174d5d4b4bf146064407837902800000108320029" "session.10d687795da196d779146013967260556600000006970029" "session.10f4e459d8b259162a146064184576919900000022460029" "session.108f544a7f32203125146058401790523200000313470029" "session.1076536da3dea7029145994688492904900000006470027" "session.102b608d51fd5caa1146055218927312900000019940029" ".python-environments/" ".smex-items" "session.10ae50d6ada491d0e114605840777351000000318190029" "session.104b0787a14c2800cf146064394695467600000101470029" "session.10d5481e8096eb23c146064378131552400000094390028" "session.10e649540641b2ade1147567910712250000000006820038" "ac-comphist.dat" "cider-history" "session.102d69b937fdf22291146083759882584500000006460115" "session.10d0ea7ec51bce77146063813429259300000006380029" "session.106d5c9fdcc92c9f70146099970686028800000006630049" "session.10d9dc0135a606439f146088610999036400000006440030" "session.104a0343ca746d18f8146064427628538700000117720029" "./" "../" "projectile.cache" "session.10cb06251385a5ae13146065016566350400000178610029" "ensime/" "session.10e1ee3ef6c31ebca3145685770791919200000006080043" "session.1047e473b94fca2fe5146045123998641900000006220032" "session.109e747ee387799d0f146064568786144900000105150028" "elpa/" "network-security.data" "customizations/" "session.10d5700cc87138d7d1147655369875629500000009010038" "session.107d06da9799590698146010549943527400000006740029" "places" "session.102ae6041983f4350b147716722420272400000007040031" "session.10df7ff2dd3440091c146058492046511200000020500029" "session.107465c3b88dc3ed1b146058433161718100000324640029" "session.10f4f6bd0717e3bab7146064259914710100000087470029" "session.10bf2c6cdcc4120473146058254227034500000121870028")
 
- ("/home/ashida/.github/" (22500 8343 160593 207000) "tegmacs/" "pdl.zip" "pii/" "dmenu-extended/" "fundacionBancaExtremadura/" "../" "awesome.conf/" "home/" "Prueba0/" "emacs.conf/" "segti/" "CursoBlender-2015-16/" "todo/" "Go-things/" "ClojureKoans/" "dwm.conf/" "./" "ScalaCourse/" "TallerBotsTelegram_ACM_ETSIINF_UPM/" "NuevaWeb/" "ACMbot/" "pdl/" "awesome-copycats/" "java-mode-for-real/")
+ ("/home/ashida/git/emacs.conf/" (22503 60495 275327 995000) "README.md" ".emacs.d/" "./" "../" ".git/")
 
- ("/home/ashida/" (22500 8780 387147 926000) ".dropbox-dist/" ".sbt/" "reveal.js/" ".ssh/" ".texlive/" ".bash_logout" ".telegram-cli/" ".macromedia/" "Descargas/" ".pulse-cookie" "Público/" ".gennion/" ".zshrc.save" ".local/" ".wicd/" "Projects/" "Downloads/" "../" ".bashrc" "Música/" ".steampid" ".gitconfig" ".activator/" ".python_history" ".gnupg/" ".bash_history" "reveal.js.zip" "Documentos/" ".esd_auth" "Plantillas/" ".config/" ".TelegramDesktop/" ".thumbnails/" ".github/" ".cache/" ".gnome/" ".Skype/" ".emacs.d/" "Imágenes/" ".zcompdump-ashidaArch-5.2" ".adobe/" ".dropbox/" ".zsh-update" ".steampath" ".zshrc" ".gem/" ".zshrc.pre-oh-my-zsh" ".zsh_history" "Escritorio/" "./" ".ammonite/" ".kde4/" ".lein/" ".npm/" "Vídeos/" "Dropbox/" ".java/" "*message*-20160421-103712" ".pki/" ".bundle/" ".ICEauthority" "__MACOSX/" ".oh-my-zsh/" ".m2/" ".scala_history" ".mozilla/" ".gimp-2.8/" ".bzr.log" ".lesshst" ".ivy2/" ".bash_profile" ".steam/")
+ ("/home/ashida/git/elm-music-player/src/public/static/" (22557 43286 904433 986000) "main.css" "index.js" "normalize.css" "./" "../")
 
- ("/home/ashida/.github/awesome.conf/awesome/awesome-copycats/" (22266 59443 0 0) "../" "./")
+ ("/home/ashida/git/elm-music-player/src/public/" (22557 43286 904433 986000) "index.html" "static/" "./" "../")
 
- ("/home/ashida/.github/awesome.conf/awesome/" (22287 51877 569393 0) "vicious/" "rc.lua.previous" "rc.lua.copland" "scratchdrop/" "switch-theme.sh" "diskusage.lua" "../" "net_widgets/" "lain/" "rc.lua.holo" "revelation/" "rc.lua.multicolor" "menugen/" "diskette.png" "rc.lua.sesarp" "themes/" "README.rst" ".gitignore" "rc.lua" "./" "rc.lua.powerarrow-darker" "rc.lua.dremora" "wallpapers/" "eminent/" "rc.lua.blackburn" "rc.lua.steamburn" "awesome-copycats/" "rc.lua.rainbow")
+ ("/home/" (22503 57347 574898 966000) "./" "../" "ashida/")
 
- ("/home/ashida/.github/awesome.conf/" (22287 52366 688138 236000) "../" ".git/" "./" "awesome/")
+ ("/home/ashida/git/elm-music-player/" (22557 44296 167820 371000) ".gitignore" "server.js" "src/" "elm-stuff/" "./" "../" ".git/" "node_modules/" "elm-package.json" "package.json" "webpack.config.js")
 
- ("/home/ashida/Documentos/Universidad/IS1/" (22341 30877 856781 115000) "sequencial2_diagram.png" "sequencial1_diagram.png" "modeloConceptual.tex" "modeloConceptual.pdf" "example_diagram.png" "IS1.out" "example.pdf" "IS1.pdf" "modeloConceptual2.org" "Practica/" "modeloConceptual2.tex" "../" "modeloConceptual.odt" "IS1.toc" "IS1.tex" "phisical_diagram.png" "logic_diagram_2.png" "modeloConceptual.org" "logic_diagram.png" "example.tex" "./" "modeloConceptual2.pdf" "example.org" "IS1.aux" "IS1.log" "general_diagram.png" "projects/")
+ ("/home/ashida/Documentos/TallerElm/" (22557 43489 467777 967000) "taller.elm" "./" "../")
 
- ("/home/ashida/Documentos/Universidad/" (22386 53121 56469 692000) "bsvc-2.lis" "bsvc-2.1/" "120001_120233_Sesion2.pdf" "120001_120233_Sesion2.tex" "autores.txt" "SEGTI/" "../" "caches/" ".tex" "IS1/" "memoriaPipelines.org" "bsvc-2.h68" "memoriaPipelines.tex" "PII/" "DATSI/" "./" "120001_120233_Sesion2.tex.tex" "d3/" "PII.zip" "PyE2/" "Certificado/")
+ ("/home/ashida/git/elm-music-player/src/elm/" (22557 43286 904433 986000) "Router.elm" "About.elm" "Routes.elm" "Home.elm" "Main.elm" "./" "../" "NotFound.elm")
 
- ("/home/ashida/Documentos/org/" (22350 40718 819375 947000) "../" "./")
+ ("/home/ashida/git/elm-music-player/src/" (22557 43286 904433 986000) "public/" "./" "../" "elm/")
 
- ("/home/ashida/Documentos/" (22467 7306 842438 552000) "Universidad/" "ScalaBACKUP/" "pipelines/" "../" "org/" "MyAwesomeWM-master/" "LaTeX/" "BACKAP/" ".emacs.d/" "fotos_seeker/" "./" "CursoScala/" "CV_EX/" "ACM/" "poke/")
+ ("/home/ashida/git/" (22557 43283 961100 499000) "PisitoBot/" "awesome.conf/" "NuevaWeb/" "ClojureKoans/" "./" "emacs.conf/" "../" "jawn/" "elm-music-player/" "home/" "play-slick-evolutions/" "tegmacs/")
 
- ("/home/ashida/.github/emacs.conf/.emacs.d/" (22411 30212 651652 281000) "places" "session.10f4f6bd0717e3bab7146064259914710100000087470029" "cider-history" ".recentf" "projectile.cache" "session.10dd85cfe59c29f2d0146118662056253000000009110029" "session.102b608d51fd5caa1146055218927312900000019940029" "session.10d5481e8096eb23c146064378131552400000094390028" "session.108f544a7f32203125146058401790523200000313470029" "session.109e747ee387799d0f146064568786144900000105150028" "session.10f4e459d8b259162a146064184576919900000022460029" "session.107d06da9799590698146010549943527400000006740029" "session.10e1ee3ef6c31ebca3145685770791919200000006080043" "../" "session.10ae50d6ada491d0e114605840777351000000318190029" "auto-save-list/" "session.101d435c1032fe9d5f145961231222575300000007300038" "session.104f1c1963460230f6143222412480663000000005340029" ".smex-items" "ac-comphist.dat" "session.1047e473b94fca2fe5146045123998641900000006220032" "session.1044ac12c5c9670007143212967343901100000020170036" "session.1068a5174d5d4b4bf146064407837902800000108320029" "session.10d9dc0135a606439f146088610999036400000006440030" "session.103aa6650ad02fa71a145794653683459100000007130029" "session.10d687795da196d779146013967260556600000006970029" "session.10d0ea7ec51bce77146063813429259300000006380029" "session.1041343b0aed2bc8fa146065262725050500000037770029" "customizations/" "session.10bf2c6cdcc4120473146058254227034500000121870028" "./" "session.104a0343ca746d18f8146064427628538700000117720029" "session.10844ea3e5a1662b3f146065154737204400000276170029" "session.106d5c9fdcc92c9f70146099970686028800000006630049" "session.104b0787a14c2800cf146064394695467600000101470029" "ido.last" "session.10d64d87b33a80f6a614605845872493600000010910029" "init.el" "backups/" "elpa/" "session.1076536da3dea7029145994688492904900000006470027" "session.102d69b937fdf22291146083759882584500000006460115" "extras/" "projectile-bookmarks.eld" "session.10cb06251385a5ae13146065016566350400000178610029" "session.10df7ff2dd3440091c146058492046511200000020500029" "ensime/" "session.107465c3b88dc3ed1b146058433161718100000324640029")
+ ("/home/ashida/gennion/" (22543 31360 913339 900000) "nutshell-apirest/" "./" "../")
 
- ("/home/ashida/.github/emacs.conf/.emacs.d/customizations/" (22411 29995 295014 584000) "setup-scala.el" "org-setup.el" "setup-yaml.el" "setup-js.el" "setup-lua.el" "clean_buffers.el" "../" "setup-web.el" "setup-clojure.el" "setup-reveal.el" "setup-ocaml.el" "setup-go.el" "setup-ruby.el" "uml-steup.el" "setup-haskell.el" "shell-integration.el" "misc.el" "elisp-editing.el" "./" "ui.el" "editing.el" "setup-java.el" "setup-css.el" "navigation.el")
+ ("/home/ashida/Documentos/" (22557 42987 677751 591000) "ACM/" "steam_latest.deb" "TallerElm/" "LambdaWorld/" "roberto_sarmiento.pdf" "Universidad/" "org/" "hola.java" "./" "../" "mordisco.mp4" "office/" "document.pdf" "unetbootin-linux64-625.bin" "client_secret.json")
 
- ("/home/ashida/.github/emacs.conf/" (22411 29995 498347 939000) "../" ".emacs.d/" ".git/" "./" "README.md")
+ ("/home/ashida/Documentos/Universidad/SEGTI/" (22551 40008 24816 435000) "figure_1.png" "GOST_R_34.11-94.tex" "it.png" "resumenTema1.org" "GOST_R_34.11-94.py" "segti2016-17.p12" "./" "../" "GOST_R_34.11-94.pdf" "GOST_R_34.11-94.org")
 
- ("/home/ashida/.gennion/nutshell-apirest/src/main/scala/com/gennion/nutshell/http/routes/" (22390 22366 354688 316000) "./" "ProjectRouting.scala" "Routes.scala" "../")
+ ("/home/ashida/Descargas/Telegram Desktop/" (22551 30411 144311 983000) "Mastering_Akka.pdf" "ACMUPM_membersList (2).csv" "Screenshot from 2016-10-11 20-08-03.png" "2016-10-10-233918_1279x723_scrot.png" "Cartel Burp.jpg" "video_2016-10-27_21-30-41.mov" "avalancha0.6.py" "image_2016-10-10_21-13-08.png" "lista_comida (2).tex" "sed-hackers.pdf" "ACMUPM_membersList (3).csv" "bocetos simplificados.pdf" "Cartel Git 2016.jpg" "chrome_2016-10-02_22-58-20.jpg" "LISTA-COMIDA-ACM-2016.org" "ACMUPM_membersList.csv" "video_2016-10-03_20-19-03.mov" "usuario1.pdf" "senado-cni-upm.pdf" "nuevosACM.csv" "video_2016-10-25_18-57-24.mov" "office.rar" "lista_comida.tex" "./" "lista_comida.log" "../" "Captura de pantalla de 2016-10-04 22:38:08.png" "lista_comida.out" "audio_2016-10-04_22-42-10.ogg" "usuario3.pdf" "video_2016-10-09_20-44-52.mov" "lista_comida.aux" "document(9).pdf" "video_2016-10-25_00-07-24.mov" "Cartel Java.jpg" "01 Planificación observación entrevistas.docx" "lista_comida.pdf" "video_2016-10-28_22-22-55.mov" "Usuario 2.docx" "acm_mono.png" "02 Resultado análisis usuarios tarea entorno - 2016v1.docx")
 
- ("/home/ashida/.gennion/nutshell-apirest/src/test/scala/com/gennion/nutshell/http/routes/" (22390 22314 14686 733000) "./" "../")
+ ("/home/ashida/Descargas/" (22546 18855 919408 470000) "segti_2010_v04_2sem_89-119_criptoanalisis.pdf" "ACMUPM_membersList (2).csv" "Kaze no Tachinu.mp4" "segti_2010_v04_2sem_189-225_funciones_hash.pdf" "Malviviendo 1x01 - Me dicen Negro.mp4" "segti_2010_v04_2sem_226-257_criptografia_asimetrica.pdf" "mysql.tar.gz" "segti_2010_v04_2sem_120-188_algoritmos_actuales.pdf" "yaourt/" "guia-del-mooc.pdf" "debian-8.6.0-i386-netinst.iso" "2577_3.mp4" "segti_2010_v04_2sem_68-88_transposicion_y_maquinas.pdf" "dialog-1-1.3_20160828-1-x86_64.pkg.tar.xz" "mysql/" "rodrigo.defrutos.zip" "./" "../" "test2.jpg" "Telegram Desktop/" "yaourt.tar.gz" "segti_2010_v08_sust_simbolica_pp_050-077.pdf" "test.jpg" "twenty one pilots Heathens (from Suicide Squad The Album) [OFFICIAL VIDEO].mp4" "document.pdf" "2441_28.mp4" "CV_RodrigoDeFrutos.pdf")
 
- ("/home/ashida/.gennion/nutshell-apirest/src/test/scala/com/gennion/nutshell/storage/actor/project/" (22390 18056 811224 651000) "./" "ProjectSlickInsertSpec.scala" "ProjectSlickExistsSpec.scala" "StorageProjectInsertSpec.scala" "ProjectSlickBleuuidProjectSpec.scala" "../")
+ ("/home/ashida/Documentos/Universidad/" (22522 31856 23191 660000) "SEGTI/" "./" "../" "IPO/")
 
- ("/home/ashida/.gennion/nutshell-apirest/src/test/scala/com/gennion/nutshell/storage/actor/" (22390 18056 811224 651000) "./" "../" "project/")
+ ("/home/ashida/Documentos/ACM/" (22550 26436 486088 848000) "miembrosCSV.csv" "planning.tex" "carta_dinero.org" "planning.pdf" "acm_web.sql.mwb" "ldap_add_users.sh" "acm_web_sql.sql" "nuevosACMCSV.csv" "comunicado_sigs.org" "./" "../" "rsarmiento@acm.asoc.upm.es" "planning.org")
 
- ("/home/ashida/.gennion/nutshell-apirest/src/test/scala/com/gennion/nutshell/storage/" (22390 18056 811224 651000) "./" "actor/" "../")
-
- ("/home/ashida/.gennion/nutshell-apirest/src/test/resources/" (22390 18056 797891 317000) "./" "../" "application.conf")
-
- ("/home/ashida/.gennion/nutshell-apirest/src/main/scala/com/gennion/nutshell/http/bridge/" (22390 18056 747891 315000) "package.scala" "./" "ProjectRoutingBridge.scala" "../" "Bridge.scala")
-
- ("/home/ashida/.gennion/nutshell-apirest/src/test/scala/com/gennion/nutshell/logic/" (22390 18056 797891 317000) "./" "ProjectManagerSpec.scala" "../" "OperationMock.scala" "BleUuidSpec.scala")
-
- ("/home/ashida/.gennion/nutshell-apirest/src/test/scala/com/gennion/nutshell/http/bridge/" (22390 18056 797891 317000) "./" "../" "ProjectRountingBridgeSpec.scala")
-
- ("/home/ashida/.gennion/nutshell-apirest/src/test/scala/com/gennion/nutshell/http/domain/" (22390 18056 797891 317000) "./" "DateUtilsSpec.scala" "../")
-
- ("/home/ashida/.gennion/nutshell-apirest/src/test/scala/com/gennion/nutshell/http/" (22390 18056 797891 317000) "package.scala" "./" "routes/" "domain/" "bridge/" "../")
-
- ("/home/ashida/.gennion/nutshell-apirest/src/test/scala/com/gennion/nutshell/" (22390 18056 811224 651000) "storage/" "./" "http/" "ProjectFixtures.scala" "logic/" "../")
-
- ("/home/ashida/.gennion/nutshell-apirest/src/test/scala/com/gennion/" (22390 18056 797891 317000) "./" "../" "nutshell/")
-
- ("/home/ashida/.gennion/nutshell-apirest/src/test/scala/com/" (22390 18056 797891 317000) "./" "gennion/" "../")
-
- ("/home/ashida/.gennion/nutshell-apirest/src/test/scala/" (22390 18056 797891 317000) "./" "com/" "../")
-
- ("/home/ashida/.gennion/nutshell-apirest/src/test/" (22390 18056 797891 317000) "./" "resources/" "scala/" "../")
-
- ("/home/ashida/.gennion/nutshell-apirest/" (22390 19122 997923 561000) ".git/" "./" "src/" "publish.sh" "kubernetes.rc.yaml" ".gitignore" "build.sbt" "target/" ".idea/" "init.sh" "kubernetes.service.yaml" "README.md" "../" "project/")
-
- ("/home/ashida/.sbt/0.13/plugins/" (22390 18175 214561 564000) "./" "plugins.sbt" "target/" "../" "project/")
-
- ("/home/ashida/.sbt/0.13/" (22378 17320 1011 990000) "./" "staging/" "plugins/" "../")
-
- ("/home/ashida/.gennion/nutshell-apirest/src/main/scala/com/gennion/nutshell/logic/domain/" (22390 18056 791224 650000) "Exceptions.scala" "Zone.scala" "./" "Project.scala" "../")
-
- ("/home/ashida/.gennion/nutshell-apirest/src/main/scala/com/gennion/nutshell/logic/" (22390 18056 764557 983000) "./" "ProjectManager.scala" "PersistancePort.scala" "domain/" "LogicFeature.scala" "actor/" "../")
-
- ("/home/ashida/.gennion/nutshell-apirest/src/main/scala/com/gennion/nutshell/http/domain/" (22390 18056 754557 982000) "Exceptions.scala" "ProjectDomain.scala" "./" "DateUtils.scala" "../")
-
- ("/home/ashida/.gennion/nutshell-apirest/src/main/scala/com/gennion/nutshell/http/" (22390 18056 754557 982000) "./" "routes/" "domain/" "HttpFeature.scala" "bridge/" "../")
-
- ("/home/ashida/.gennion/nutshell-apirest/src/main/scala/com/gennion/nutshell/" (22390 18056 797891 317000) "storage/" "./" "http/" "NutshellAPIRest.scala" "utils/" "logic/" "../")
-
- ("/home/ashida/.gennion/nutshell-apirest/src/main/scala/com/gennion/" (22390 18056 734557 981000) "./" "../" "nutshell/")
-
- ("/home/ashida/.gennion/nutshell-apirest/src/main/scala/com/" (22390 18056 734557 981000) "./" "gennion/" "../")
-
- ("/home/ashida/.gennion/nutshell-apirest/src/main/scala/" (22390 18056 734557 981000) "./" "com/" "../")
-
- ("/home/ashida/.gennion/nutshell-apirest/src/main/" (22390 18056 734557 981000) "./" "resources/" "scala/" "../")
-
- ("/home/ashida/.gennion/" (22389 653 831513 406000) "./" "nutshell-apirest/" "../")
-
- ("/home/ashida/.gennion/nutshell-apirest/src/main/scala/com/gennion/nutshell/utils/" (22378 22488 664501 637000) "./" "Tables.scala" "NutshellTablesGenerator.scala" "../")
-
- ("/home/ashida/.gennion/nutshell-apirest/project/project/target/config-classes/" (22378 12509 644199 845000) "$470edbdf33c37ed2461c.cache" "./" "$8d8d4a9c832f7908cc29.cache" "$1f34e89142e146cbdba7$.class" "$1f34e89142e146cbdba7.class" "$8d8d4a9c832f7908cc29$.class" "$1f34e89142e146cbdba7.cache" "$470edbdf33c37ed2461c.class" "$470edbdf33c37ed2461c$.class" "../" "$8d8d4a9c832f7908cc29.class")
-
- ("/home/ashida/.gennion/nutshell-apirest/project/project/target/" (22378 12507 804199 790000) "./" "config-classes/" "../")
-
- ("/home/ashida/.gennion/nutshell-apirest/project/project/" (22378 12507 804199 790000) "./" "target/" "../")
-
- ("/home/ashida/.gennion/nutshell-apirest/project/" (22378 19527 87745 405000) "./" "plugins.sbt" "target/" "../" "project/")
-
- ("/home/ashida/.gennion/nutshell-apirest/src/main/resources/local/" (22378 22488 664501 637000) "./" "docker-compose.yaml" "../" "application.conf")
-
- ("/home/ashida/.gennion/nutshell-apirest/src/main/resources/prod/" (22378 19527 111078 738000) "./" "logback.xml" "../" "application.conf")
-
- ("/home/ashida/.gennion/nutshell-apirest/src/main/resources/" (22378 19527 111078 738000) "./" "schema.sql" "prod/" "../" "local/")
-
- ("/home/ashida/.gennion/nutshell-apirest/src/" (22377 9678 448006 67000) "./" "test/" "main/" "../")
-
- ("/home/ashida/.sbt/0.13/staging/" (22378 12507 410866 445000) "./" "../")
-
- ("/home/ashida/.sbt/" (22378 12507 410866 445000) "./" "0.13/" "../" "boot/")
-
- ("/home/ashida/Documents/Scala/hello/" (22378 16937 577667 91000) "./" "hw.scala" "target/" "../")
-
- ("/home/ashida/Documents/Scala/" (22378 16789 680995 952000) "./" "hello/" "../")
-
- ("/home/ashida/bin/" (22378 16702 904326 661000) "./" "sbt-launch.jar" "target/" "sbt" "../")
-
- ("/home/" (22377 1216 546660 586000) "./" "ashida/" "../")
-
- ("/home/ashida/Documents/" (22378 15343 807618 892000) "./" "Scala/" "../")
-
- ("/home/ashida/.github/Go-things/" (22377 5868 677890 851000) ".git/" "./" "t-bot/" "server/" "README.md" "hello/" "stringutil/" "../")
-
- ("/home/ashida/.github/home/.emacs.d/customizations/" (22239 62293 978638 6000) "setup-scala.el" "setup-yaml.el" "setup-js.el" "setup-lua.el" "../" "setup-web.el" "setup-clojure.el" "setup-ocaml.el" "setup-go.el" "setup-ruby.el" "setup-haskell.el" "shell-integration.el" "misc.el" "elisp-editing.el" "./" "ui.el" "editing.el" "setup-java.el" "setup-css.el" "navigation.el")
-
- ("/home/ashida/.github/home/.emacs.d/" (22279 29681 709596 812000) "places" "cider-history" ".recentf" "projectile.cache" "session.107d06da9799590698146010549943527400000006740029" "session.10e1ee3ef6c31ebca3145685770791919200000006080043" "../" "auto-save-list/" "session.101d435c1032fe9d5f145961231222575300000007300038" "session.104f1c1963460230f6143222412480663000000005340029" ".smex-items" "ac-comphist.dat" "session.1044ac12c5c9670007143212967343901100000020170036" "session.103aa6650ad02fa71a145794653683459100000007130029" "customizations/" "./" "ido.last" "init.el" "backups/" "elpa/" "session.1076536da3dea7029145994688492904900000006470027" "extras/" "projectile-bookmarks.eld")
-
- ("/home/ashida/.github/home/Clojure/" (22229 31425 958311 349000) "../" "predicates/" "prueba.clj" "./" "p-p-p-ppoker.clj")
-
- ("/home/ashida/.github/home/" (22240 3595 804953 356000) "Java/" "../" "Haskell/" "lua/" "julia/" ".emacs.d/" "Go/" ".gitignore" ".git/" "./" "js/" "go/" "README.md" "Clojure/" "html5/" "scripts/")
-
- ("/home/ashida/Documentos/ACM/" (22283 44068 83168 332000) "LISTA COMIDA ACM.tex" "acm_mono.png" "../" "correo_automatico.txt" "lista_compra.tex" "lista_comida.aux" "Cursos/" "lista_comida.log" "LISTA COMIDA ACM.org" "nuevos_miembros.txt" "./" "correo_inicio.txt" "acmWeb/" "lista_comida.out" "texput.log" "lista_comida.tex" "lista_compra.pdf" "juntaOrdinaria.pdf" "lista_comida.pdf")
-
- ("/home/ashida/Documentos/ACM/Cursos/" (22283 44068 83168 332000) "11-4-2016/" "../" "./")
-
- ("/home/ashida/Documentos/ACM/Cursos/11-4-2016/" (22283 44068 83168 332000) "../" "./")
-
- ("/home/ashida/.github/ACMbot/data/" (22239 60331 390644 536000) "bienvenida.txt" "listaComida.jpg" "data.json" "help.json" "../" "QueHaceACM.txt" "./" "carlton.mp4" "tldr.mp4")
-
- ("/home/ashida/.github/ACMbot/" (22279 29146 109569 321000) "bot.py" "../" "data/" ".gitignore" ".git/" "./" "launch.sh" "README.org")
-
- ("/home/ashida/Dropbox/compartida roberto/server/private/" (22277 3768 285863 859000) "../" "gets.js" "./")
-
- ("/home/ashida/Dropbox/compartida roberto/server/node_modules/" (22277 4011 958962 398000) "destroy/" "http-response-object/" "string_decoder/" "parseurl/" "caseless/" "util-deprecate/" "css-what/" "cssstyle/" "entities/" "accepts/" "source-map/" "content-disposition/" "body-parser/" "ee-first/" "jsdom/" "css-stringify/" "core-util-is/" "esutils/" "on-headers/" "character-parser/" "right-align/" "graceful-readlink/" "css/" "boolbase/" "cookie-signature/" "unpipe/" "type-is/" "symbol-tree/" "type-check/" "merge-descriptors/" "with/" "cssom/" "deep-is/" "debug/" "esprima/" "../" "parse5/" "uglify-to-browserify/" "kind-of/" "transformers/" "is-promise/" "on-finished/" "depd/" "cookie/" "media-typer/" "morgan/" "qs/" "ms/" "minimist/" "css-parse/" "tough-cookie/" "promise/" "mime/" "is-buffer/" "iconv-lite/" "vary/" "sax/" "fast-levenshtein/" "path-to-regexp/" ".bin/" "lodash/" "acorn-globals/" "window-size/" "methods/" "forwarded/" "mime-types/" "negotiator/" "dom-serializer/" "bytes/" "levn/" "domelementtype/" "optimist/" "nth-check/" "wordwrap/" "mime-db/" "estraverse/" "http-basic/" "utils-merge/" "statuses/" "etag/" "isarray/" "content-type/" "align-text/" "readable-stream/" "array-flatten/" "proxy-addr/" "async/" "escape-html/" "escodegen/" "domutils/" "css-select/" "domhandler/" "jade/" "webidl-conversions/" "cliui/" "constantinople/" "center-align/" "camelcase/" "xml-name-validator/" "whatwg-url-compat/" "cookie-parser/" "jstransformer/" "./" "uglify-js/" "asap/" "raw-body/" "mkdirp/" "yargs/" "void-elements/" "repeat-string/" "process-nextick-args/" "optionator/" "basic-auth/" "range-parser/" "cheerio/" "longest/" "abab/" "amdefine/" "inherits/" "tr46/" "concat-stream/" "ipaddr.js/" "acorn/" "then-request/" "fresh/" "http-errors/" "prelude-ls/" "express/" "sync-request/" "decamelize/" "commander/" "serve-static/" "serve-favicon/" "lazy-cache/" "clean-css/" "send/" "finalhandler/" "nwmatcher/" "htmlparser2/" "typedarray/")
-
- ("/home/ashida/Dropbox/compartida roberto/server/bin/" (22277 3688 249241 350000) "../" "./" "www")
-
- ("/home/ashida/Dropbox/compartida roberto/server/" (22277 3749 552542 852000) "routes/" "app.js" "../" "private/" "views/" "node_modules/" "./" "public/" "package.json" "bin/")
-
- ("/home/ashida/Dropbox/compartida roberto/server/public/" (22277 3372 19039 555000) "stylesheets/" "../" "javascripts/" "./" "images/")
-
- ("/home/ashida/Dropbox/compartida roberto/" (22277 3371 819039 114000) "server/" "../" ".dropbox" "./")
-
- ("/home/ashida/Dropbox/" (22277 3390 715744 927000) "../" "IS1/" "Fotos Teatro/" "Libros/" "Lenguajes Formales/" ".dropbox" "./" ".dropbox.cache/" "Discreta II/" "compartida roberto/")
-
- ("/home/ashida/Documentos/Universidad/bsvc-2.1/bin/" (22271 60107 726206 448000) "es_int.s" "xtermpipe" "es_int.lis" "practica.setup" "UI/" "../" "arquitecra.lis" "practica_arquitecTUra/" "68kasm" "arquitecra.h68" "sim68360" "./" "bsvc" "puertoa" "sim68000" "es_int.h68" "arquitecra.s" "puertob")
-
- ("/home/ashida/.github/NuevaWeb/public/javascripts/" (22239 60320 537303 866000) "hello.js" "../" "./")
-
- ("/home/ashida/.github/NuevaWeb/public/" (22239 60320 537303 866000) "stylesheets/" "../" "javascripts/" "./" "images/")
-
- ("/home/ashida/.github/NuevaWeb/conf/" (22239 60320 537303 866000) "routes" "build.properties" "../" "logback.xml" "./" "application.conf")
-
- ("/home/ashida/.github/NuevaWeb/project/project/" (22239 63774 956305 884000) "../" "target/" "./")
-
- ("/home/ashida/.github/NuevaWeb/project/" (22239 63780 426309 582000) "build.properties" "../" "target/" "plugins.sbt" "./" "project/")
-
- ("/home/ashida/.github/NuevaWeb/app/views/" (22239 60320 537303 866000) "../" "index.scala.html" "main.scala.html" "./" "test.scala.html")
-
- ("/home/ashida/.github/NuevaWeb/app/" (22239 60320 537303 866000) "../" "views/" "./" "controllers/")
-
- ("/home/ashida/.github/NuevaWeb/" (22240 3488 994693 537000) "LICENSE" "activator-launch-1.3.7.jar" "conf/" "activator" "logs/" "../" "target/" ".gitignore" ".git/" "./" "test/" "README" "public/" "project/" "README.md" "build.sbt" "app/")
-
- ("/home/ashida/.emacs.d/elpa/" (22239 62174 251890 398000) "ggtags-0.8.9.signed" "magit-20140720.358/" "ac-cider-20150306.254/" "gtags-3.3/" "auto-complete-c-headers-20140325.835/" "ac-ispell-readme.txt" "let-alist-1.0.4.signed" "cl-lib-0.5/" "moe-theme-readme.txt" "helm-20150513.904/" "rainbow-delimiters-20140713.1131/" "moe-theme-20150307.1907/" "paredit-20140128.1248/" "helm-flyspell-20150413.1318/" "cider-readme.txt" "gnupg/" "scala-mode2-20151226.1048/" "pkg-info-20140610.630/" "go-mode-20150503.258/" "go-autocomplete-20150404.2351/" "let-alist-1.0.4/" "git-rebase-mode-20140605.520/" "seq-1.11.signed" "ensime-readme.txt" "../" "ggtags-readme.txt" "go-autocomplete-readme.txt" "auto-complete-readme.txt" "ac-ispell-20150313.1728/" "ac-helm-20140919.917/" "helm-ghc-readme.txt" "s-20140714.707/" "ac-haskell-process-20150423.702/" "flycheck-20160229.458/" "company-20160308.1914/" "evil-cleverparens-readme.txt" "git-commit-mode-20140605.520/" "ido-ubiquitous-20140526.1306/" "lua-mode-20150303.1303/" "seq-1.11/" "cider-20141120.1746/" "clojure-mode-extra-font-locking-20140613.839/" "haskell-mode-20150429.1237/" "sbt-mode-20160219.248/" "queue-0.1.1/" "tagedit-20140618.521/" "ac-helm-readme.txt" "ac-slime-readme.txt" "async-20150511.1328/" "haskell-mode-readme.txt" "auto-complete-auctex-20140223.958/" "exec-path-from-shell-20141212.846/" "./" "epl-20140620.218/" "go-direx-readme.txt" "smartscan-20131230.739/" "lua-mode-readme.txt" "flycheck-readme.txt" "ac-slime-20141002.639/" "ggtags-20150325.2025/" "web-mode-20150503.931/" "coffee-mode-20150503.806/" "scss-mode-20150107.1400/" "clojure-mode-20150429.2253/" "auto-complete-20150408.1132/" "slime-20150507.1405/" "emmet-mode-20150410.803/" "clojure-mode-readme.txt" "emacs-eclim-20150502.516/" "ghc-20150305.845/" "yaml-mode-20141125.37/" "dash-20140717.547/" "ensime-20160307.122/" "yasnippet-20150415.244/" "archives/" "clojure-mode-20141120.1410/" "helm-gtags-readme.txt" "helm-gtags-20150506.220/" "smex-20140425.1314/" "projectile-20140716.416/" "popup-20150315.612/" "helm-flyspell-readme.txt" "ggtags-0.8.9/")
-
- ("/home/ashida/.emacs.d/elpa/ensime-20160307.122/" (22239 62187 348565 919000) "ensime-popup.el" "ensime-debug.el" "ensime-macros.elc" "ensime-config.el" "ensime.el" "ensime-http.elc" "ensime-completion-util.el" "ensime-mode.el" "ensime-ui.elc" "ensime-completion-util.elc" "ensime-semantic-highlight.el" "ensime-util.el" "ensime-sbt.elc" "ensime-mode.elc" "ensime-undo.el" "ensime-startup.elc" "ensime-model.el" "../" "ensime-inspector.elc" "ensime-notes.el" "ensime-comint-utils.elc" "ensime-vars.elc" "ensime-macros.el" "ensime-inf.el" "ensime-autoloads.el" "ensime-stacktrace.elc" "ensime-sbt.el" "ensime-search.el" "ensime-company.el" "ensime-editor.elc" "ensime-ui.el" "ensime-editor.el" "ensime-undo.elc" "ensime-comint-utils.el" "ensime-model.elc" "ensime-util.elc" "ensime-refactor.elc" "ensime-vars.el" "ensime-notes.elc" "ensime-semantic-highlight.elc" "ensime-client.elc" "./" "ensime-startup.el" "ensime-goto-testfile.el" "ensime-inspector.el" "ensime-expand-region.el" "ensime-config.elc" "ensime-search.elc" "ensime-debug.elc" "ensime-doc.elc" "ensime-stacktrace.el" "ensime.elc" "ensime-auto-complete.elc" "ensime-goto-testfile.elc" "ensime-auto-complete.el" "ensime-pkg.el" "ensime-doc.el" "ensime-company.elc" "ensime-client.el" "ensime-http.el" "ensime-popup.elc" "ensime-inf.elc" "ensime-refactor.el")
-
- ("/home/ashida/Documentos/.emacs.d/settings/" (22233 36808 0 0) "markdown-settings.el" "random-requires.el" "programming-settings.el" "julia-settings.el" "term-settings.el" "cask-settings.el" "scala-settings.el" "auto-complete-settings.el" "irc-settings.el" "custom-functions.el" "bodil-powerline.el" "prolog-settings.el" "../" "custom.el" "scss-settings.el" "rock-defuns.el" "custom-variables.el" "haskell-settings.el" "ocaml-settings.el" "ido-settings.el" "el-get-settings.el" "python-settings.el" "mumamo-settings.el" "package-settings.el" "./" "pony-settings.el" "rust-settings.el" "go-settings.el" "general-settings.el" "js-settings.el" "latex-settings.el" "yasnippet-settings.el" "camelcase-settings.el" "matlab-settings.el" "theme-settings.el" "tss-settings.el" "helm-settings.el" "websemantica-settings.el" "#python-settings.el#" "org-settings.el")
-
- ("/home/ashida/Documentos/.emacs.d/" (22236 38871 0 0) "places" "../" "auto-save-list/" "ac-comphist.dat" ".emacs.desktop" "games/" ".emacs.d/" "./" "init.el" "backups/" "elpa/" "settings/" "plugins/")
-
- ("/home/ashida/Documentos/BACKAP/" (22229 57579 528525 328000) "wireshark-2.0.1.tar.bz2" "autores.txt" "wireshark-2.0.1/" "passBanco.txt" "../" "./" "meh/")
-
- ("/home/ashida/.emacs.d/" (22232 40956 817389 26000) "places" "cider-history" ".recentf" "projectile.cache" "session.10e1ee3ef6c31ebca3145685770791919200000006080043" "../" "auto-save-list/" "session.104f1c1963460230f6143222412480663000000005340029" ".smex-items" "ac-comphist.dat" "session.1044ac12c5c9670007143212967343901100000020170036" "customizations/" "./" "ido.last" "init.el" "backups/" "elpa/" "extras/" "projectile-bookmarks.eld")
-
- ("/etc/vpnc/" (22229 28578 905562 133000) "../" "fi_in.conf" "default.conf" "./" "fi.conf" "vpnc-script")
-
- ("/etc/" (22233 21090 303383 397000) "resolv.conf.bak" "skel/" "mime.types" "NetworkManager/" "modules" "request-key.conf" "idn.conf" "lirc/" "brlapi.key" ".pwd.lock" "udisks2/" "profile.d/" "mkinitcpio.conf" "httpd/" "iproute2/" "mkinitcpio.d/" "binfmt.d/" "mdadm.conf" "cups/" "libao.conf" "libpaper.d/" "gtk-3.0/" "machine-id" "libgda-5.0/" "pacman.d/" "dleyna-renderer-service.conf" "nsswitch.conf" "pam.d/" "group" "login.defs" "java-8-openjdk/" "pacman.conf.save" "yaourtrc" "papersize" "openldap/" "gconf/" "ifplugd/" "asound.conf" "bash.bashrc" "bind.keys" "X11/" "pkcs11/" "passwd" "pulse/" "vpnc/" "libnl/" "resolv.conf" "mke2fs.conf" "profile" "adobe/" "adjtime" "gnome-vfs-mime-magic" "../" "iptables/" "grub.d/" "dleyna-server-service.conf" "motd" "lvm/" "bonobo-activation/" "tmpfiles.d/" "brltty.conf" "krb5.conf" "locale.conf" "shadow-" "ld.so.conf.d/" "initcpio/" "trusted-key.key" "gnome-chess/" "bash.bash_logout" "logrotate.d/" "rc_maps.cfg" "group-" "os-release" "hostname" "zsh/" "sound/" "netconfig" "geoclue/" "nscd.conf" "modprobe.d/" "gtk-2.0/" "ld.so.conf" ".updated" "rc_keymaps/" "depmod.d/" "pacman.conf" "at-spi2/" "gnome-vfs-2.0/" "irman.conf" "environment" "drirc" "locale.gen" "shadow" "passwd-" "crypttab" "kernel/" "ld.so.cache" "polkit-1/" "request-key.d/" "ImageMagick-6/" "ca-certificates/" "avahi/" "mail.rc" "issue" "fstab" "xml/" "hosts" "gai.conf" "nanorc" "sudoers" "./" "inputrc" "logrotate.conf" "systemd/" "fuse.conf" "localtime" "passwd.OLD" "default/" "gshadow-" "xinetd.d/" "man_db.conf" "vimrc" "arch-release" "services" "mtab" "securetty" "resolvconf.conf" "idnalias.conf" "gdm/" "pcmcia/" "UPower/" "ssl/" "dhcpcd.duid" "gshadow" "udev/" "speech-dispatcher/" "host.conf" "mono/" "dbus-1/" "slsh.rc" "protocols" "wpa_supplicant/" "security/" "whois.conf" "vdpau_wrapper.cfg" "bluetooth/" "rygel.conf" "shells" "makepkg.conf" "netctl/" "sysctl.d/" "ssh/" "modules-load.d/" "dhcpcd.conf" "rpc" "fonts/" "sudoers.d/" "conf.d/" "xdg/")
-
- ("/usr/local/" (22028 13666 0 0) "etc/" "../" "include/" "games/" "lib/" "./" "src/" "sbin/" "man/" "share/" "bin/")
-
- ("/usr/share/GConf/" (22218 64033 662332 786000) "../" "schema/" "./" "gsettings/")
-
- ("/usr/share/" (22233 21089 46716 521000) "automake-1.15/" "gettext/" "media-player-info/" "gtksourceview-3.0/" "gitg/" "tracker/" "applications/" "lirc/" "gupnp-av/" "libwacom/" "graphite2/" "blender/" "apr-1/" "org.gnome.Characters/" "GConf/" "httpd/" "cogl/" "pixmaps/" "mobile-broadband-provider-info/" "glade/" "iso-codes/" "gir-1.0/" "color/" "gnome-control-center/" "brltty/" "file/" "gtk-3.0/" "kbd/" "projectM/" "xcb/" "libgda-5.0/" "OSL/" "idnkit/" "hwdata/" "gnome-klotski/" "itstool/" "postgresql/" "clang/" "gedit/" "jack-audio-connection-kit/" "skype/" "cracklib/" "zoneinfo/" "icu/" "autoconf-archive/" "gitweb/" "yelp/" "gobject-introspection-1.0/" "zenity/" "gnupg/" "gconf/" "readline/" "libnm-gtk/" "gnome-nettool/" "evince/" "nm-applet/" "X11/" "file-roller/" "hwinfo/" "anjuta/" "gnome-background-properties/" "xsessions/" "mono-2.0/" "perl5/" "kde4/" "libcaca/" "gitk/" "gnome-bluetooth/" "evolution-data-server/" "apps/" "icons/" "iagno/" "awk/" "classes/" "texinfo/" "org.gnome.Weather/" "source-highlight/" "i18n/" "evolution/" "systemtap/" "backgrounds/" "p11-kit/" "openal/" "caribou/" "gst-plugins-base/" "bijiben/" "git-gui/" "common-lisp/" "graphviz/" "idl/" "emacs/" "seahorse/" "wayland-sessions/" "pygobject/" "gnome-chess/" "cryptui/" "gnome-taquin/" "totem/" "jay/" "autoconf/" "lua/" "gnome-2.0/" "yelp-xsl/" "zsh/" "terminfo/" "gnome-music/" "gnome-color-manager/" "liblouis/" "mime/" "dict/" "gnome-documents/" "libalpm/" "strigi/" "espeak-data/" "quadrapassel/" "keyutils/" "inkscape/" "thumbnailers/" "vte/" "alsa/" "zeitgeist/" "gnome-sudoku/" "bash-completion/" "vala/" "gnome-robots/" "gtk-2.0/" "five-or-more/" "aclocal/" "sgml/" "unity/" "locale/" "orca/" "libquvi-scripts/" "libgnomekbd/" "gnome-settings-daemon-3.0/" "libgnome-desktop-3.0/" ".mono/" "adium/" "ffmpeg/" "cdrdao/" "xosd/" "libgc-mono/" "vinagre/" "ghostscript/" "glib-2.0/" "epiphany/" "slsh/" "phonon/" "polkit-1/" "et/" "desktop-directories/" "swell-foop/" "git-core/" "tali/" "libthai/" "themes/" "gssdp/" "gcc-5.3.0/" "gst-plugins-bad/" "gnome-sound-recorder/" "misc/" "ImageMagick-6/" "ca-certificates/" "grilo-plugins/" "avahi/" "libtool/" "t1lib/" "tabset/" "libosinfo/" "gnome-session/" "gnome-settings-daemon/" "xml/" "lightsoff/" "info/" "brasero/" "gnome-builder/" "help/" "mousetweaks/" "bison/" "cmake/" "devhelp/" "systemd/" "man/" "gnome-maps/" "eog/" "tc/" "sushi/" "imlib2/" "gvfs/" "gnome-session-properties/" "gcr-3/" "git/" "GeoIP/" "gstreamer-1.0/" "licenses/" "djvu/" "webkitgtk-3.0/" "gnome-doc-utils/" "config/" "yelp-tools/" "colord/" "libgphoto2/" "vala-0.30/" "shared-color-targets/" "qt4/" "gupnp-dlna-2.0/" "gnome-user-share/" "gtk-doc/" "telepathy/" "groff/" "factory/" "mime-info/" "guile/" "farstream/" "gdm/" "sounds/" "unity-scopes/" "dconf/" "pkgconfig/" "gnome-mahjongg/" "speech-dispatcher/" "aclocal-1.15/" "wayland/" "dhclient/" "makepkg-template/" "enchant/" "hspell/" "subversion/" "gnome-mines/" "intltool/" "dbus-1/" "os-prober/" "libgweather/" "librarian/" "pacman/" "gnome-shell/" "atomix/" "ss/" "gnome-video-effects/" "vim/" "gnome-tweak-tool/" "pygtk/" "application-registry/" "autogen/" "gettext-0.19.7/" "doc/" "m17n/" "accerciser/" "rygel/" "four-in-a-row/" "gnome-clocks/" "polari/" "grub/" "java/" "gnome/" "antler/" "scala/" "gdict-1.0/" "mkinitcpio/" "gdb/" "gapi-2.0/" "nano/" "iana-etc/" "pulseaudio/" "guake/" "makepkg/" "ocio/" "gnome-online-accounts/" "appdata/" "fonts/" "aisleriot/" "gnome-nibbles/" "empathy/" "dhcpcd/" "../" "./")
-
- ("/usr/src/" (22028 13666 0 0) "../" "./")
+ ("/home/ashida/git/PisitoBot/" (22540 6387 313345 335000) "./" "../" ".git/" "mordisco.mp4" "README.org" "idun.py")
 )
 
 ;; ----- ido-unc-hosts-cache -----

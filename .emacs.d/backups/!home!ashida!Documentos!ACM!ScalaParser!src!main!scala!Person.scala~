@@ -1,0 +1,16 @@
+import actors.Actors 
+
+
+abstract class Person extends Actor {
+  
+  def getPrefix : String
+  val points : Int = 0
+  val status : String = ""
+
+  def ::(card : Int) : Int = ???
+  def msg(message : String) : String = ???
+}
+
+object Person {
+  def have : String = ""
+}

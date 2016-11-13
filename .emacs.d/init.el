@@ -18,18 +18,10 @@
     clojure-mode
     clojure-mode-extra-font-locking
     cider
-    ;; allow ido usage in as many contexts as possible.
-    ;; customizations/navigation.el line 23 
     ido-ubiquitous
-    ;; Enhances M-x to allow easier execution of commands. Provides
-    ;; a filterable list of possible commands in the minibuffer
     smex
-    ;; project navigation
     projectile
-    rainbow-delimiters
-    ;; edit html tags like sexps
     tagedit
-    ;; git integration
     magit
     moe-theme
     scss-mode
@@ -58,8 +50,8 @@
 ;;;;;;;;;;;;;;;;;;;
 
 (defun tegmacs-load ()
-  (add-to-list 'load-path "~/.github/tegmacs")
-  (load-file "~/.github/tegmacs/tegmacs.el")
+  (add-to-list 'load-path "~/git/tegmacs")
+  (load-file "~/git/tegmacs/tegmacs.el")
   (require 'tegmacs)
   (setq tegmacs-message-mark-as-read t))
 
@@ -75,22 +67,23 @@
 ;; Sets up exec-path-from-shell so that Emacs will use the correct environment variables
 (load "shell-integration.el")
 
+;; Miscelaneus and functions
+(load "misc.el")
+
 ;; These customizations are for navigation between buffers, etc.
 (load "navigation.el")
 
 ;; These customizations make editing a bit nicer.
 (load "editing.el")
 
-;; Hard-to-categorize customizations
-(load "misc.el")
-
-;; For editing lisps
-(load "elisp-editing.el")
-
 ;; some user interface elements
 (load "ui.el")
 
+;; company conf
+(load "setup-company.el")
+
 ;; Langauage-specific
+(load "setup-elisp.el")
 (load "setup-clojure.el")
 (load "setup-js.el")
 (load "setup-haskell.el")
@@ -102,6 +95,18 @@
 (load "setup-java.el")
 (load "setup-go.el")
 (load "setup-scala.el")
-(load "uml-steup.el")
-(load "org-setup.el")
+(load "setup-uml.el")
+(load "setup-org.el")
 (load "setup-reveal.el")
+(load "setup-python.el")
+(load "setup-elm.el")
+(load "setup-helm.el")
+(load "setup-flycheck.el")
+(load "setup-color-id.el")
+(load "setup-elixir.el")
+(load "setup-ac.el")
+(load "setup-emojify.el")
+
+;Custom variables
+(setq custom-file "~/.emacs.d/customizations/custom.el")
+(load custom-file)
