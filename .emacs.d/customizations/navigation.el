@@ -61,4 +61,5 @@
 (projectile-global-mode)
 
 ;;autocomplete
-(global-auto-complete-mode t)
+;;(global-auto-complete-mode t)
+

@@ -1,0 +1,26 @@
+import Dependencies._
+
+version := "0.0.1"
+
+scalaVersion := "2.11.8"
+
+
+resolvers ++= Seq(
+  Resolver.sonatypeRepo("snapshots")
+)
+
+libraryDependencies ++= Seq(
+  "info.mukel" %% "telegrambot4s" % "2.2.7-SNAPSHOT",
+  "com.typesafe.scala-logging" %% "scala-logging" % "3.5.0"
+)
+
+lazy val root = (project in file(".")).
+  settings(
+    inThisBuild(List(
+      organization := "com.maser",
+      scalaVersion := "2.12.1",
+      version      := "0.1.0-SNAPSHOT"
+    )),
+    name := "Maser",
+    libraryDependencies += scalaTest % Test
+  )

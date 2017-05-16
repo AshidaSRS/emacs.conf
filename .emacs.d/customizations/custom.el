@@ -6,6 +6,7 @@
  '(TeX-PDF-mode t)
  '(coffee-tab-width 2)
  '(company-auto-complete t)
+ '(company-auto-complete-chars nil)
  '(company-ghc-show-info t)
  '(company-global-modes t)
  '(company-idle-delay 0.1)
@@ -35,10 +36,19 @@
  '(haskell-process-suggest-remove-import-lines t)
  '(haskell-process-type (quote cabal-repl))
  '(haskell-tags-on-save t)
+ '(org-emphasis-alist
+   (quote
+    (("*" bold)
+     ("/" italic)
+     ("_" underline)
+     ("=" org-verbatim verbatim)
+     ("~" org-code verbatim)
+     ("+"
+      (:strike-through t)))))
  '(org-replace-disputed-keys nil)
  '(package-selected-packages
    (quote
-    (pretty-symbols emojify haskell-emacs flycheck-ghcmod company-ghc ac-alchemist alchemist color-identifiers-mode helm-company company-web company-cmake elm-mode yaml-mode web-mode virtualenv use-package tagedit smex smartscan scss-mode rainbow-delimiters puml-mode projectile powerline plantuml-mode paredit ox-reveal org-bullets multi-term moe-theme magit lua-mode jedi ido-ubiquitous hydra helm-gtags helm-flyspell gtags go-mode go-autocomplete git-rebase-mode git-commit-mode ghc ggtags flycheck exec-path-from-shell ensime emmet-mode emacs-eclim darkokai-theme color-theme-sanityinc-tomorrow color-theme-modern coffee-mode clojure-mode-extra-font-locking auto-complete-c-headers auto-complete-auctex atom-dark-theme alect-themes ac-slime ac-ispell ac-helm ac-haskell-process ac-cider abyss-theme)))
+    (csharp-mode pretty-symbols emojify haskell-emacs flycheck-ghcmod company-ghc ac-alchemist alchemist color-identifiers-mode helm-company company-web company-cmake elm-mode yaml-mode web-mode virtualenv use-package tagedit smex smartscan scss-mode rainbow-delimiters puml-mode projectile powerline plantuml-mode paredit ox-reveal org-bullets multi-term moe-theme magit lua-mode jedi ido-ubiquitous hydra helm-gtags helm-flyspell gtags go-mode go-autocomplete git-rebase-mode git-commit-mode ghc ggtags flycheck exec-path-from-shell ensime emmet-mode emacs-eclim darkokai-theme color-theme-sanityinc-tomorrow color-theme-modern coffee-mode clojure-mode-extra-font-locking auto-complete-c-headers auto-complete-auctex atom-dark-theme alect-themes ac-slime ac-ispell ac-helm ac-haskell-process ac-cider abyss-theme)))
  '(recentf-mode t)
  '(shift-select-mode nil)
  '(tegmacs-company t))

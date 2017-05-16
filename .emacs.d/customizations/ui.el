@@ -23,10 +23,10 @@
 ;(require 'moe-theme)
 ;(moe-dark)
 ;(load-theme 'subdued t)
-(require 'setup-theme)
-(set-linum)
-(set-full-paren)
-(set-sanityinc)
+;; (require 'setup-theme)
+;; (set-linum)
+;; (set-full-paren)
+;; (set-sanityinc)
 
 ;; Tamaño de letra
 (set-face-attribute 'default nil :height 100)

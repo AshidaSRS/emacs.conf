@@ -1,0 +1,21 @@
+package maser
+
+import java.net.URLEncoder
+
+import info.mukel.telegrambot4s.Implicits._
+import info.mukel.telegrambot4s.api._
+import com.typesafe.scalalogging.Logger
+
+trait commands {
+  val logger: Logger = Logger("Command")
+
+  def command(c: String, response: String) {
+    val order = s"/$c"
+    logger.info(s"[$c] answering: $response")
+    on(order) {
+      implicit msg => args =>
+      reply(response)
+    }
+  }
+
+}

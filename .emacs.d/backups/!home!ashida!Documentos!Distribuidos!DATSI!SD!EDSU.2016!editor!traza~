@@ -1,0 +1,157 @@
+execve("./test_editor", ["./test_editor"], [/* 53 vars */]) = 0
+brk(0)                                  = 0xe9f000
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f3acf362000
+access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or directory)
+open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 4
+fstat(4, {st_mode=S_IFREG|0644, st_size=79156, ...}) = 0
+mmap(NULL, 79156, PROT_READ, MAP_PRIVATE, 4, 0) = 0x7f3acf34e000
+close(4)                                = 0
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+open("/lib/x86_64-linux-gnu/libpthread.so.0", O_RDONLY|O_CLOEXEC) = 4
+read(4, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\20m\0\0\0\0\0\0"..., 832) = 832
+fstat(4, {st_mode=S_IFREG|0755, st_size=135175, ...}) = 0
+mmap(NULL, 2212936, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 4, 0) = 0x7f3acef25000
+mprotect(0x7f3acef3d000, 2093056, PROT_NONE) = 0
+mmap(0x7f3acf13c000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 4, 0x17000) = 0x7f3acf13c000
+mmap(0x7f3acf13e000, 13384, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7f3acf13e000
+close(4)                                = 0
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 4
+read(4, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\260\37\2\0\0\0\0\0"..., 832) = 832
+fstat(4, {st_mode=S_IFREG|0755, st_size=1848024, ...}) = 0
+mmap(NULL, 3961912, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 4, 0) = 0x7f3aceb5d000
+mprotect(0x7f3aced1b000, 2093056, PROT_NONE) = 0
+mmap(0x7f3acef1a000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 4, 0x1bd000) = 0x7f3acef1a000
+mmap(0x7f3acef20000, 17464, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7f3acef20000
+close(4)                                = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f3acf34d000
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f3acf34b000
+arch_prctl(ARCH_SET_FS, 0x7f3acf34b740) = 0
+mprotect(0x7f3acef1a000, 16384, PROT_READ) = 0
+mprotect(0x7f3acf13c000, 4096, PROT_READ) = 0
+mprotect(0x601000, 4096, PROT_READ)     = 0
+mprotect(0x7f3acf364000, 4096, PROT_READ) = 0
+munmap(0x7f3acf34e000, 79156)           = 0
+set_tid_address(0x7f3acf34ba10)         = 2830
+set_robust_list(0x7f3acf34ba20, 0x18)   = 0
+futex(0x7fff467e728c, FUTEX_WAIT_BITSET_PRIVATE|FUTEX_CLOCK_REALTIME, 1, NULL, 7f3acf34b740) = -1 EAGAIN (Resource temporarily unavailable)
+rt_sigaction(SIGRTMIN, {0x7f3acef2b800, [], SA_RESTORER|SA_SIGINFO, 0x7f3acef34bd0}, NULL, 8) = 0
+rt_sigaction(SIGRT_1, {0x7f3acef2b880, [], SA_RESTORER|SA_RESTART|SA_SIGINFO, 0x7f3acef34bd0}, NULL, 8) = 0
+rt_sigprocmask(SIG_UNBLOCK, [RTMIN RT_1], NULL, 8) = 0
+getrlimit(RLIMIT_STACK, {rlim_cur=8192*1024, rlim_max=RLIM_INFINITY}) = 0
+fstat(1, {st_mode=S_IFCHR|0620, st_rdev=makedev(136, 2), ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f3acf361000
+write(1, "\n", 1)                       = 1
+write(1, "Introduzca una l\303\255nea con el tem"..., 56) = 56
+fstat(0, {st_mode=S_IFCHR|0620, st_rdev=makedev(136, 2), ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f3acf360000
+read(0, "Ocio Hola\n", 1024)            = 10
+brk(0)                                  = 0xe9f000
+brk(0xec0000)                           = 0xec0000
+open("/etc/resolv.conf", O_RDONLY|O_CLOEXEC) = 4
+fstat(4, {st_mode=S_IFREG|0644, st_size=172, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f3acf35f000
+read(4, "# Dynamic resolv.conf(5) file fo"..., 4096) = 172
+read(4, "", 4096)                       = 0
+close(4)                                = 0
+munmap(0x7f3acf35f000, 4096)            = 0
+uname({sys="Linux", node="dinu-N56VB", ...}) = 0
+stat("/etc/resolv.conf", {st_mode=S_IFREG|0644, st_size=172, ...}) = 0
+open("/etc/resolv.conf", O_RDONLY|O_CLOEXEC) = 4
+fstat(4, {st_mode=S_IFREG|0644, st_size=172, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f3acf35f000
+read(4, "# Dynamic resolv.conf(5) file fo"..., 4096) = 172
+read(4, "", 4096)                       = 0
+close(4)                                = 0
+munmap(0x7f3acf35f000, 4096)            = 0
+uname({sys="Linux", node="dinu-N56VB", ...}) = 0
+socket(PF_FILE, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 4
+connect(4, {sa_family=AF_FILE, path="/var/run/nscd/socket"}, 110) = -1 ENOENT (No such file or directory)
+close(4)                                = 0
+socket(PF_FILE, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 4
+connect(4, {sa_family=AF_FILE, path="/var/run/nscd/socket"}, 110) = -1 ENOENT (No such file or directory)
+close(4)                                = 0
+open("/etc/nsswitch.conf", O_RDONLY|O_CLOEXEC) = 4
+fstat(4, {st_mode=S_IFREG|0644, st_size=513, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f3acf35f000
+read(4, "# /etc/nsswitch.conf\n#\n# Example"..., 4096) = 513
+read(4, "", 4096)                       = 0
+close(4)                                = 0
+munmap(0x7f3acf35f000, 4096)            = 0
+open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 4
+fstat(4, {st_mode=S_IFREG|0644, st_size=79156, ...}) = 0
+mmap(NULL, 79156, PROT_READ, MAP_PRIVATE, 4, 0) = 0x7f3acf337000
+close(4)                                = 0
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+open("/lib/x86_64-linux-gnu/libnss_files.so.2", O_RDONLY|O_CLOEXEC) = 4
+read(4, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0@\"\0\0\0\0\0\0"..., 832) = 832
+fstat(4, {st_mode=S_IFREG|0644, st_size=52168, ...}) = 0
+mmap(NULL, 2148504, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 4, 0) = 0x7f3ace950000
+mprotect(0x7f3ace95c000, 2093056, PROT_NONE) = 0
+mmap(0x7f3aceb5b000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 4, 0xb000) = 0x7f3aceb5b000
+close(4)                                = 0
+mprotect(0x7f3aceb5b000, 4096, PROT_READ) = 0
+munmap(0x7f3acf337000, 79156)           = 0
+open("/etc/host.conf", O_RDONLY|O_CLOEXEC) = 4
+fstat(4, {st_mode=S_IFREG|0644, st_size=92, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f3acf35f000
+read(4, "# The \"order\" line is only used "..., 4096) = 92
+read(4, "", 4096)                       = 0
+close(4)                                = 0
+munmap(0x7f3acf35f000, 4096)            = 0
+futex(0x7f3acef22ac0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+open("/etc/hosts", O_RDONLY|O_CLOEXEC)  = 4
+fstat(4, {st_mode=S_IFREG|0644, st_size=225, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f3acf35f000
+read(4, "127.0.0.1\tlocalhost\n127.0.1.1\tdi"..., 4096) = 225
+read(4, "", 4096)                       = 0
+close(4)                                = 0
+munmap(0x7f3acf35f000, 4096)            = 0
+socket(PF_INET, SOCK_STREAM, IPPROTO_TCP) = 4
+connect(4, {sa_family=AF_INET, sin_port=htons(56789), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
+write(4, "\3\0\0\0\0Ocio\0Hola\0", 15)  = 15
+shutdown(4, 1 /* send */)               = 0
+read(4, "\1\0\0\0\0", 5)                = 5
+close(4)                                = 0
+write(1, "\n", 1)                       = 1
+write(1, "Introduzca una l\303\255nea con el tem"..., 56) = 56
+read(0, "Ocio Chau\n", 1024)            = 10
+stat("/etc/resolv.conf", {st_mode=S_IFREG|0644, st_size=172, ...}) = 0
+stat("/etc/resolv.conf", {st_mode=S_IFREG|0644, st_size=172, ...}) = 0
+open("/etc/hosts", O_RDONLY|O_CLOEXEC)  = 4
+fstat(4, {st_mode=S_IFREG|0644, st_size=225, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f3acf35f000
+read(4, "127.0.0.1\tlocalhost\n127.0.1.1\tdi"..., 4096) = 225
+read(4, "", 4096)                       = 0
+close(4)                                = 0
+munmap(0x7f3acf35f000, 4096)            = 0
+socket(PF_INET, SOCK_STREAM, IPPROTO_TCP) = 4
+connect(4, {sa_family=AF_INET, sin_port=htons(56789), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
+write(4, "\3\0\0\0\0Ocio\0Chau\0", 15)  = 15
+shutdown(4, 1 /* send */)               = 0
+read(4, "\1\0\0\0\0", 5)                = 5
+close(4)                                = 0
+write(1, "\n", 1)                       = 1
+write(1, "Introduzca una l\303\255nea con el tem"..., 56) = 56
+read(0, "ASd dsa\n", 1024)              = 8
+stat("/etc/resolv.conf", {st_mode=S_IFREG|0644, st_size=172, ...}) = 0
+stat("/etc/resolv.conf", {st_mode=S_IFREG|0644, st_size=172, ...}) = 0
+open("/etc/hosts", O_RDONLY|O_CLOEXEC)  = 4
+fstat(4, {st_mode=S_IFREG|0644, st_size=225, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f3acf35f000
+read(4, "127.0.0.1\tlocalhost\n127.0.1.1\tdi"..., 4096) = 225
+read(4, "", 4096)                       = 0
+close(4)                                = 0
+munmap(0x7f3acf35f000, 4096)            = 0
+socket(PF_INET, SOCK_STREAM, IPPROTO_TCP) = 4
+connect(4, {sa_family=AF_INET, sin_port=htons(56789), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
+write(4, "\3\0\0\0\0ASd\0dsa\0", 13)    = 13
+shutdown(4, 1 /* send */)               = 0
+read(4, "\377\377\377\377\0", 5)        = 5
+close(4)                                = 0
+write(1, "\n", 1)                       = 1
+write(1, "Introduzca una l\303\255nea con el tem"..., 56) = 56
+read(0, 0x7f3acf360000, 1024)           = ? ERESTARTSYS (To be restarted)
+--- SIGINT (Interrupt) @ 0 (0) ---
++++ killed by SIGINT +++

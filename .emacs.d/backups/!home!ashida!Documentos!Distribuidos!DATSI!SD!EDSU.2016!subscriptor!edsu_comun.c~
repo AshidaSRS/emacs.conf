@@ -1,0 +1,113 @@
+/*
+ Incluya en este fichero todas las implementaciones que pueden
+ necesitar compartir los módulos editor y subscriptor,
+ si es que las hubiera.
+ */
+
+#include "edsu_comun.h"
+#include "comun.h"
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdarg.h>
+
+int connect() {
+	struct hostent *host_info;
+	char* server = getenv("SERVIDOR");
+	char* port = getenv("PUERTO");
+	struct sockaddr_in dir;
+	int con;
+        
+	host_info = gethostbyname(server);
+        
+	memcpy(&dir.sin_addr.s_addr,
+               host_info->h_addr,
+               host_info->h_length);
+        
+	dir.sin_port = htons(atoi(port));
+	dir.sin_family = PF_INET;
+
+	if ((con = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0) {
+          perror("Error: Can not create a socket");
+	  return -1;
+	}
+
+	if (connect(con, (struct sockaddr *) &dir, sizeof(dir)) < 0) {
+          perror("Error: Can not connect");
+	  close(con);
+	  return -1;
+	}
+	return con;
+}
+
+int sendMsg(int opt, ...) {
+
+	int length = 0;
+	int res = 0;
+	char buffer[5];
+	char* msg = NULL;
+	int con;
+	int i;
+
+	if ((con = connect()) < 0) {
+		return con;
+	}
+
+	va_list ap;
+	va_start(ap, opt);
+	char** arg = NULL;
+	int arg_size;
+
+	switch (opt) {
+        case EVENT:
+		arg_size = 2;
+		break;
+	case CANCEL:
+	case AUTHORIZE:
+	case CREATE:
+	case REMOVE:
+		arg_size = 1;
+		break;
+	case START:
+	case OFF:
+		arg_size = 0;
+		break;
+	}
+
+	arg = malloc(arg_size * sizeof(char*));
+	for (i = 0; i < arg_size; i++) {
+		arg[i] = (char*) va_arg(ap,char*);
+	}
+	int port;
+	if (opt == CANCEL || opt == AUTHORIZE || opt == OFF || opt == START) {
+		port = va_arg(ap,int);
+		char* tam = malloc(sizeof(int) + sizeof(char));
+		memcpy((void*) tam, (void*) &port, sizeof(int));
+		tam[sizeof(int)] = 0;
+		arg[arg_size] = tam;
+	}
+
+	msg = marshallMsg(opt, arg, arg_size, &length);
+
+	if (write(con, msg, length) < 0) {
+		perror("error en write");
+		close(con);
+		free(msg);
+		return -1;
+	}
+	shutdown(con, SHUT_WR);
+	int r = 0;
+	if ((r = read(con, buffer, RESPONSE_SIZE)) < 0) {
+		perror("Error en read de respuesta");
+	}
+
+	memcpy((void *) &res, (void*) buffer, sizeof(int));
+	close(con);
+	free(msg);
+	return res;
+
+}

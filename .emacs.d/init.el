@@ -3,6 +3,8 @@
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives
              '("tromey" . "http://tromey.com/elpa/") t)
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/") t)
@@ -49,13 +51,13 @@
 ;; Tegmacs ;;
 ;;;;;;;;;;;;;;;;;;;
 
-(defun tegmacs-load ()
-  (add-to-list 'load-path "~/git/tegmacs")
-  (load-file "~/git/tegmacs/tegmacs.el")
-  (require 'tegmacs)
-  (setq tegmacs-message-mark-as-read t))
+;; (defun tegmacs-load ()
+;;   (add-to-list 'load-path "~/git/tegmacs")
+;;   (load-file "~/git/tegmacs/tegmacs.el")
+;;   (require 'tegmacs)
+;;   (setq tegmacs-message-mark-as-read t))
 
-(tegmacs-load)
+;; (tegmacs-load)
 
 ;;;;;;;;;;;;;;;;;;;
 ;; Customization ;;
@@ -104,8 +106,9 @@
 (load "setup-flycheck.el")
 (load "setup-color-id.el")
 (load "setup-elixir.el")
-(load "setup-ac.el")
+;;(load "setup-ac.el")
 (load "setup-emojify.el")
+(load "setup-ensime.el")
 
 ;Custom variables
 (setq custom-file "~/.emacs.d/customizations/custom.el")

@@ -1,0 +1,472 @@
+% Created 2017-05-08 lun 22:16
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\date{\today}
+\title{APIRESTfull con Glassfish y XML}
+\hypersetup{
+ pdfauthor={Ashida},
+ pdftitle={APIRESTfull con Glassfish y XML},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 25.2.1 (Org mode 9.0)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\author{Autores:  \\ Alberto Revuelta Arribas \\  Roberto Sarmiento del Río}
+\begin{center}
+\textit{Práctica 1 - Sistemas Orientados a Servicios}
+\end{center}
+\vfill
+\vfill
+\includegraphics[width=4cm]{./images/logo.jpg}
+\hfill
+\hfill
+\includegraphics[width=4cm]{./images/logo2.jpg}
+\thispagestyle{empty}
+
+\newpage
+\thispagestyle{empty} 
+\textit{Esta página se deja en blanco intencionadamente}
+\newpage
+\setcounter{tocdepth}{5}
+\tableofcontents
+\thispagestyle{empty} 
+\newpage
+\setcounter{page}{1}
+\section{Diseño del servicio}
+\label{sec:org6c634de}
+\subsection{Usuarios}
+\label{sec:org1998fa4}
+\subsubsection{GET}
+\label{sec:orgbaaa578}
+\begin{enumerate}
+\item /users
+\label{sec:org6a9a2c6}
+Devuelve una lista de usuarios existentes en la base de datos.
+\begin{center}
+\includegraphics[width=.9\linewidth]{./images/users.jpg}
+\end{center}
+\item /users/\{id\}
+\label{sec:org3d19ad3}
+Devuelve la información del usuario expecificado con el id en la
+ruta.
+\begin{center}
+\includegraphics[width=.9\linewidth]{./images/usersByID.jpg}
+\end{center}
+\item /users/\{id\}/friends
+\label{sec:orgbb29f7b}
+Devuelve una lista con los usuarios amigos del usuario indicado
+con el id en la ruta.
+\begin{center}
+\includegraphics[width=.9\linewidth]{./images/usersFriends.png}
+\end{center}
+\item /users/\{id\}/posts
+\label{sec:orgf7c9d5e}
+Devuelve los posts del usuario indicado con el id en la ruta.
+\begin{center}
+\includegraphics[width=.9\linewidth]{./images/usersPosts.jpg}
+\end{center}
+\item /users/\{id\}/friends/posts
+\label{sec:orgbb4d0eb}
+Devuelve una lista con los posts de los amigos.
+\begin{center}
+\includegraphics[width=.9\linewidth]{./images/usersFriendsPosts.jpg}
+\end{center}
+\end{enumerate}
+\subsubsection{POST}
+\label{sec:org7690d72}
+\begin{enumerate}
+\item /users
+\label{sec:org68cf8ae}
+Crea un nuevo usuario a patir del body dado.
+\begin{center}
+\includegraphics[width=.9\linewidth]{./images/postUser.png}
+\end{center}
+\end{enumerate}
+\subsubsection{PUT}
+\label{sec:orge166e79}
+\begin{enumerate}
+\item /users/\{id\}
+\label{sec:org0e42187}
+Actualiza el usuario indicado con el id en el path con el body
+dado.
+\begin{center}
+\includegraphics[width=.9\linewidth]{./images/put.jpg}
+\end{center}
+\end{enumerate}
+\subsubsection{DELETE}
+\label{sec:org23346de}
+\begin{enumerate}
+\item /users/\{id\}
+\label{sec:orgd19ab11}
+Borra el usuario con el id dado en la ruta.
+\begin{center}
+\includegraphics[width=.9\linewidth]{./images/delete.jpg}
+\end{center}
+\end{enumerate}
+\subsection{Amigos}
+\label{sec:org7ff3315}
+\subsubsection{GET}
+\label{sec:org0a6db12}
+\begin{enumerate}
+\item /friends
+\label{sec:org9f55d86}
+Devuelve la lista de relaciones entre usuarios.
+\begin{center}
+\includegraphics[width=.9\linewidth]{./images/GET_friends.PNG}
+\end{center}
+\item /friends/\{id\}
+\label{sec:org5a83c6b}
+Devuelve la lista de relaciones creadas por el usuario con el id dado.
+\begin{center}
+\includegraphics[width=.9\linewidth]{./images/GET_friends_id.PNG}
+\end{center}
+\item /friends/\{id\}/of
+\label{sec:org4c6039b}
+Devuelve la lista de relaciones cuyo amigo sea el id dado en la ruta. 
+\begin{center}
+\includegraphics[width=.9\linewidth]{./images/GET_friends_id_of.PNG}
+\end{center}
+\end{enumerate}
+\subsubsection{POST}
+\label{sec:org85185f1}
+\begin{enumerate}
+\item /friends
+\label{sec:org64f035a}
+\begin{center}
+\includegraphics[width=.9\linewidth]{./images/POST_friends.PNG}
+\end{center}
+Crea una nueva relacion con lo indicado en el body.
+\end{enumerate}
+\subsubsection{PUT}
+\label{sec:org5e398d0}
+\begin{enumerate}
+\item /friends/\{id\}
+\label{sec:orgb20bd84}
+Actualiza la relación indicada en la ruta con el body.
+\begin{center}
+\includegraphics[width=.9\linewidth]{./images/PUT_friend_id.PNG}
+\end{center}
+\end{enumerate}
+\subsubsection{DELETE}
+\label{sec:orge088203}
+\begin{enumerate}
+\item /friends/\{id\}
+\label{sec:org11cf258}
+Borra una relación de la base de datos.
+\begin{center}
+\includegraphics[width=.9\linewidth]{./images/DELETE_friends_id.PNG}
+\end{center}
+\end{enumerate}
+\subsection{Posts}
+\label{sec:org44ec712}
+\subsubsection{GET}
+\label{sec:org0a11d84}
+\begin{enumerate}
+\item /posts
+\label{sec:org489abc9}
+Devuelve todos los posts.
+\begin{center}
+\includegraphics[width=.9\linewidth]{./images/GET_posts.PNG}
+\end{center}
+\item /posts/\{id\}
+\label{sec:orge040752}
+Devuelve la información del post dado el id
+\begin{center}
+\includegraphics[width=.9\linewidth]{./images/GET_posts_id.PNG}
+\end{center}
+\end{enumerate}
+\subsubsection{POST}
+\label{sec:org5635fb4}
+\begin{enumerate}
+\item /posts
+\label{sec:org19a2fed}
+Crea un nuevo post con el body recibido.
+\begin{center}
+\includegraphics[width=.9\linewidth]{./images/POST_post.PNG}
+\end{center}
+\end{enumerate}
+\subsubsection{PUT}
+\label{sec:orgbe1fe7b}
+\begin{enumerate}
+\item /posts/\{id\}
+\label{sec:org505cf18}
+Actualiza el post pasado por id con el body.
+\begin{center}
+\includegraphics[width=.9\linewidth]{./images/PUT_post_id.PNG}
+\end{center}
+\end{enumerate}
+\subsubsection{DELETE}
+\label{sec:orgd572390}
+\begin{enumerate}
+\item /posts/\{id\}
+\label{sec:org26d7f60}
+Borra el post indicado en el id
+\begin{center}
+\includegraphics[width=.9\linewidth]{./images/DELETE_post_id.PNG}
+\end{center}
+\end{enumerate}
+\section{Estructura de la APIrest}
+\label{sec:orgf481bcf}
+\subsection{Routes}
+\label{sec:org49c367a}
+Contiene las diferentes clases con las rutas de la API. Estas llamarán
+a los daos para realizar las diferentes acciones.
+También contiene la clase de la conexión a la base de datos que en una
+API más grande iría en otro paquete.
+Además contiene la clase del Cliente que ejecuta las pruebas a nuestro
+APIrest.
+\subsection{Domain}
+\label{sec:orgda50d30}
+Contiene una clase intermedia por cada tabla de MySQL. Estas además
+contienen tres clases cada una, Get, Post, Patch las cuales se usan de
+intermediarias entre la entrada y salida de la base de datos y la api.
+Con esto nos permitimos más flexibilidad a la hora de realizar cambios
+en la entrada o en la base de datos. 
+
+La explicación de porqué se llama PATCH la clase que se usa para el
+PUT es porque, según los estándares, el PUT es una modificación
+completa de una entidad mientras que el PATCH es una modificación de
+alguno de los atributos de esta. Nos parecía más lógico usar esta pero
+no disponiamos de dicho método.
+\subsection{DAO's}
+\label{sec:org31af409}
+El paquete daos contine todas las funciones de inserción, modificación
+y consulta de las diferentes tablas de la base de datos. Son aquellas
+clases que nos permiten la comunicación y la que realmente realizan la
+acción.
+\subsection{Errores}
+\label{sec:org3068f49}
+Controlamos el tipo de output que esperamos y formamos para enviar.
+
+No hemos realizado ningún tratamiento de errores ya que no se pide
+pero consideramos necesario nombrarlo y aparte decir una serie de
+estandares que, de haber podido, lo habriamos implementado como
+devolver un 20X donde X puede ser 0,1,2,3 o 4 en los DELETE
+dependiendo de lo que este devuelva. Estandarizar los PUT y devolver
+los correspondientes errores 401, etc. si hubiera un sistema de login.
+
+También mandar los diferentes errores 404, etc. en función de si el
+recurso pedido se encuentra o no en el sistema.
+\section{Capturas con detalles}
+\label{sec:orgd332bde}
+\subsection{Postman}
+\label{sec:org8c2f09b}
+Se ha usado postman, extensión de chrome, para realizar las pruebas ya
+que este permite ejecutar los diferentes tipos de verbos, ver
+cabeceras y añadir en el caso de los posts.
+A continuación se adjuntan algunas capturas de ejemplo. Adjuntas se
+dejan todas las capturas para mejor presentación de la memoria.
+Se encontrarán en Memoria/Postman/IMAGES
+\begin{center}
+\includegraphics[width=.9\linewidth]{./Postman/IMAGES/GET_users_posts_filters.png}
+\end{center}
+\begin{center}
+\includegraphics[width=.9\linewidth]{./Postman/IMAGES/GET_friends_for_user_id_filter_from_to.png}
+\end{center}
+\begin{center}
+\includegraphics[width=.9\linewidth]{./Postman/IMAGES/PUT_post.png}
+\end{center}
+\section{Cliente}
+\label{sec:orgd72ca0a}
+La propia ejecución del Cliente permite la prueba entera de la API y
+tiene lo minimo y necesario para que funcione, insercciones, etc. 
+
+A continuación presentamos la traza del cliente a la hora de realizar
+algunas de las pruebas. Las hemos cortado para verlas bien en la
+memoria. Si se ejecuta el cliente se podrá observar bien la traza.
+\begin{verbatim}
+Usuario creado en la BBDD: JerseyWebTarget 
+{ http://localhost:8080/sos/users }
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<user><nombre>prueba</nombre><apellidos>prueba_apellidos</apellidos>
+<email>prueba@prueba.com</email></user>
+ Con respuesta : 200
+Lista de todos los usuarios de la BBDD en la ruta: 
+JerseyWebTarget { http://localhost:8080/sos/users }
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<users>
+    <user>
+        <id>1</id>
+        <nombre>prueba</nombre>
+        <apellidos>prueba_apellidos</apellidos>
+        <email>prueba@prueba.com</email>
+        <activo>true</activo>
+    </user>
+    <user>
+        <id>2</id>
+        <nombre>prueba2</nombre>
+        <apellidos>prueba_apellidos2</apellidos>
+        <email>prueba2@prueba2.com</email>
+        <activo>true</activo>
+    </user>
+</users>
+
+ Con respuesta : 200
+Post creado en la BBDD: JerseyWebTarget 
+{ http://localhost:8080/sos/users }
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<post><contenido>prueba</contenido><user_id>1</user_id></post>
+ Con respuesta : 200
+Modificado post creado en la BBDD: JerseyWebTarget 
+{ http://localhost:8080/sos/posts/1 }
+true
+ Con respuesta : 200
+Posts del primer usuario filtrado por rango de la BBDD en la ruta: 
+JerseyWebTarget { http://localhost:8080/sos/posts/1?from=1&to=1 }
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<posts>
+    <post>
+        <id>1</id>
+        <contenido>prueba_cambiada</contenido>
+        <fecha>2017-05-08 17:24:31.0</fecha>
+        <activo>true</activo>
+        <user_id>1</user_id>
+    </post>
+</posts>
+
+ Con respuesta : 200
+Posts del primer usuario filtrado por fecha de la BBDD en la ruta:
+ JerseyWebTarget { http://localhost:8080/sos/posts/1?dinit=2017-05-02 }
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<posts>
+    <post>
+        <id>1</id>
+        <contenido>prueba_cambiada</contenido>
+        <fecha>2017-05-08 17:24:31.0</fecha>
+        <activo>true</activo>
+        <user_id>1</user_id>
+    </post>
+</posts>
+
+ Con respuesta : 200
+Eliminado el 1� post creado en la BBDD: JerseyWebTarget 
+{ http://localhost:8080/sos/posts/3 }
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<ok>true</ok>
+ Con respuesta : 200
+Posibles amigos filtrados por nombre de la BBDD en la ruta:
+ JerseyWebTarget { http://localhost:8080/sos/users?name=prue }
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<users>
+    <user>
+        <id>1</id>
+        <nombre>prueba</nombre>
+        <apellidos>prueba_apellidos</apellidos>
+        <email>prueba@prueba.com</email>
+        <activo>true</activo>
+    </user>
+    <user>
+        <id>2</id>
+        <nombre>prueba2</nombre>
+        <apellidos>prueba_apellidos2</apellidos>
+        <email>prueba2@prueba2.com</email>
+        <activo>true</activo>
+    </user>
+</users>
+
+ Con respuesta : 200
+Usuario creado en la BBDD: JerseyWebTarget 
+{ http://localhost:8080/sos/friends }
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<friend><user_id>1</user_id><amigo_id>2</amigo_id></friend>
+ Con respuesta : 200
+Lista de todos los amigos del 1� usario de la BBDD en la ruta:
+ JerseyWebTarget { http://localhost:8080/sos/users/1/friends?name=prueb }
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<users>
+    <user>
+        <id>2</id>
+        <nombre>prueba2</nombre>
+        <apellidos>prueba_apellidos2</apellidos>
+        <email>prueba2@prueba2.com</email>
+        <activo>true</activo>
+    </user>
+</users>
+
+ Con respuesta : 200
+Eliminado la amistad creada en la BBDD: JerseyWebTarget
+ { http://localhost:8080/sos/friends/1?amigo=2 }
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<ok>1</ok>
+ Con respuesta : 200
+Usuario creado en la BBDD: JerseyWebTarget { http://localhost:8080/sos/users/1 }
+true
+ Con respuesta : 200
+Eliminado el 1� usuario creado en la BBDD: JerseyWebTarget
+ { http://localhost:8080/sos/users/1 }
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<ok>true</ok>
+ Con respuesta : 200
+Posts del primer usuario filtrado por contenido BBDD en la ruta:
+ JerseyWebTarget { http://localhost:8080/sos/users/1/friends/posts?content=pru }
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<posts>
+    <post>
+        <id>2</id>
+        <contenido>prueba_amigo</contenido>
+        <fecha>2017-05-08 17:24:31.0</fecha>
+        <activo>true</activo>
+        <user_id>1</user_id>
+    </post>
+</posts>
+
+ Con respuesta : 200
+\end{verbatim}
+\section{Estructura MySQL}
+\label{sec:orge687006}
+El sql adunto creará un schema con nombre restfullapi con tres
+tablas.
+\subsection{Tabla Usuarios}
+\label{sec:org8732f48}
+Contiene los usuarios de la aplicación con los siguientes campos.
+\begin{itemize}
+\item id: id interno para el uso de los diferentes.
+\item nombre: Nombre del usuario.
+\item apellidos: Apellidos del usuario.
+\item email: Email del usuario.
+\item activo: Campo usado para un borrado lógico de la base de datos.
+\end{itemize}
+\subsection{Tabla Posts}
+\label{sec:org3104183}
+Contiene los posts de los usuarios.
+\begin{itemize}
+\item id: id interno para el uso de los recursos de la API.
+\item contenido: Contenido del post.
+\item fecha: Fecha en el que se ha creado el post.
+\item usuario\_id: foreign key a la tabla de usuarios para relacionar el
+post con estos
+\item activo: Borrado logico.
+\end{itemize}
+\subsection{Tabla Amigos}
+\label{sec:org2e34bb3}
+Contiene las relaciones entre los usuarios.
+\begin{itemize}
+\item id: id para uso interno.
+\item usuario\_id: id del usuario que crea la relación.
+\item amigo\_id: id del usuario destinatario de la relación.
+\item activo: Borrado lógico de la base de datos.
+\end{itemize}
+\section{Archivos}
+\label{sec:orge524ca1}
+\begin{itemize}
+\item Cliente: Se encuentra el zip con el cliente.
+\item DataBase: Se encuentra el schema y el modelo de la base de datos.
+\item Memoria: Se encuentra la memoria.
+\item WAR: Se encuentra el war.
+\end{itemize}
+\end{document}

@@ -1,0 +1,322 @@
+#+TITLE:APIRESTfull con Glassfish y XML
+#+Latex: \author{Autores:  \\ Alberto Revuelta Arribas \\  Roberto Sarmiento del Río}
+#+OPTIONS: toc:nil author:nil
+#+OPTIONS: ^:nil
+
+\begin{center}
+\textit{Práctica 1 - Sistemas Orientados a Servicios}
+\end{center}
+\vfill
+\vfill
+\includegraphics[width=4cm]{./images/logo.jpg}
+\hfill
+\hfill
+\includegraphics[width=4cm]{./images/logo2.jpg}
+\thispagestyle{empty}
+
+\newpage
+\thispagestyle{empty} 
+\textit{Esta página se deja en blanco intencionadamente}
+\newpage
+#+TOC: headlines 5
+\thispagestyle{empty} 
+\newpage
+\setcounter{page}{1}
+* Diseño del servicio
+** Usuarios
+*** GET
+**** /users
+     Devuelve una lista de usuarios existentes en la base de datos.
+     [[./images/users.jpg]]
+**** /users/{id}
+     Devuelve la información del usuario expecificado con el id en la
+     ruta.
+     [[./images/usersByID.jpg]]
+**** /users/{id}/friends
+     Devuelve una lista con los usuarios amigos del usuario indicado
+     con el id en la ruta.
+     [[./images/usersFriends.png]]
+**** /users/{id}/posts
+     Devuelve los posts del usuario indicado con el id en la ruta.
+     [[./images/usersPosts.jpg]]
+**** /users/{id}/friends/posts
+     Devuelve una lista con los posts de los amigos.
+     [[./images/usersFriendsPosts.jpg]]
+*** POST
+**** /users
+     Crea un nuevo usuario a patir del body dado.
+     [[./images/postUser.png]]
+*** PUT
+**** /users/{id}
+     Actualiza el usuario indicado con el id en el path con el body
+     dado.
+     [[./images/put.jpg]]
+*** DELETE
+**** /users/{id}
+     Borra el usuario con el id dado en la ruta.
+     [[./images/delete.jpg]]
+** Amigos
+*** GET
+**** /friends
+Devuelve la lista de relaciones entre usuarios.
+[[./images/GET_friends.PNG]]
+**** /friends/{id}
+Devuelve la lista de relaciones creadas por el usuario con el id dado.
+[[./images/GET_friends_id.PNG]]
+**** /friends/{id}/of
+Devuelve la lista de relaciones cuyo amigo sea el id dado en la ruta. 
+[[./images/GET_friends_id_of.PNG]]
+*** POST
+**** /friends
+[[./images/POST_friends.PNG]]
+Crea una nueva relacion con lo indicado en el body.
+*** PUT
+**** /friends/{id}
+Actualiza la relación indicada en la ruta con el body.
+[[./images/PUT_friend_id.PNG]]
+*** DELETE
+**** /friends/{id}
+Borra una relación de la base de datos.
+[[./images/DELETE_friends_id.PNG]]
+** Posts
+*** GET
+**** /posts
+Devuelve todos los posts.
+[[./images/GET_posts.PNG]]
+**** /posts/{id}
+Devuelve la información del post dado el id
+[[./images/GET_posts_id.PNG]]
+*** POST
+**** /posts
+Crea un nuevo post con el body recibido.
+[[./images/POST_post.PNG]]
+*** PUT
+**** /posts/{id}
+Actualiza el post pasado por id con el body.
+[[./images/PUT_post_id.PNG]]
+*** DELETE
+**** /posts/{id}
+Borra el post indicado en el id
+[[./images/DELETE_post_id.PNG]]
+* Estructura de la APIrest
+** Routes
+Contiene las diferentes clases con las rutas de la API. Estas llamarán
+a los daos para realizar las diferentes acciones.
+También contiene la clase de la conexión a la base de datos que en una
+API más grande iría en otro paquete.
+Además contiene la clase del Cliente que ejecuta las pruebas a nuestro
+APIrest.
+** Domain
+Contiene una clase intermedia por cada tabla de MySQL. Estas además
+contienen tres clases cada una, Get, Post, Patch las cuales se usan de
+intermediarias entre la entrada y salida de la base de datos y la api.
+Con esto nos permitimos más flexibilidad a la hora de realizar cambios
+en la entrada o en la base de datos. 
+
+La explicación de porqué se llama PATCH la clase que se usa para el
+PUT es porque, según los estándares, el PUT es una modificación
+completa de una entidad mientras que el PATCH es una modificación de
+alguno de los atributos de esta. Nos parecía más lógico usar esta pero
+no disponiamos de dicho método.
+** DAO's
+El paquete daos contine todas las funciones de inserción, modificación
+y consulta de las diferentes tablas de la base de datos. Son aquellas
+clases que nos permiten la comunicación y la que realmente realizan la
+acción.
+** Errores
+Controlamos el tipo de output que esperamos y formamos para enviar.
+
+No hemos realizado ningún tratamiento de errores ya que no se pide
+pero consideramos necesario nombrarlo y aparte decir una serie de
+estandares que, de haber podido, lo habriamos implementado como
+devolver un 20X donde X puede ser 0,1,2,3 o 4 en los DELETE
+dependiendo de lo que este devuelva. Estandarizar los PUT y devolver
+los correspondientes errores 401, etc. si hubiera un sistema de login.
+
+También mandar los diferentes errores 404, etc. en función de si el
+recurso pedido se encuentra o no en el sistema.
+* Capturas con detalles
+** Postman
+Se ha usado postman, extensión de chrome, para realizar las pruebas ya
+que este permite ejecutar los diferentes tipos de verbos, ver
+cabeceras y añadir en el caso de los posts.
+A continuación se adjuntan algunas capturas de ejemplo. Adjuntas se
+dejan todas las capturas para mejor presentación de la memoria.
+Se encontrarán en Memoria/Postman/IMAGES
+[[./Postman/IMAGES/GET_users_posts_filters.png]]
+[[./Postman/IMAGES/GET_friends_for_user_id_filter_from_to.png]]
+[[./Postman/IMAGES/PUT_post.png]]
+* Cliente
+La propia ejecución del Cliente permite la prueba entera de la API y
+tiene lo minimo y necesario para que funcione, insercciones, etc. 
+
+A continuación presentamos la traza del cliente a la hora de realizar
+algunas de las pruebas. Las hemos cortado para verlas bien en la
+memoria. Si se ejecuta el cliente se podrá observar bien la traza.
+#+BEGIN_SRC
+Usuario creado en la BBDD: JerseyWebTarget 
+{ http://localhost:8080/sos/users }
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<user><nombre>prueba</nombre><apellidos>prueba_apellidos</apellidos>
+<email>prueba@prueba.com</email></user>
+ Con respuesta : 200
+Lista de todos los usuarios de la BBDD en la ruta: 
+JerseyWebTarget { http://localhost:8080/sos/users }
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<users>
+    <user>
+        <id>1</id>
+        <nombre>prueba</nombre>
+        <apellidos>prueba_apellidos</apellidos>
+        <email>prueba@prueba.com</email>
+        <activo>true</activo>
+    </user>
+    <user>
+        <id>2</id>
+        <nombre>prueba2</nombre>
+        <apellidos>prueba_apellidos2</apellidos>
+        <email>prueba2@prueba2.com</email>
+        <activo>true</activo>
+    </user>
+</users>
+
+ Con respuesta : 200
+Post creado en la BBDD: JerseyWebTarget 
+{ http://localhost:8080/sos/users }
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<post><contenido>prueba</contenido><user_id>1</user_id></post>
+ Con respuesta : 200
+Modificado post creado en la BBDD: JerseyWebTarget 
+{ http://localhost:8080/sos/posts/1 }
+true
+ Con respuesta : 200
+Posts del primer usuario filtrado por rango de la BBDD en la ruta: 
+JerseyWebTarget { http://localhost:8080/sos/posts/1?from=1&to=1 }
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<posts>
+    <post>
+        <id>1</id>
+        <contenido>prueba_cambiada</contenido>
+        <fecha>2017-05-08 17:24:31.0</fecha>
+        <activo>true</activo>
+        <user_id>1</user_id>
+    </post>
+</posts>
+
+ Con respuesta : 200
+Posts del primer usuario filtrado por fecha de la BBDD en la ruta:
+ JerseyWebTarget { http://localhost:8080/sos/posts/1?dinit=2017-05-02 }
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<posts>
+    <post>
+        <id>1</id>
+        <contenido>prueba_cambiada</contenido>
+        <fecha>2017-05-08 17:24:31.0</fecha>
+        <activo>true</activo>
+        <user_id>1</user_id>
+    </post>
+</posts>
+
+ Con respuesta : 200
+Eliminado el 1� post creado en la BBDD: JerseyWebTarget 
+{ http://localhost:8080/sos/posts/3 }
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<ok>true</ok>
+ Con respuesta : 200
+Posibles amigos filtrados por nombre de la BBDD en la ruta:
+ JerseyWebTarget { http://localhost:8080/sos/users?name=prue }
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<users>
+    <user>
+        <id>1</id>
+        <nombre>prueba</nombre>
+        <apellidos>prueba_apellidos</apellidos>
+        <email>prueba@prueba.com</email>
+        <activo>true</activo>
+    </user>
+    <user>
+        <id>2</id>
+        <nombre>prueba2</nombre>
+        <apellidos>prueba_apellidos2</apellidos>
+        <email>prueba2@prueba2.com</email>
+        <activo>true</activo>
+    </user>
+</users>
+
+ Con respuesta : 200
+Usuario creado en la BBDD: JerseyWebTarget 
+{ http://localhost:8080/sos/friends }
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<friend><user_id>1</user_id><amigo_id>2</amigo_id></friend>
+ Con respuesta : 200
+Lista de todos los amigos del 1� usario de la BBDD en la ruta:
+ JerseyWebTarget { http://localhost:8080/sos/users/1/friends?name=prueb }
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<users>
+    <user>
+        <id>2</id>
+        <nombre>prueba2</nombre>
+        <apellidos>prueba_apellidos2</apellidos>
+        <email>prueba2@prueba2.com</email>
+        <activo>true</activo>
+    </user>
+</users>
+
+ Con respuesta : 200
+Eliminado la amistad creada en la BBDD: JerseyWebTarget
+ { http://localhost:8080/sos/friends/1?amigo=2 }
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<ok>1</ok>
+ Con respuesta : 200
+Usuario creado en la BBDD: JerseyWebTarget { http://localhost:8080/sos/users/1 }
+true
+ Con respuesta : 200
+Eliminado el 1� usuario creado en la BBDD: JerseyWebTarget
+ { http://localhost:8080/sos/users/1 }
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<ok>true</ok>
+ Con respuesta : 200
+Posts del primer usuario filtrado por contenido BBDD en la ruta:
+ JerseyWebTarget { http://localhost:8080/sos/users/1/friends/posts?content=pru }
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<posts>
+    <post>
+        <id>2</id>
+        <contenido>prueba_amigo</contenido>
+        <fecha>2017-05-08 17:24:31.0</fecha>
+        <activo>true</activo>
+        <user_id>1</user_id>
+    </post>
+</posts>
+
+ Con respuesta : 200
+#+END_SRC
+* Estructura MySQL
+  El sql adunto creará un schema con nombre restfullapi con tres
+  tablas.
+** Tabla Usuarios
+Contiene los usuarios de la aplicación con los siguientes campos.
+- id: id interno para el uso de los diferentes.
+- nombre: Nombre del usuario.
+- apellidos: Apellidos del usuario.
+- email: Email del usuario.
+- activo: Campo usado para un borrado lógico de la base de datos.
+** Tabla Posts
+Contiene los posts de los usuarios.
+- id: id interno para el uso de los recursos de la API.
+- contenido: Contenido del post.
+- fecha: Fecha en el que se ha creado el post.
+- usuario_id: foreign key a la tabla de usuarios para relacionar el
+  post con estos
+- activo: Borrado logico.
+** Tabla Amigos
+Contiene las relaciones entre los usuarios.
+- id: id para uso interno.
+- usuario_id: id del usuario que crea la relación.
+- amigo_id: id del usuario destinatario de la relación.
+- activo: Borrado lógico de la base de datos.
+* Archivos
+- Cliente: Se encuentra el zip con el cliente.
+- DataBase: Se encuentra el schema y el modelo de la base de datos.
+- Memoria: Se encuentra la memoria.
+- WAR: Se encuentra el war.

@@ -1,0 +1,31 @@
+/*
+ Incluya en este fichero todas las definiciones que pueden
+ necesitar compartir todos los módulos (editor, subscriptor y
+ proceso intermediario), si es que las hubiera.
+ */
+
+#define LINE 5
+#define SIZE 64
+#define MAX_LISTEN 64
+#define RESPONSE_SIZE sizeof(int)+sizeof(char)
+#define AUTHORIZE 1
+#define CANCEL 2
+#define EVENT 3
+#define OFF 4
+#define CREATE 5
+#define REMOVE 6
+#define START 7
+typedef struct notificacion {
+	int opt;
+	char* tema;
+	char* mensaje;
+	int puerto;
+	struct sockaddr_in * cliente;
+} notificacion;
+
+typedef notificacion * notif;
+
+char* marshallMsg(const int opt, char ** argumento, int argumentos,
+		int * longitud);
+
+notif unMarshallMsg(char* mensaje);

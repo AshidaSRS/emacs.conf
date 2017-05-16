@@ -1,0 +1,22 @@
+* Diseño del servicio
+** Usuarios
+*** GET
+*** POST
+*** PUT
+** Amigos
+*** GET
+*** POST
+*** PUT
+** Posts
+*** GET
+*** POST
+*** PUT
+* Capturas con detalles
+** Postman
+* Capturas del cliente
+* Estructura MySQL
+* Archivos
+- memoria.pdf
+- schema.sql
+- sos.war
+- sos.rar
