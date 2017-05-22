@@ -1,13 +1,13 @@
 
 ;; ----- smex-history -----
 (
+ list-packages
+ package-autoremove
  package-install
  company-mode
  elm-mode
  package-refresh-contents
  helm-mode
- ielm
- multi-term
 )
 
 ;; ----- smex-data -----
@@ -17,7 +17,7 @@
  (multi-term . 17)
  (term-mode . 2)
  (term-terminal-menu . 1)
- (list-packages . 3)
+ (list-packages . 5)
  (make-directory . 2)
  (jedi-mode . 4)
  (jedi:install-server . 9)
@@ -28,4 +28,5 @@
  (helm-mode . 1)
  (elm-mode . 1)
  (company-mode . 1)
+ (package-autoremove . 1)
 )

@@ -3,8 +3,9 @@
 ;;; Code:
 (add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
-;;;### (autoloads nil "hi2" "hi2.el" (22567 43855 153672 486000))
-;;; Generated autoloads from hi2.el
+;;;### (autoloads nil "hi2" "../../../../../.emacs.d/elpa/hi2-20141005.1231/hi2.el"
+;;;;;;  "5f5eb9dd7e685902ae749ae8de39e8f9")
+;;; Generated autoloads from ../../../../../.emacs.d/elpa/hi2-20141005.1231/hi2.el
 
 (autoload 'hi2-mode "hi2" "\
 Haskell indentation mode that deals with the layout rule.
@@ -18,6 +19,12 @@ autofill-mode.
 Turn on the hi2 minor mode.
 
 \(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads nil nil ("../../../../../.emacs.d/elpa/hi2-20141005.1231/hi2-autoloads.el"
+;;;;;;  "../../../../../.emacs.d/elpa/hi2-20141005.1231/hi2.el")
+;;;;;;  (22819 19911 809402 180000))
 
 ;;;***
 

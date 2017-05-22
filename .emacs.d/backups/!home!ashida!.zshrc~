@@ -85,3 +85,66 @@ alias zshconfig="mate ~/.zshrc"
 alias ohmyzsh="mate ~/.oh-my-zsh"
 alias yrt="yaourt"
 alias ls="ls++ -al"
+alias aktualiza="yaourt -Syyuuaa"
+
+LASTKUBE=""
+
+kubepre() {
+    if [ "$LASTKUBE" != "pre" ]; then
+        LASTKUBE="pre"
+        gcloud container clusters get-credentials gennion-prod-gce-cluster --zone europe-west1-b
+    fi
+}
+
+kubectlpre() {
+    kubepre
+    kubectl "$@"
+}
+
+kubeint() {
+    if [ "$LASTKUBE" != "int" ]; then
+        LASTKUBE="int"
+        gcloud container clusters get-credentials gennion-integration-gce-cluster --zone europe-west1-c
+    fi
+}
+
+kubectlint() {
+    kubeint
+    kubectl "$@"
+}
+
+kubepro() {
+    if [ "$LASTKUBE" != "pro" ]; then
+        LASTKUBE="pro"
+        gcloud container clusters get-credentials gennion-live-gce-cluster --zone europe-west1-d
+    fi
+}
+
+kubectlpro() {
+    kubepro
+    kubectl "$@"
+}
+
+alias prepods="kubectlpre get pods -o wide"
+alias intpods="kubectlint get pods -o wide"
+alias propods="kubectlpro get pods -o wide"
+
+alias preserv="kubectlpre get service"
+alias intserv="kubectlint get service"
+alias proserv="kubectlpro get service"
+
+alias pretop='kubectlpre top pod | sed  's/Mi//' | tail -n +2 | sort -n -k 3 -r'
+alias inttop='kubectlint top pod | sed  's/Mi//' | tail -n +2 | sort -n -k 3 -r'
+alias protop='kubectlpro top pod | sed  's/Mi//' | tail -n +2 | sort -n -k 3 -r'
+
+alias prelogs='kubectlpre logs -f'
+alias intlogs='kubectlint logs -f'
+alias prologs='kubectlpro logs -f'
+
+alias vpnfi="sudo vpnc fi"
+alias killvpn="sudo killall -9 vpnc"
+alias sshfi="ssh u120233@triqui.fi.upm.es"
+
+if ( -e /usr/local/bin/ciao/.cshrc ) then
+	source /user/local/bin/ciao/.cshrc
+endif

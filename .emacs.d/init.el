@@ -85,6 +85,8 @@
 (load "setup-company.el")
 
 ;; Langauage-specific
+(load "setup-scala-mode-auto.el")
+;;(load "extras/emacs-scala-mode/scala-mode.el")
 (load "setup-elisp.el")
 (load "setup-clojure.el")
 (load "setup-js.el")
@@ -108,7 +110,8 @@
 (load "setup-elixir.el")
 ;;(load "setup-ac.el")
 (load "setup-emojify.el")
-(load "setup-ensime.el")
+;;(load "setup-ensime.el")
+(load "setup-ciao.el")
 
 ;Custom variables
 (setq custom-file "~/.emacs.d/customizations/custom.el")
