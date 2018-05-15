@@ -5,7 +5,9 @@ The base is from here! -> [[https://github.com/Ironjanowar/.emacs.d][Ironjanowar
 - Install Emacs.
 - Make sure you have no *.emacs*. You only need an empty *.emacs.d*
   directory, or simply install Emacs, delete *.emacs.d* and *.emacs*
-  (in case you have it) and clone this repository.
+  (in case you have it).
+- Clone this repository.
+- Ignore the *.emacs.d_back* it's an old configuration (you can remove it).
 - Open Emacs.
 - Open *~/.emacs.d/init.org*
 - Use the command: ~C-c C-v t~ (or ~M-x org-babel-tangle RET~)
