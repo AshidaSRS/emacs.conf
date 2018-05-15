@@ -1,0 +1,1482 @@
+* Init
+:PROPERTIES:
+:tangle: ~/.e#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+(use-package ensime
+  :ensure t
+  :pin melpa-stable
+  :init
+  (put 'ensime-auto-generate-config 'safe-local-variable #'booleanp)
+  (setq
+    ensime-startup-snapshot-notification nil
+    ensime-startup-notification nil)
+  :config
+  (require 'ensime-expand-region)
+  (add-hook 'git-timemachine-mode-hook (lambda () (ensime-mode 0))))
+#+END_SRCm;;; tron-theme.el --- A theme loosely based on Tron: Legacy colors
+
+;; Copyright (C) 2012 Tom Willemsen <tom@ryuslash.org>
+
+;; Author: Tom Willemsen <tom@ryuslash.org>
+;; Created: Wed Jan 4 2012
+;; Version: 12
+;; Keywords: faces
+;; URL: http://ryuslash.org/projects/tron-theme.html
+
+;; This file is free software; you can redistribute it and/or
+;; modify it under the terms of the GNU General Public License
+;; as published by the Free Software Foundation; either version 3
+;; of the License, or (at your option) any later version.
+
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this file; If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;; tron-theme is an Emacs theme that is loosely based on the colors
+;; observed in the movie Tron: Legacy.
+
+;;; Change Log:
+
+;; 1 - Initial release.
+;; 2 - Decrease size of the `org-level-*' faces.
+;; 3 - Add `info-title-1' through `info-title-4', `info-xref' and
+;;     `info-xref-visited' faces.
+;; 4 - Add `custom-button', `custom-button-mouse' and
+;;     `custom-button-pressed' faces.
+;; 5 - Add `css-property' and `css-proprietary-property' faces.
+;; 6 - Add `erc-default-face', `erc-input-face' and
+;;     `erc-nick-default-face' faces.
+;; 7 - Change `mode-line', `mode-line-buffer-id' and
+;;     `mode-line-inactive' faces.
+;; 8 - Add `region' face.
+;;   - Add riley's changes:
+;;     - Add `show-paren-match-face', `eshell-ls-archive-face',
+;;       `eshell-ls-backup-face', `eshell-ls-clutter-face',
+;;       `eshell-ls-directory-face', `eshell-ls-executable-face',
+;;       `eshell-ls-missing-face', `eshell-ls-product-face',
+;;       `eshell-ls-readonly-face', `eshell-ls-readonly-face',
+;;       `eshell-ls-special-face', `eshell-ls-symlink-face',
+;;       `eshell-ls-unreadable-face', `eshell-prompt-face',
+;;       `eshell-test-failed-face' and `eshell-test-ok-face' faces.
+;;     - Change `font-lock-comment-face' face.
+;; 9 - Fix typo in `font-lock-variable-name-face' face.
+;;   - Add `magit-header', `magit-diff-add', `magit-diff-del',
+;;     `magit-diff-hunk-header', `magit-diff-file-header',
+;;     `magit-item-highlight' and `magit-item-mark' faces.
+;; 10 - Add `rst-level-1-face' through `rst-level-6-face' faces.
+;; 11 - Change `font-lock-warning-face', `header-line',
+;;      `jabber-chat-prompt-local' and `jabber-chat-text-local'
+;;      faces.
+;;    - Add header.
+;;    - Add local variables, enable `rainbow-mode'.
+;; 12 - Remove quotes from :inherit properties.
+;;    - Explicitly set colors for `fringe'.
+
+;;; Code:
+
+(deftheme tron
+  "Create 2012-01-01")
+
+(custom-theme-set-faces
+ 'tron
+ '(bold ((t (:foreground "#24c6e0" :weight bold))))
+ '(bold-italic ((t (:inherit bold :slant italic))))
+ '(cursor ((t (:background "#15abc3"))))
+ '(default ((t (:background "#000000" :foreground "#15abc3"))))
+ '(fringe ((t (:background "#000000" :foreground "#15abc3"))))
+ '(header-line ((t (:inherit mode-line))))
+ '(linum ((t (:inherit default))))
+ '(mouse ((t (:foreground "#e0c625"))))
+ '(region ((t (:background "#e0c625" :foreground "#000000"))))
+ '(show-paren-match-face ((t (:weight bold))))
+
+ ;; column-marker
+ '(column-marker-1 ((t (:background "#a3e8ef" :foreground "#000000"))))
+ '(column-marker-2 ((t (:background "#55c3f8" :foreground "#000000"))))
+ '(column-marker-3 ((t (:background "#f6faf9" :foreground "#000000"))))
+
+ ;; css
+ '(css-property ((t (:inherit font-lock-variable-name-face))))
+ '(css-proprietary-property ((t (:inherit mouse))))
+
+ ;; custom
+ '(custom-button ((t (:inherit default :box (:line-width 1 :color "#15abc3")))))
+ '(custom-button-mouse ((t (:inherit custom-button :box (:color "#e0c624")))))
+ '(custom-button-pressed ((t (:inherit custom-button :box (:color "#05e4a5")))))
+
+ ;; Eshell
+ '(eshell-ls-archive-face ((t (:foreground "#029cdc" :bold t))))
+ '(eshell-ls-backup-face ((t (:inherit font-lock-builtin-face :italic t))))
+ '(eshell-ls-clutter-face ((t (:foreground "OrangeRed" :bold t))))
+ '(eshell-ls-directory-face ((t (:foreground "#e0c625" :bold t))))
+ '(eshell-ls-executable-face ((t (:foreground "#00815b"))))
+ '(eshell-ls-missing-face ((t (:foreground "#e0c624" :bold t))))
+ '(eshell-ls-product-face ((t (:foreground "OrangeRed"))))
+ '(eshell-ls-readonly-face ((t (:foreground "#808080" :italic t))))
+ '(eshell-ls-special-face ((t (:foreground "Mauve" :bold t))))
+ '(eshell-ls-symlink-face ((t (:foreground "#035390" :bold t))))
+ '(eshell-ls-unreadable-face ((t (:foreground "Grey30"))))
+ '(eshell-prompt-face ((t (:foreground "#e0c625"))))
+ '(eshell-test-failed-face ((t (:foreground "OrangeRed" :bold t))))
+ '(eshell-test-ok-face ((t (:foreground "#05e4a5" :bold t))))
+
+ ;; font-lock
+ '(font-lock-builtin-face ((t (:foreground "#029cdc"))))
+ '(font-lock-comment-delimiter-face ((t (:foreground "#2e3436" :weight bold))))
+ '(font-lock-comment-face ((t (:foreground "#808080" :slant italic))))
+ '(font-lock-constant-face ((t (:foreground "#035390"))))
+ '(font-lock-doc-face ((t (:foreground "#00815b"))))
+ '(font-lock-function-name-face ((t (:foreground "#e0c624" :bold t))))
+ '(font-lock-keyword-face ((t (:inherit font-lock-builtin-face :weight bold))))
+ '(font-lock-negation-char-face ((t (:foreground "#c3ab15"))))
+ '(font-lock-preprocessor-face ((t (:foreground "#c3ab15" :weight bold))))
+ '(font-lock-string-face ((t (:foreground "#05e4a5"))))
+ '(font-lock-type-face ((t (:foreground "#035390" :weight bold))))
+ '(font-lock-variable-name-face ((t (:foreground "#00815b"))))
+ '(font-lock-warning-face ((t (:foreground "OrangeRed"))))
+
+ ;; info
+ '(info-title-1 ((t (:inherit org-level-1))))
+ '(info-title-2 ((t (:inherit org-level-2))))
+ '(info-title-3 ((t (:inherit org-level-3))))
+ '(info-title-4 ((t (:inherit org-level-4))))
+ '(info-xref ((t (:inherit default :underline t))))
+ '(info-xref-visited ((t (:inherit mouse :underline t))))
+
+ ;; magit
+ '(magit-header ((t (:foreground "#e0c624" :weight bold))))
+ '(magit-diff-add ((t (:foreground "#00815b"))))
+ '(magit-diff-del ((t (:foreground "OrangeRed"))))
+ '(magit-diff-hunk-header ((t (:background "#101010"))))
+ '(magit-diff-file-header ((t (:weight bold :inherit magit-diff-hunk-header))))
+ '(magit-item-highlight ((t (:background "#101010"))))
+ '(magit-item-mark ((t (:background "#808080"))))
+
+ ;; mode-line
+ '(mode-line ((t (:foreground "#e0c625" :background nil :box nil))))
+ '(mode-line-buffer-id ((t (:weight bold))))
+ '(mode-line-inactive ((t (:foreground "#15abc3" :background nil :box nil))))
+
+ ;; rainbow-delimiters
+ '(rainbow-delimiters-depth-1-face ((t (:foreground "#a3e8ef"))))
+ '(rainbow-delimiters-depth-2-face ((t (:foreground "#55c3f8"))))
+ '(rainbow-delimiters-depth-3-face ((t (:foreground "#f6faf9"))))
+ '(rainbow-delimiters-depth-4-face ((t (:foreground "#4ed8f5"))))
+ '(rainbow-delimiters-depth-5-face ((t (:foreground "#004a88"))))
+ '(rainbow-delimiters-depth-6-face ((t (:foreground "#f0ffff"))))
+ '(rainbow-delimiters-depth-7-face ((t (:foreground "#51d7f0"))))
+ '(rainbow-delimiters-depth-8-face ((t (:foreground "#be9194"))))
+ '(rainbow-delimiters-depth-9-face ((t (:foreground "#94949c"))))
+
+ ;; rainbow-delimiters
+ '(org-level-1 ((t (:inherit rainbow-delimiters-depth-1-face :weight bold :height 1.6))))
+ '(org-level-2 ((t (:inherit rainbow-delimiters-depth-2-face :weight bold :height 1.4))))
+ '(org-level-3 ((t (:inherit rainbow-delimiters-depth-3-face :weight bold :height 1.2))))
+ '(org-level-4 ((t (:inherit rainbow-delimiters-depth-4-face :weight bold))))
+ '(org-level-5 ((t (:inherit rainbow-delimiters-depth-5-face :weight bold))))
+ '(org-level-6 ((t (:inherit rainbow-delimiters-depth-6-face :weight bold))))
+ '(org-level-7 ((t (:inherit rainbow-delimiters-depth-7-face :weight bold))))
+ '(org-level-8 ((t (:inherit rainbow-delimiters-depth-8-face :weight bold))))
+
+ ;; rst
+ '(rst-level-1-face ((t (:inherit rainbow-delimiters-depth-1-face :weight bold))))
+ '(rst-level-2-face ((t (:inherit rainbow-delimiters-depth-2-face :weight bold))))
+ '(rst-level-3-face ((t (:inherit rainbow-delimiters-depth-3-face :weight bold))))
+ '(rst-level-4-face ((t (:inherit rainbow-delimiters-depth-4-face :weight bold))))
+ '(rst-level-5-face ((t (:inherit rainbow-delimiters-depth-5-face :weight bold))))
+ '(rst-level-6-face ((t (:inherit rainbow-delimiters-depth-6-face :weight bold))))
+
+ ;; outline
+ '(outline-1 ((t (:inherit org-level-1))))
+ '(outline-2 ((t (:inherit org-level-2))))
+ '(outline-3 ((t (:inherit org-level-3))))
+ '(outline-4 ((t (:inherit org-level-4))))
+ '(outline-5 ((t (:inherit org-level-5))))
+ '(outline-6 ((t (:inherit org-level-6))))
+ '(outline-7 ((t (:inherit org-level-7))))
+ '(outline-8 ((t (:inherit org-level-8))))
+
+ ;; markdown
+ '(markdown-header-face-1 ((t (:inherit org-level-1))))
+ '(markdown-header-face-2 ((t (:inherit org-level-2))))
+ '(markdown-header-face-3 ((t (:inherit org-level-3))))
+ '(markdown-header-face-4 ((t (:inherit org-level-4))))
+ '(markdown-header-face-5 ((t (:inherit org-level-5))))
+ '(markdown-header-face-6 ((t (:inherit org-level-6))))
+
+ ;; jabber
+ '(jabber-chat-prompt-local ((t (:foreground "#15abc3"  :weight bold))))
+ '(jabber-chat-prompt-foreign ((t (:inherit font-lock-function-name-face))))
+ '(jabber-chat-prompt-system ((t (:inherit font-lock-doc-face))))
+ '(jabber-chat-text-local ((t (:foreground "#15abc3"))))
+ '(jabber-chat-text-foreign ((t (:inherit font-lock-function-name-face :weight normal))))
+ '(jabber-activity-face ((t (:foreground "#00815b"))))
+ '(jabber-activity-personal-face ((t (:foreground "OrangeRed"))))
+
+ ;; erc
+ '(erc-default-face ((t (:inherit jabber-chat-text-local))))
+ '(erc-input-face ((t (:inherit jabber-chat-text-foreign))))
+ '(erc-nick-default-face ((t (:inherit jabber-chat-prompt-system)))))
+
+(provide-theme 'tron)
+
+;; Local Variables:
+;; eval: (rainbow-mode 1)
+;; End:
+
+;;; tron-theme.el ends hereCannot load ensimeacs.d/init.el
+:END:
+#+BEGIN_SRC elisp :tangle "~/.emacs.d/init.el"
+(add-to-list 'load-path "~/.emacs.d/settings/")
+(add-to-list 'load-path "~/.emacs.d/plugins/")
+
+(require 'package-management-settings)
+
+(require 'interface-settings)
+
+(require 'editing-settings)
+
+(require 'programming-settings)
+
+(require 'programming-language-settings)
+
+(require 'reveal-settings)
+
+(require 'magit-settings)
+
+(require 'clean-buffers)
+
+(require 'mix-format)
+
+(require 'open-notes)
+
+(require 'restclient-settings)
+
+(require 'dockerfile-settings)
+#+END_SRC
+
+* Package Management
+:PROPERTIES:
+:tangle: ~/.emacs.d/settings/package-management-settings.el
+:END:
+** Melpa, marmalade
+
+Milkypostman’s Emacs Lisp Package Archive - https://melpa.org/#/
+
+Adding ~melpa stable~ to avoid conflicts.
+
+#+BEGIN_SRC elisp :tangle ./settings/package-management-settings.el :mkdirp yes
+
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (add-to-list
+   'package-archives
+   '("melpa" . "http://melpa.org/packages/") t)
+  (add-to-list
+   'package-archives
+   '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
+  (package-initialize))
+
+#+END_SRC
+
+** Use-package
+
+~Use-package~ is a magic package that allow us to configure packages
+and ensure to download them before configuring. JUST INSTALL IT DUDE!
+
+https://github.com/jwiegley/use-package
+
+#+BEGIN_SRC elisp :tangle ./settings/package-management-settings.el :mkdirp yes
+
+(unless (featurep 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package)
+  )
+
+#+END_SRC
+
+** Backup files
+
+Backup `~` ended files in ~.emacs.d/backup/~.
+
+#+BEGIN_SRC elisp :tangle ./settings/package-management-settings.el :mkdirp yes
+
+(setq make-backup-files nil) ;; Hello GIT
+
+(setq backup-directory-alist '(("" . "~/.emacs.d/backup")))
+
+#+END_SRC
+
+** Provide
+Provide *package-management-settings.el*
+
+#+BEGIN_SRC elisp :tangle ./settings/package-management-settings.el :mkdirp yes
+(provide 'package-management-settings)
+#+END_SRC
+
+* Interface
+:PROPERTIES:
+:tangle:   ~/.emacs.d/settings/interface-settings.el
+:END:
+** Session
+
+This let us save buffers from one session to another, but I personally
+don't use it so we're gonna comment this by now.
+
+#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+;; (desktop-save-mode 1)
+#+END_SRC
+
+** Emacs bars
+
+Cleaner interface, cleaner life.
+
+#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+
+(tooltip-mode -1)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+
+#+END_SRC
+
+** Theme
+Gotham theme
+#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+(use-package gotham-theme
+  :ensure t
+  :config (load-theme 'gotham t))
+#+END_SRC
+** Powerline
+
+#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+  (use-package powerline
+    :ensure t
+    :config (powerline-default-theme))
+#+END_SRC
+
+** Window movement
+
+I wanted a symbol in the left hand so I con move with *<symbol> +
+<arrow>*, I use Dvorak as a keyboard distribution so...
+
+#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+
+(use-package windmove
+  :bind (("C-. <up>" . windmove-up)
+         ("C-. <left>" . windmove-left)
+         ("C-. <right>" . windmove-right)
+         ("C-. <down>" . windmove-down))
+  )
+#+END_SRC
+
+** Helm rules!
+
+I personally LOOOVE helm
+
+#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+;; By @rockneurotiko
+(use-package helm
+  :ensure t
+  :diminish helm-mode
+  :init
+  (progn
+    (require 'helm-config)
+    (setq helm-candidate-number-limit 100)
+    ;; From https://gist.github.com/antifuchs/9238468
+    (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
+          helm-input-idle-delay 0.01  ; this actually updates things
+                                        ; reeeelatively quickly.
+          helm-yas-display-key-on-candidate t
+          helm-quick-update t
+          helm-M-x-requires-pattern nil
+          helm-ff-skip-boring-files t)
+    (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
+          helm-buffers-fuzzy-matching           t ; fuzzy matching buffer names when non--nil
+          helm-recentf-fuzzy-match              t
+          helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
+          helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
+          helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
+          helm-ff-file-name-history-use-recentf t
+          helm-M-x-fuzzy-match t)  ;; optional fuzzy matching for helm-M-x
+    (helm-mode))
+  :config
+  (progn
+    ;; rebind tab to run persistent action
+    (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+    ;; make TAB works in terminal
+    (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
+    ;; list actions using C-z
+    (define-key helm-map (kbd "C-z")  'helm-select-action))
+  :bind (("C-x C-f" . helm-find-files)
+         ("C-x C-b" . helm-buffers-list)
+         ("C-x b" . helm-mini)
+         ("M-y" . helm-show-kill-ring)
+         ("M-x" . helm-M-x)
+         ("C-h a" . helm-apropos)
+         ("C-x c o" . helm-occur)
+         ("C-x c y" . helm-yas-complete)
+         ("C-x c Y" . helm-yas-create-snippet-on-region)
+         ("C-x c SPC" . helm-all-mark-rings)
+         ("C-c h g" . helm-google-suggest)))
+
+(ido-mode -1)
+
+(use-package helm-descbinds
+  :ensure t
+  :bind (("C-h b" . helm-descbinds)
+         ("C-h w" . helm-descbinds)))
+
+(use-package helm-swoop
+  ;; :disabled t
+  :ensure t
+  :bind (("M-i" . helm-swoop)
+         ("M-I" . helm-swoop-back-to-last-point)
+         ("C-c M-i" . helm-multi-swoop)
+         ("C-x M-i" . helm-multi-swoop-all)))
+
+(use-package ace-jump-helm-line
+  ;; :disabled t
+  :ensure t
+  :commands helm-mode
+  :init (define-key helm-map (kbd "C-'") 'ace-jump-helm-line))
+
+
+(defun set-helm-swoop ()
+  ;; Change the keybinds to whatever you like :)
+  )
+
+
+(defun set-helm-ace-jump ()
+  )
+#+END_SRC
+
+** Rainbow
+Rainbow delimeters lets you see where starts and ends each pair of
+parentheses painting them with different collors by pairs.
+
+Rainbow mode lets you see hex colors in /.css/ files.
+
+#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+;; Rainbow delimeters
+(use-package rainbow-delimiters
+  :ensure t
+  :init
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+  )
+
+;; Rainbow mode
+(use-package rainbow-mode
+  :ensure t
+  :mode "\\.css\\'"
+  )
+#+END_SRC
+
+** Maximized
+
+Start Emacs maximized
+
+#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+#+END_SRC
+
+** Pretty dashboard
+
+#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+  ;; Remove initial buffer
+  (setq inhibit-startup-screen t)
+
+  (use-package projectile
+    :ensure t)
+
+  (use-package page-break-lines
+    :ensure t)
+
+  (use-package dashboard
+    :ensure t
+    :config
+    (dashboard-setup-startup-hook)
+    (setq dashboard-startup-banner nil)
+    (setq dashboard-items '((recents  . 5)
+                            (projects . 5)
+                            (agenda . 5))))
+#+END_SRC
+
+** Emojify
+Turn icons into REAL icons
+
+#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+  (use-package emojify
+    :ensure t
+    :config
+    (add-hook 'after-init-hook #'global-emojify-mode))
+#+END_SRC
+** All the icons!
+Needed for NeoTree :D
+
+#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+  (use-package all-the-icons
+    :ensure t)
+#+END_SRC
+** NeoTree
+#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+  (use-package neotree
+    :ensure t
+    :config
+    (global-set-key "\M-n" 'neotree-toggle)
+    (setq neo-theme 'icons))
+#+END_SRC
+
+** Font
+Source Code Pro font with size (100 -> 10) :D
+
+#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+;;(set-face-attribute 'default nil
+;;                    :family "Hack"
+;;                    :height 110
+;;                    :weight 'normal
+;;                    :width 'normal)
+(set-face-attribute 'mode-line nil :height 120)
+#+END_SRC
+** Provide
+Provide *interface-settings.el*
+
+#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+(provide 'interface-settings)
+#+END_SRC
+
+* Editing
+:PROPERTIES:
+:tangle:   ~/.emacs.d/settings/editing-settings.el
+:END:
+** Mutiple cursors
+
+Just a lot of cursors at the same time.
+
+#+BEGIN_SRC elisp :tangle ./settings/editing-settings.el :mkdirp yes
+;; Multiple cursors
+(use-package multiple-cursors
+  :ensure t
+  :bind (("C-S-c C-S-c" . mc/edit-lines)
+         ("C->" . mc/mark-next-like-this)
+         ("C-<" . mc/mark-previous-like-this)
+         ("C-c C-<" . mc/mark-all-like-this))
+  )
+#+END_SRC
+
+** Pretty icons
+Locating the cursor right after "->" and pressing ~Shift + Space~ transforms it into "→"
+
+#+BEGIN_SRC elisp :tangle ./settings/editing-settings.el :mkdirp yes
+  (use-package xah-math-input
+    :ensure t)
+#+END_SRC
+
+** Undo
+
+Glorious undo with `C-z` and redoo with `C-S-z`.
+
+#+BEGIN_SRC elisp :tangle ./settings/editing-settings.el
+;; Undo
+(use-package undo-tree
+  :ensure t
+  :init
+  (defalias 'redo 'undo-tree-redo)
+  :config
+  (global-undo-tree-mode 1)
+  (global-set-key (kbd "C-z") 'undo)
+  (global-set-key (kbd "C-S-z") 'redo)
+  )
+#+END_SRC
+
+** Indent buffer
+
+Function made by @skgsergio that indents the whole buffer.
+
+#+BEGIN_SRC elisp :tangle ./settings/editing-settings.el :mkdirp yes
+;; Indent Fucking Whole Buffer (by github.com/skgsergio)
+(defun iwb ()
+  "Indent whole buffer"
+  (interactive)
+  (delete-trailing-whitespace)
+  (indent-region (point-min) (point-max) nil)
+  (untabify (point-min) (point-max))
+  (message "Indent buffer: Done.")
+  )
+
+(global-set-key "\M-i" 'iwb)
+#+END_SRC
+
+** Key bind fill paragraph
+
+#+BEGIN_SRC elisp :tangle ./settings/editing-settings.el :mkdirp yes
+(global-set-key "\M-q" 'fill-paragraph)
+#+END_SRC
+
+** Move text
+
+#+BEGIN_SRC elisp :tangle ./settings/editing-settings.el :mkdirp yes
+;; Move text
+(use-package move-text
+  :ensure t
+  :config
+  (global-set-key [(control shift up)]  'move-text-up)
+  (global-set-key [(control shift down)]  'move-text-line-down)
+  )
+#+END_SRC
+
+** Indent with spaces
+
+INDENT WITH SPACES!!
+
+#+BEGIN_SRC elisp :tangle ./settings/editing-settings.el :mkdirp yes
+;; Don't indent with tabs ffs!
+(setq-default indent-tabs-mode nil)
+#+END_SRC
+
+** White space clean up
+Just before saving, erase the whitespaces left at the end of lines.
+
+#+BEGIN_SRC elisp :tangle ./settings/editing-settings.el :mkdirp yes
+;; Clean my file pl0x!
+(add-hook 'before-save-hook 'whitespace-cleanup)
+#+END_SRC
+
+** Sudo edit
+Edit with root user, open a file and execute ~M-x sudo-edit~
+
+#+BEGIN_SRC elisp :tangle ./settings/editing-settings.el :mkdirp yes
+  (use-package sudo-edit
+    :ensure t)
+#+END_SRC
+
+** Provide
+Provide *editing-settings.el*
+
+#+BEGIN_SRC elisp :tangle ./settings/editing-settings.el :mkdirp yes
+(provide 'editing-settings)
+#+END_SRC
+
+* Programming
+:PROPERTIES:
+:tangle:   ~/.emacs.d/settings/programming-settings.el
+:END:
+
+** Yasnippets
+
+Completion for all languages
+
+#+BEGIN_SRC elisp :tangle ./settings/programming-settings.el :mkdirp yes
+;; Yasnippets
+(use-package yasnippet
+  :ensure t
+  :init (yas-global-mode 1)
+  :config
+  (define-key yas-minor-mode-map (kbd "<tab>") nil)
+  (define-key yas-minor-mode-map (kbd "TAB") nil)
+  (define-key yas-minor-mode-map (kbd "<C-tab>") 'yas-expand)
+  )
+#+END_SRC
+
+** Smart Parens
+
+Good stuff with parens (https://github.com/Fuco1/smartparens)
+
+#+BEGIN_SRC elisp :tangle ./settings/programming-settings.el :mkdirp yes
+;; SmartParents
+(use-package smartparens
+  :ensure t
+  :init (smartparens-global-mode t))
+#+END_SRC
+
+** Aggressive Indent
+
+Indent everything
+
+#+BEGIN_SRC elisp :tangle ./settings/programming-settings.el :mkdirp yes
+;; Aggressive indent
+(use-package aggressive-indent
+  :ensure t
+  :init
+  (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
+  (add-hook 'css-mode-hook #'aggressive-indent-mode)
+  )
+#+END_SRC
+
+** Auto Complete
+
+Well...
+
+#+BEGIN_SRC elisp :tangle ./settings/programming-settings.el :mkdirp yes
+;; Auto complete
+(use-package auto-complete
+  :ensure t
+  :config (ac-config-default))
+#+END_SRC
+
+** Flycheck
+
+A lot of well...
+
+#+BEGIN_SRC elisp :tangle ./settings/programming-settings.el :mkdirp yes
+;; Flycheck
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
+#+END_SRC
+
+** Provide
+
+Providing *programming-settings.el*
+
+#+BEGIN_SRC elisp :tangle ./settings/programming-settings.el :mkdirp yes
+(provide 'programming-settings)
+#+END_SRC
+
+* Custom
+:PROPERTIES:
+:tangle:   ~/.emacs.d/settings/custom-settings.el
+:END::PROPERTIIES:
+** Popup
+#+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yes
+   (use-package popup
+       :pin melpa-stable)
+#+END_SRC
+** Counsel-proyectile
+#+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yes
+(use-package counsel-projectile
+  :config
+  (counsel-projectile-on))
+#+END_SRC
+** Expand-region
+#+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yes
+(use-package expand-region
+  :ensure t
+  :config
+  (global-set-key (kbd "C-=") 'er/expand-region)
+#+END_SRC
+** Provide
+
+Providing *customprogramming-language-settings.el*
+
+#+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yes
+(provide custom-settings)
+#+END_SRC
+* Languages
+:PROPERTIES:
+:tangle:   ~/.emacs.d/settings/programming-language-settings.el
+:END:
+Concrete language settings
+** Web
+
+JavaScript, CSS, HTML ...
+
+#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+;; php mode
+(use-package php-mode
+  :ensure t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.php[345]?\\'\\|\\.inc\\'" . php-mode)))
+
+;; json mode
+(use-package json-mode
+  :ensure t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.json\\'\\|\\.jshintrc\\'" . json-mode)))
+
+;; Web mode
+(use-package web-mode
+  :ensure t
+
+  :init
+  (defun my-web-mode-hook ()
+    "Hooks for Web mode."
+    (setq web-mode-markup-indent-offset 2)
+    (setq web-mode-css-indent-offset 2)
+    (setq web-mode-code-indent-offset 4)
+    (setq web-mode-enable-auto-pairing t)
+    (setq web-mode-enable-css-colorization t)
+    (setq web-mode-enable-current-element-highlight t)
+    (setq web-mode-enable-current-column-highlight t)
+    (setq web-mode-enable-auto-expanding t))
+
+  :config
+  (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.json\\'" . web-mode))
+  (add-hook 'web-mode-hook 'my-web-mode-hook)
+  )
+
+;; Emmet mode
+(use-package emmet-mode
+  :ensure t
+  :config
+  (add-hook 'web-mode-hook 'emmet-mode))
+
+;; Node repl
+(use-package nodejs-repl
+  :ensure t
+  :config
+  (defun my-jscallback ()
+    (local-set-key (kbd "C-c C-e") 'nodejs-repl-send-buffer))
+
+  (add-hook 'js-mode-hook 'my-jscallback))
+#+END_SRC
+
+** JavaScript
+
+#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+  ;;----------------------;
+  ;;; Javascript & Web ;;;
+  ;;----------------------;
+
+  (defun load-tern ()
+    (use-package tern
+      :ensure t
+      :diminish tern-mode
+      :config
+      (defun ternhook ()
+        (tern-mode t)
+        (auto-complete-mode))
+      (add-hook 'js2-mode-hook 'ternhook)
+      (add-hook 'web-mode-hook 'ternhook)
+      (require 'tern-auto-complete)
+      (tern-ac-setup))
+
+    (defun delete-tern-process ()
+      (interactive)
+      (delete-process "Tern")))
+
+  (defun js-flycheck ()
+    (use-package flycheck
+      :ensure t
+      :diminish flycheck-mode
+      :config
+      (add-hook 'js-mode-hook 'flycheck-mode)
+      (add-hook 'web-mode-hook 'flycheck-mode)
+      (flycheck-add-mode 'javascript-jshint 'web-mode)
+      (flycheck-add-mode 'html-tidy 'web-mode)))
+
+  (defun use-js2 ()
+    (use-package js2-mode
+      :ensure t
+      :init
+      (setq js-indent-level 4)
+      (setq js2-indent-level 4)
+      (setq-default js2-basic-offset 4)
+      (setq ac-js2-evaluate-calls t)
+      (setq js2-highlight-level 3)
+      :config
+      (add-hook 'js2-mode-hook 'ac-js2-mode)
+      (add-hook 'js2-mode-hook 'jasminejs-mode)
+      (use-package js2-refactor
+        :ensure t
+        :config
+        (add-hook 'js2-mode-hook #'js2-refactor-mode)
+        (js2r-add-keybindings-with-prefix "C-c C-m"))
+
+      (js2-imenu-extras-mode)
+      (apply #'derived-mode-p '(org-mode web-mode))
+
+      (add-to-list 'auto-mode-alist '("\\.js[x]?\\'" . js2-jsx-mode))
+
+      (add-hook 'js2-post-parse-callbacks
+                (lambda ()
+                  (when (> (buffer-size) 0)
+                    (let ((btext (replace-regexp-in-string
+                                  ": *true" " "
+                                  (replace-regexp-in-string "[\n\t ]+" " " (buffer-substring-no-properties 1 (buffer-size)) t t))))
+                      (mapc (apply-partially 'add-to-list 'js2-additional-externs)
+                            (split-string
+                             (if (string-match "/\\* *global *\\(.*?\\) *\\*/" btext) (match-string-no-properties 1 btext) "")
+                             " *, *" t))
+                      )))))
+
+    (use-package php-mode
+      :ensure t
+      :config
+      (add-to-list 'auto-mode-alist '("\\.php[345]?\\'\\|\\.inc\\'" . php-mode)))
+
+    (use-package json-mode
+      :ensure t
+      :config
+      (add-to-list 'auto-mode-alist '("\\.json\\'\\|\\.jshintrc\\'" . json-mode)))
+
+    (use-package jasminejs-mode
+      :ensure t
+      :diminish jasminejs-mode
+      :config
+      (add-hook 'jasminejs-mode-hook (lambda () (jasminejs-add-snippets-to-yas-snippet-dirs))))
+
+    (use-package js2-refactor
+      :ensure t
+      :diminish js2-refactor-mode)
+
+    (add-to-list 'auto-mode-alist
+                 '("\\.p?html\\(\\.[a-z]\\{2\\}\\)?\\'" . html-mode)))
+
+  (defun load-web-mode ()
+    (defun my-web-mode-hook ()
+      "Hooks for Web mode."
+      (setq web-mode-markup-indent-offset 2)
+      (setq web-mode-css-indent-offset 2)
+      (setq web-mode-code-indent-offset 4)
+      (set-face-attribute 'web-mode-css-at-rule-face nil :foreground "Pink3")
+      (setq web-mode-enable-auto-pairing t)
+      (setq web-mode-enable-css-colorization t)
+      (setq web-mode-enable-current-element-highlight t)
+      (setq web-mode-enable-current-column-highlight t)
+      (setq web-mode-enable-auto-expanding t))
+
+    (use-package web-mode
+      :ensure t
+      :init
+      (setq web-mode-content-types-alist
+            '(("jsx" . "\\.js[x]?\\'")))
+      :config
+      (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+      (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
+      (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+      (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+      (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+      (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+      (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+      (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
+      (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+      (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . web-mode))
+      (add-to-list 'auto-mode-alist '("\\.json\\'" . web-mode))
+      (add-hook 'web-mode-hook  'my-web-mode-hook))
+    )
+
+  (use-package emmet-mode
+    :ensure t
+    :config
+    (defun emmet-hook()
+      (emmet-mode)
+      (local-set-key (kbd "M-TAB") 'emmet-expand-line))
+    ;; Auto-start on any markup modes
+    (add-hook 'sgml-mode-hook 'emmet-hook)
+    ;; enable Emmet's css abbreviation.
+    (add-hook 'css-mode-hook  'emmet-hook))
+
+  (use-package nodejs-repl
+    :ensure t
+    :config
+    (defun my-jscallback ()
+      (local-set-key (kbd "C-c C-e") 'nodejs-repl-send-buffer))
+
+    (add-hook 'js-mode-hook 'my-jscallback))
+
+  ;; set web content type to jsx in js files, this will solve the indent problem I mentioned in my first post.
+  (setq web-mode-content-types-alist
+        '(("jsx" . ".*\\.js\\'"))
+        )
+
+  ;; for flycheck work in web-mode
+  (flycheck-add-mode 'javascript-eslint 'web-mode)
+#+END_SRC
+
+** Python
+
+#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+(package-initialize)
+(use-package elpy
+  :ensure t
+  :config (elpy-enable)
+)
+#+END_SRC
+
+** Scala
+#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+  (use-package scala-mode
+    :ensure t)
+
+  (use-package sbt-mode
+    :ensure t)
+#+END_SRC
+*** Several things
+***** Ivy
+#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+(use-package ivy
+  :pin melpa-stable
+  :bind
+  (:map ivy-mode-map
+        ("C-'" . ivy-avy))
+  :diminish (ivy-mode . "")
+  :config
+  ;; (ivy-mode 1)
+  ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
+  (setq ivy-use-virtual-buffers t)
+  ;; number of result lines to display
+  (setq ivy-height 10)
+  ;; does not count candidates
+  (setq ivy-count-format "")
+  ;; no regexp by default
+  (setq ivy-initial-inputs-alist nil)
+  ;; configure regexp engine.
+  (setq ivy-re-builders-alist
+        ;; allow input not in order
+        '((t   . ivy--regex-ignore-order))))
+#+END_SRC
+***** Ensime
+#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+(use-package ensime
+  :ensure t
+  :pin melpa-stable
+  :init
+  (put 'ensime-auto-generate-config 'safe-local-variable #'booleanp)
+  (setq
+    ensime-startup-snapshot-notification nil
+    ensime-startup-notification nil)
+  :config
+  (require 'ensime-expand-region)
+  (add-hook 'git-timemachine-mode-hook (lambda () (ensime-mode 0))))
+(require 'ensime)
+(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+
+#+END_SRC
+***** .sbt
+#+BEGIN_SRC elisp :tangle ~/.sbt/0.13/plugins/plugins.sbt :mkdirp yes
+addSbtPlugin("org.ensime" % "sbt-ensime" % "2.5.1")
+addSbtPlugin("io.get-coursier" % "sbt-coursier" % "1.0.0-RC13")
+#+END_SRC
+#+BEGIN_SRC elisp :tangle ~/.sbt/0.13/global.sbt :mkdirp yes
+import org.ensime.EnsimeCoursierKeys._
+import org.ensime.EnsimeKeys._
+
+ensimeIgnoreMissingDirectories in ThisBuild := true
+cancelable in Global := true
+ensimeIgnoreScalaMismatch := true
+#+END_SRC
+#+BEGIN_SRC elisp :tangle ~/.sbt/1.0/plugins/plugins.sbt :mkdirp yes
+addSbtPlugin("org.ensime" % "sbt-ensime" % "2.5.1")
+addSbtPlugin("io.get-coursier" % "sbt-coursier" % "1.0.0-RC13")
+#+END_SRC
+#+BEGIN_SRC elisp :tangle ~/.sbt/1.0/global.sbt :mkdirp yes
+import org.ensime.EnsimeCoursierKeys._
+import org.ensime.EnsimeKeys._
+
+ensimeIgnoreMissingDirectories in ThisBuild := true
+cancelable in Global := true
+ensimeIgnoreScalaMismatch := true
+#+END_SRC
+** Elixir
+
+#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+  (use-package alchemist
+    :ensure t)
+
+  ;; elixir-mode hook
+  (add-hook 'elixir-mode-hook
+            (lambda () (add-hook 'before-save-hook 'mix-format-before-save)))
+
+  ;; yasnippets
+  (use-package elixir-yasnippets
+    :ensure t)
+#+END_SRC
+
+*** Mix Format
+#+BEGIN_SRC elisp :tangle ./plugins/mix-format.el :mkdirp yes
+  ;;; mix-format.el --- Emacs plugin to mix format Elixir files
+
+  ;; Copyright (C) 2017 Anil Wadghule
+
+  ;; Author: Anil Wadghule <anildigital@gmail.com>
+  ;; URL: https://github.com/anildigital/mix-format
+
+  ;; This file is NOT part of GNU Emacs.
+
+  ;; This program is free software; you can redistribute it and/or modify
+  ;; it under the terms of the GNU General Public License as published by
+  ;; the Free Software Foundation; either version 2, or (at your option)
+  ;; any later version.
+
+  ;; This program is distributed in the hope that it will be useful,
+  ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ;; GNU General Public License for more details.
+
+  ;;; Commentary:
+
+  ;; The mix-format function formats the elixir files with Elixir's `mix format`
+  ;; command
+
+  ;; e.g.
+  ;;
+  ;; (require 'mix-format)
+  ;; M-x mix-format
+  ;;
+
+  (defcustom mixfmt-elixir "elixir"
+    "Path to the Elixir interpreter."
+    :type 'string
+    :group 'mix-format)
+
+  (defcustom mixfmt-mix "/usr/bin/mix"
+    "Path to the 'mix' executable."
+    :type 'string
+    :group 'mix-format)
+
+  (defcustom mixfmt-args nil
+    "Additional arguments to 'mix format'"
+    :type '(repeat string)
+    :group 'mix-format)
+
+  (defcustom mix-format-hook nil
+    "Hook called by `mix-format'."
+    :type 'hook
+    :group 'mix-format)
+
+
+  ;;; Code
+
+  ;;;###autoload
+  (defun mix-format-before-save ()
+    "Add this to .emacs to run mix format on the current buffer when saving:
+  \(add-hook 'before-save-hook 'mix-format-before-save).
+  Note that this will cause ‘elixir-mode’ to get loaded the first time
+  you save any file, kind of defeating the point of autoloading."
+
+    (interactive)
+    (when (eq major-mode 'elixir-mode) (mix-format)))
+
+
+  (defun mixfmt--goto-line (line)
+    (goto-char (point-min))
+    (forward-line (1- line)))
+
+  (defun mixfmt--delete-whole-line (&optional arg)
+    "Delete the current line without putting it in the `kill-ring'.
+  Derived from function `kill-whole-line'.  ARG is defined as for that
+  function.
+  Shamelessly stolen from go-mode (https://github.com/dominikh/go-mode.el)"
+    (setq arg (or arg 1))
+    (if (and (> arg 0)
+             (eobp)
+             (save-excursion (forward-visible-line 0) (eobp)))
+        (signal 'end-of-buffer nil))
+    (if (and (< arg 0)
+             (bobp)
+             (save-excursion (end-of-visible-line) (bobp)))
+        (signal 'beginning-of-buffer nil))
+    (cond ((zerop arg)
+           (delete-region (progn (forward-visible-line 0) (point))
+                          (progn (end-of-visible-line) (point))))
+          ((< arg 0)
+           (delete-region (progn (end-of-visible-line) (point))
+                          (progn (forward-visible-line (1+ arg))
+                                 (unless (bobp)
+                                   (backward-char))
+                                 (point))))
+          (t
+           (delete-region (progn (forward-visible-line 0) (point))
+                          (progn (forward-visible-line arg) (point))))))
+
+  (defun mixfmt--apply-rcs-patch (patch-buffer)
+    "Apply an RCS-formatted diff from PATCH-BUFFER to the current buffer.
+  Shamelessly stolen from go-mode (https://github.com/dominikh/go-mode.el)"
+
+    (let ((target-buffer (current-buffer))
+          ;; Relative offset between buffer line numbers and line numbers
+          ;; in patch.
+          ;;
+          ;; Line numbers in the patch are based on the source file, so
+          ;; we have to keep an offset when making changes to the
+          ;; buffer.
+          ;;
+          ;; Appending lines decrements the offset (possibly making it
+          ;; negative), deleting lines increments it. This order
+          ;; simplifies the forward-line invocations.
+          (line-offset 0))
+      (save-excursion
+        (with-current-buffer patch-buffer
+          (goto-char (point-min))
+          (while (not (eobp))
+            (unless (looking-at "^\\([ad]\\)\\([0-9]+\\) \\([0-9]+\\)")
+              (error "Invalid rcs patch or internal error in mixfmt--apply-rcs-patch"))
+            (forward-line)
+            (let ((action (match-string 1))
+                  (from (string-to-number (match-string 2)))
+                  (len  (string-to-number (match-string 3))))
+              (cond
+               ((equal action "a")
+                (let ((start (point)))
+                  (forward-line len)
+                  (let ((text (buffer-substring start (point))))
+                    (with-current-buffer target-buffer
+                      (cl-decf line-offset len)
+                      (goto-char (point-min))
+                      (forward-line (- from len line-offset))
+                      (insert text)))))
+               ((equal action "d")
+                (with-current-buffer target-buffer
+                  (mixfmt--goto-line (- from line-offset))
+                  (cl-incf line-offset len)
+                  (mixfmt--delete-whole-line len)))
+               (t
+                (error "Invalid rcs patch or internal error in mixfmt--apply-rcs-patch"))))))))
+    )
+
+  ;;;###autoload
+  (defun mix-format (&optional is-interactive)
+    (interactive "p")
+
+    (let ((outbuff (get-buffer-create "*mix-format-output*"))
+          (errbuff (get-buffer-create "*mix-format-errors*"))
+          (tmpfile (make-temp-file "mix-format" nil ".ex"))
+          (our-mixfmt-args (list mixfmt-mix "format"))
+          (output nil))
+
+      (unwind-protect
+          (save-restriction
+            (with-current-buffer outbuff
+              (erase-buffer))
+
+            (with-current-buffer errbuff
+              (setq buffer-read-only nil)
+              (erase-buffer))
+
+            (write-region nil nil tmpfile)
+
+            (run-hooks 'mix-format-hook)
+
+            (when mixfmt-args
+              (setq our-mixfmt-args (append our-mixfmt-args mixfmt-args)))
+            (setq our-mixfmt-args (append our-mixfmt-args (list tmpfile)))
+
+            (if (zerop (apply #'call-process mixfmt-elixir nil errbuff nil our-mixfmt-args))
+                (progn
+                  (if (zerop (call-process-region (point-min) (point-max) "diff" nil outbuff nil "-n" "-" tmpfile))
+                      (message "File is already formatted")
+                    (progn
+                      (mixfmt--apply-rcs-patch outbuff)
+                      (message "mix format applied")))
+                  (kill-buffer errbuff))
+
+              (progn
+                (with-current-buffer errbuff
+                  (setq buffer-read-only t)
+                  (ansi-color-apply-on-region (point-min) (point-max))
+                  (special-mode))
+
+                (if is-interactive
+                    (display-buffer errbuff)
+                  (message "mix-format failed: see %s" (buffer-name errbuff)))))
+
+            (delete-file tmpfile)
+            (kill-buffer outbuff)))))
+
+
+
+  (provide 'mix-format)
+
+  ;;; mix-format.el ends here
+#+END_SRC
+
+** Yaml
+
+#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+  (use-package yaml-mode
+    :ensure t)
+#+END_SRC
+
+** Angular 2
+#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+  (use-package ng2-mode
+    :ensure t)
+#+END_SRC
+
+** Lua
+#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+  (use-package lua-mode
+    :ensure t)
+#+END_SRC
+
+** TypeScript
+#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+  (use-package tide
+    :ensure t
+    :config
+    (defun setup-tide-mode ()
+      (interactive)
+      (tide-setup)
+      (flycheck-mode +1)
+      (setq flycheck-check-syntax-automatically '(save mode-enabled))
+      (eldoc-mode +1)
+      (tide-hl-identifier-mode +1)
+      ;; company is an optional dependency. You have to
+      ;; install it separately via package-install
+      ;; `M-x package-install [ret] company`
+      (company-mode +1))
+
+    ;; aligns annotation to the right hand side
+    (setq company-tooltip-align-annotations t)
+
+    ;; formats the buffer before saving
+    (add-hook 'before-save-hook 'tide-format-before-save)
+
+    (add-hook 'typescript-mode-hook #'setup-tide-mode)
+    )
+#+END_SRC
+
+** Elm
+#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+  (use-package elm-mode
+    :ensure t)
+#+END_SRC
+
+** Haskell
+#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+  (use-package haskell-mode
+    :ensure t)
+#+END_SRC
+
+** Nginx Config Files
+#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+  (use-package nginx-mode
+    :ensure t)
+#+END_SRC
+
+** Provide
+
+Providing *programming-language-settings.el*
+
+#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+(provide 'programming-language-settings)
+#+END_SRC
+
+* Reveal
+:PROPERTIES:
+:tangle:   ~/.emacs.d/settings/reveal-settings.el
+:END:
+
+Make beautiful slides with ox-reveal
+
+** Settings
+#+BEGIN_SRC elisp :tangle ./settings/reveal-settings.el :mkdirp yes
+  ;; (use-package org
+  ;;   :ensure t)
+  ;; (use-package ox-reveal
+  ;;   :ensure t
+  ;;   :config
+  ;;   (setq org-reveal-root "file:///home/ironjanowar/reveal.js"))
+  ;; (use-package htmlize
+  ;;   :ensure t)
+#+END_SRC
+
+** Provide
+
+Providing *reveal-settings.el*
+#+BEGIN_SRC elisp :tangle ./settings/reveal-settings.el :mkdirp yes
+(provide 'reveal-settings)
+#+END_SRC
+
+* Magit
+:PROPERTIES:
+:tangle:   ~/.emacs.d/settings/magit-settings.el
+:END:
+
+Magit is a lovely mode for git.
+
+** Settings
+
+#+BEGIN_SRC elisp :tangle ./settings/magit-settings.el :mkdirp yes
+;; Magit
+(use-package magit
+  :ensure t
+  :bind (("C-c g" . magit-status)
+         ("C-x M-g" . magit-dispatch-popup))
+  )
+#+END_SRC
+
+** Provide
+
+Providing *magit-settings.el*
+
+#+BEGIN_SRC elisp :tangle ./settings/magit-settings.el :mkdirp yes
+(provide 'magit-settings)
+#+END_SRC
+
+* Clean Buffers
+
+Kill all buffers
+
+#+BEGIN_SRC elisp :tangle ./plugins/clean-buffers.el :mkdirp yesn
+(defun kill-buffers()
+  (let (buffer buffers)
+    (setq buffers (buffer-list))
+    (dotimes (i (length buffers))
+      (setq buffer (pop buffers))
+      (if (not (string-equal (buffer-name buffer) "*scratch*")) (kill-buffer buffer) nil))))
+
+(defun clean-buffers()
+       (interactive)
+       (if (yes-or-no-p "Do you really want to clean all buffers? ")
+           (kill-buffers) nil))
+
+(global-set-key (kbd "C-x C-k") 'clean-buffers)
+
+(provide 'clean-buffers)
+#+END_SRC
+
+* Rest Client
+
+#+BEGIN_SRC elisp :tangle ./plugins/restclient-settings.el :mkdirp yes
+  (use-package restclient
+    :ensure t)
+
+  (provide 'restclient-settings)
+#+END_SRC
+
+* Dockerfiles
+#+BEGIN_SRC elisp :tangle ./plugins/dockerfile-settings.el :mkdirp yes
+  (use-package dockerfile-mode
+    :ensure t)
+
+  (provide 'dockerfile-settings)
+#+END_SRC
+
+* Open Notes
+Opens a buffer to take notes
+
+By: [[https://gist.github.com/prathik][@prathik]]
+
+#+BEGIN_SRC elisp :tangle ./plugins/open-notes.el :mkdirp yes
+  (defun new-scratch-buffer-new-window ()
+    "Create a new scratch buffer in a
+    new window. I generally take a lot of notes
+    in different topics. For each new topic hit
+    C-c C-s and start taking your notes.
+    Most of these notes don't need to be
+    saved but are used like quick post it
+    notes."
+    (interactive)
+    (let (($buf (generate-new-buffer "notes")))
+      (split-window-right)
+      (other-window 1)
+      (balance-windows)
+      (switch-to-buffer $buf)
+      (org-mode)
+      (insert "# Notes\n\n")
+      $buf
+      ))
+
+  (global-set-key
+   (kbd "C-c C-n")
+   'new-scratch-buffer-new-window
+   )
+
+  (provide 'open-notes)
+#+END_SRC
