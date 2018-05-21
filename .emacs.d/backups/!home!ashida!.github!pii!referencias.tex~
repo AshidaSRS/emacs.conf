@@ -1,8 +1,0 @@
-\renewcommand{\refname}{}
-\begin{thebibliography}{10}
-\bibitem{nasa-robotics} \url{http://robotics.nasa.gov/}, NASA Robotics Alliance Project.
-\bibitem{mat-handling-robotics} \url{http://www.robotics.org/content-detail.cfm/Industrial-Robotics-Industry-Insights/Biotech-Material-Handling-Robotics/content_id/1113}, Robotics.org.
-\bibitem{pharm-bio-robotics} \url{http://www.staubli.com/en/robotics/robot-solution-application/life-science-pharmaceutical-medical-robot/pharma-production-and-biotechnology-robots/}, Stäubli.
-\bibitem{canadarm2} \url{http://www.space.com/15905-robotic-arm-grapples-spacex-dragon-international-space-station.html}, Space.com.
-\bibitem{manufacturing-simulation} \url{http://waset.org/publications/8133/importance-of-simulation-in-manufacturing}, World Academy of Science, Engineering, and Technology.
-\end{thebibliography}

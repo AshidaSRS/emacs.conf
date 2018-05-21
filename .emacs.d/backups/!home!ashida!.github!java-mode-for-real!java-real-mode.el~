@@ -1,3 +1,0 @@
-;; Version of mode.
-(defconst java-real-mode-version "0.1"
-  "The release version of `java-real-mode'.")

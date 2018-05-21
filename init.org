@@ -315,6 +315,10 @@ Source Code Pro font with size (100 -> 10) :D
 ;;                    :width 'normal)
 (set-face-attribute 'mode-line nil :height 120)
 #+END_SRC
+** Bell
+#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+(setq ring-bell-function 'ignore)
+#+END_SRC
 ** Provide
 Provide *interface-settings.el*
 

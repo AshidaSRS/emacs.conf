@@ -1,9 +1,0 @@
-import myanimelist
-with open("./user.mal", "r") as USER:
-    user = USER.readLine().split()
-    passwd = USER.readLine().split()
-
-
-def session():
-    print(user)
-    print(passwd)
