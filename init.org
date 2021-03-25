@@ -44,15 +44,14 @@ Adding ~melpa stable~ to avoid conflicts.
 
 #+BEGIN_SRC elisp :tangle ./settings/package-management-settings.el :mkdirp yes
 
-(when (>= emacs-major-version 24)
-  (require 'package)
-  (add-to-list
+(require 'package)
+
+(add-to-list
    'package-archives
    '("melpa" . "http://melpa.org/packages/") t)
-  (add-to-list
+(add-to-list
    'package-archives
    '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
-  (package-initialize))
 
 #+END_SRC
 
@@ -84,6 +83,15 @@ Backup `~` ended files in ~.emacs.d/backup/~.
 
 #+END_SRC
 
+** PATH for mac
+#+BEGIN_SRC elisp :tangle ./settings/package-management-settings.el :mkdirp yes
+(setq-default default-directory "~/")
+(when (memq window-system '(mac ns))
+  (setenv "SHELL" "/bin/zsh")
+  (exec-path-from-shell-initialize)
+  (exec-path-from-shell-copy-envs
+   '("PATH")))
+#+END_SRC
 ** Provide
 Provide *package-management-settings.el*
 
@@ -536,6 +544,63 @@ Providing *programming-settings.el*
   (global-set-key (kbd "C-=") 'er/expand-region)
 )
 #+END_SRC
+** CSV
+#+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yes
+(defun testfn ()
+  (interactive)
+  (csv-align-mode t)
+  (toggle-truncate-lines 1)
+  (csv-header-line t)
+  )
+
+(use-package csv-mode
+  :mode (".tsv" ".csv" ".tabular" ".vcf")
+  :custom
+  (csv-comment-start "##")
+  :hook
+  (csv-mode . (lambda ()
+                (run-at-time 1 nil 'testfn))))
+#+END_SRC
+** Org
+#+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yes
+;; Block parent TODOs if child is not completed
+     (setq  org-enforce-todo-dependencies t
+      org-export-dispatch-use-expert-ui t ; non-intrusive export dispatch
+      ;; update TODO cookies recursively
+      ;; use property, ":COOKIE_DATA: todo recursive"
+      ;; to set this only for a single subtree
+      org-hierarchical-todo-statistics nil
+      ;; open link in same window
+      org-link-frame-setup '((gnus . org-gnus-no-new-news)
+                             (file . find-file))
+      ;; custom links
+      org-link-abbrev-alist
+      '(("google" . "https://www.google.com/search?q=%s")
+        ("jira" . "https://pagofx-holdco.atlassian.net/browse/%s"))
+      ;; log time for TODO state changes
+      org-log-done 'time
+      ;; log time on rescheduling and changing deadlines
+      org-log-reschedule 'time
+      org-log-redeadline 'time
+      ;; on links `RET' follows the link
+      org-return-follows-link t
+      org-reverse-note-order t
+      ;; Note that using TODO keyword/tags list matches children tasks
+      org-stuck-projects '("+LEVEL=2&+SCHEDULED<\"<-1m>\"/!-DONE"
+                           nil nil "^\\*\\+ \\+\\(DONE|FIXD|CNCL\\)")
+      org-todo-keywords ; @ - time stamp with note, ! - only time stamp
+      '((sequence "TODO(t)" "DOING" "REVIEW(r)" "|" "DONE(d)" "CANCELED(c)")
+        ;; (type "TEST(e!)" "DBUG(b@)" "LEAK(l@)" "SEGF(s@)" "|" "FIXD(f@/!)")
+        )
+      )
+      ;; Setting Colours (faces) for todo states to give clearer view of work
+      (setq org-todo-keyword-faces
+      '(("TODO" . org-warning)
+      ("DOING" . "yellow")
+      ("REVIEW" . "orange")
+      ("DONE" . "green")
+      ("CANCELED" .  "blue")))
+#+END_SRC
 ** Provide
 
 Providing *custom-settings.el*
@@ -543,6 +608,7 @@ Providing *custom-settings.el*
 #+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yes
 (provide 'custom-settings)
 #+END_SRC
+
 * Languages
 :PROPERTIES:
 :tangle:   ~/.emacs.d/settings/programming-language-settings.el
@@ -778,75 +844,71 @@ JavaScript, CSS, HTML ...
 #+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
   (use-package scala-mode
     :ensure t)
-
-  (use-package sbt-mode
-    :ensure t)
 #+END_SRC
-*** Several things
-***** Ivy
+*** Metals
 #+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
-(use-package ivy
-  :pin melpa-stable
-  :bind
-  (:map ivy-mode-map
-        ("C-'" . ivy-avy))
-  :diminish (ivy-mode . "")
+;; Enable sbt mode for executing sbt commands
+(use-package sbt-mode
+  :commands sbt-start sbt-command
   :config
-  ;; (ivy-mode 1)
-  ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
-  (setq ivy-use-virtual-buffers t)
-  ;; number of result lines to display
-  (setq ivy-height 10)
-  ;; does not count candidates
-  (setq ivy-count-format "")
-  ;; no regexp by default
-  (setq ivy-initial-inputs-alist nil)
-  ;; configure regexp engine.
-  (setq ivy-re-builders-alist
-        ;; allow input not in order
-        '((t   . ivy--regex-ignore-order))))
-#+END_SRC
-***** Ensime
-#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
-(use-package ensime
-  :ensure t
-  :pin melpa-stable
-  :init
-  (put 'ensime-auto-generate-config 'safe-local-variable #'booleanp)
-  (setq
-    ensime-startup-snapshot-notification nil
-    ensime-startup-notification nil)
+  ;; WORKAROUND: https://github.com/ensime/emacs-sbt-mode/issues/31
+  ;; allows using SPACE when in the minibuffer
+  (substitute-key-definition
+   'minibuffer-complete-word
+   'self-insert-command
+   minibuffer-local-completion-map)
+   ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
+   (setq sbt:program-options '("-Dsbt.supershell=false"))
+)
+
+;; Enable nice rendering of diagnostics like compile errors.
+(use-package flycheck
+  :init (global-flycheck-mode))
+
+(use-package lsp-mode
+  ;; Optional - enable lsp-mode automatically in scala files
+  :hook  (scala-mode . lsp)
+         (lsp-mode . lsp-lens-mode)
   :config
-  (require 'ensime-expand-region)
-  (add-hook 'git-timemachine-mode-hook (lambda () (ensime-mode 0))))
-(require 'ensime)
-(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+  ;; Uncomment following section if you would like to tune lsp-mode performance according to
+  ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
+  ;;       (setq gc-cons-threshold 100000000) ;; 100mb
+  ;;       (setq read-process-output-max (* 1024 1024)) ;; 1mb
+  ;;       (setq lsp-idle-delay 0.500)
+  ;;       (setq lsp-log-io nil)
+  ;;       (setq lsp-completion-provider :capf)
+  (setq lsp-prefer-flymake nil))
 
-#+END_SRC
-***** .sbt
-#+BEGIN_SRC elisp :tangle ~/.sbt/0.13/plugins/plugins.sbt :mkdirp yes
-addSbtPlugin("org.ensime" % "sbt-ensime" % "2.5.1")
-addSbtPlugin("io.get-coursier" % "sbt-coursier" % "1.0.0-RC13")
-#+END_SRC
-#+BEGIN_SRC elisp :tangle ~/.sbt/0.13/global.sbt :mkdirp yes
-import org.ensime.EnsimeCoursierKeys._
-import org.ensime.EnsimeKeys._
+;; Add metals backend for lsp-mode
+(use-package lsp-metals
+  :config (setq lsp-metals-treeview-show-when-views-received t))
 
-ensimeIgnoreMissingDirectories in ThisBuild := true
-cancelable in Global := true
-ensimeIgnoreScalaMismatch := true
-#+END_SRC
-#+BEGIN_SRC elisp :tangle ~/.sbt/1.0/plugins/plugins.sbt :mkdirp yes
-addSbtPlugin("org.ensime" % "sbt-ensime" % "2.5.1")
-addSbtPlugin("io.get-coursier" % "sbt-coursier" % "1.0.0-RC13")
-#+END_SRC
-#+BEGIN_SRC elisp :tangle ~/.sbt/1.0/global.sbt :mkdirp yes
-import org.ensime.EnsimeCoursierKeys._
-import org.ensime.EnsimeKeys._
+;; Enable nice rendering of documentation on hover
+;;   Warning: on some systems this package can reduce your emacs responsiveness significally.
+;;   (See: https://emacs-lsp.github.io/lsp-mode/page/performance/)
+;;   In that case you have to not only disable this but also remove from the packages since
+;;   lsp-mode can activate it automatically.
+(use-package lsp-ui)
 
-ensimeIgnoreMissingDirectories in ThisBuild := true
-cancelable in Global := true
-ensimeIgnoreScalaMismatch := true
+;; lsp-mode supports snippets, but in order for them to work you need to use yasnippet
+;; If you don't want to use snippets set lsp-enable-snippet to nil in your lsp-mode settings
+;;   to avoid odd behavior with snippets and indentation
+(use-package yasnippet)
+
+;; Add company-lsp backend for metals.
+;;   (depending on your lsp-mode version it may be outdated see:
+;;    https://github.com/emacs-lsp/lsp-mode/pull/1983)
+(use-package company-lsp)
+
+;; Use the Debug Adapter Protocol for running tests and debugging
+(use-package posframe
+  ;; Posframe is a pop-up tool that must be manually installed for dap-mode
+  )
+(use-package dap-mode
+  :hook
+  (lsp-mode . dap-mode)
+  (lsp-mode . dap-ui-mode)
+  )
 #+END_SRC
 ** Elixir
 
