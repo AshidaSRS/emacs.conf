@@ -1,3 +1,4 @@
+
 * Init
 :PROPERTIES:
 :tangle: ~/.emacs.d/init.el
@@ -51,7 +52,7 @@ Adding ~melpa stable~ to avoid conflicts.
    '("melpa" . "http://melpa.org/packages/") t)
 (add-to-list
    'package-archives
-   '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
+   '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 
 #+END_SRC
 
@@ -600,6 +601,17 @@ Providing *programming-settings.el*
       ("REVIEW" . "orange")
       ("DONE" . "green")
       ("CANCELED" .  "blue")))
+#+END_SRC
+** Ripgrep
+#+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yes
+;; Ripgrep (ag alternative)
+  (use-package helm-rg
+    :ensure t
+    :config (global-set-key (kbd "C-c C-s") 'helm-rg))
+​
+  (use-package rg
+    :ensure t
+    :config (global-set-key (kbd "C-c s") 'rg-menu))
 #+END_SRC
 ** Provide
 
