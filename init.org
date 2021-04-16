@@ -1,4 +1,3 @@
-
 * Init
 :PROPERTIES:
 :tangle: ~/.emacs.d/init.el
@@ -59,7 +58,7 @@ Adding ~melpa stable~ to avoid conflicts.
 ** Use-package
 
 ~Use-package~ is a magic package that allow us to configure packages
-and ensure to download them before configuring. JUST INSTALL IT DUDE!
+and ensure to download them before configuring.
 
 https://github.com/jwiegley/use-package
 
@@ -86,7 +85,7 @@ Backup `~` ended files in ~.emacs.d/backup/~.
 
 ** PATH for mac
 #+BEGIN_SRC elisp :tangle ./settings/package-management-settings.el :mkdirp yes
-(setq-default default-directory "~/")
+(setq-default default-directory (expand-file-name "~/" (file-name-directory load-file-name)))
 (when (memq window-system '(mac ns))
   (setenv "SHELL" "/bin/zsh")
   (exec-path-from-shell-initialize)
@@ -106,8 +105,7 @@ Provide *package-management-settings.el*
 :END:
 ** Session
 
-This let us save buffers from one session to another, but I personally
-don't use it so we're gonna comment this by now.
+This let us save buffers from one session to another.
 
 #+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
 ;; (desktop-save-mode 1)
@@ -129,9 +127,12 @@ Cleaner interface, cleaner life.
 ** Theme
 Gotham theme
 #+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
-(use-package gotham-theme
+  ;; (use-package gotham-theme
+  ;;   :ensure t
+  ;;   :config (load-theme 'gotham t))
+(use-package badger-theme
   :ensure t
-  :config (load-theme 'gotham t))
+  :config (load-theme 'badger t))
 #+END_SRC
 ** Powerline
 
@@ -144,7 +145,7 @@ Gotham theme
 ** Window movement
 
 I wanted a symbol in the left hand so I con move with *<symbol> +
-<arrow>*, I use Dvorak as a keyboard distribution so...
+<arrow>*
 
 #+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
 
@@ -156,12 +157,9 @@ I wanted a symbol in the left hand so I con move with *<symbol> +
   )
 #+END_SRC
 
-** Helm rules!
-
-I personally LOOOVE helm
-
+** Helm
 #+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
-;; By @rockneurotiko
+;; helm things
 (use-package helm
   :ensure t
   :diminish helm-mode
@@ -227,14 +225,10 @@ I personally LOOOVE helm
   :commands helm-mode
   :init (define-key helm-map (kbd "C-'") 'ace-jump-helm-line))
 
+;; Change the keybinds to whatever you like :)
+(defun set-helm-swoop ())
 
-(defun set-helm-swoop ()
-  ;; Change the keybinds to whatever you like :)
-  )
-
-
-(defun set-helm-ace-jump ()
-  )
+(defun set-helm-ace-jump ())
 #+END_SRC
 
 ** Rainbow
@@ -327,6 +321,12 @@ Source Code Pro font with size (100 -> 10) :D
 ** Bell
 #+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
 (setq ring-bell-function 'ignore)
+#+END_SRC
+** Company icons
+#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+;; With use-package:
+(use-package company-box
+  :hook (company-mode . company-box-mode))
 #+END_SRC
 ** Provide
 Provide *interface-settings.el*
@@ -605,13 +605,14 @@ Providing *programming-settings.el*
 ** Ripgrep
 #+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yes
 ;; Ripgrep (ag alternative)
-  (use-package helm-rg
-    :ensure t
-    :config (global-set-key (kbd "C-c C-s") 'helm-rg))
-​
-  (use-package rg
-    :ensure t
-    :config (global-set-key (kbd "C-c s") 'rg-menu))
+(use-package
+  helm-rg
+  :ensure t
+  :config (global-set-key (kbd "C-c C-s") 'helm-rg))
+(use-package
+  rg
+  :ensure t
+  :config (global-set-key (kbd "C-c s") 'rg-menu))
 #+END_SRC
 ** Provide
 
@@ -855,73 +856,84 @@ JavaScript, CSS, HTML ...
 ** Scala
 #+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
   (use-package scala-mode
-    :ensure t)
+    :ensure t
+    :interpreter
+      ("scala" . scala-mode))
+  ;; Enable sbt mode for executing sbt commands
+  (use-package sbt-mode
+    :commands sbt-start sbt-command
+    :custom
+      (sbt:default-command "compile")
+    :config
+      ;; WORKAROUND: https://github.com/ensime/emacs-sbt-mode/issues/31
+      ;; allows using SPACE when in the minibuffer
+      (substitute-key-definition
+      'minibuffer-complete-word
+      'self-insert-command
+      minibuffer-local-completion-map)
+      ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
+      (setq sbt:program-options '("-Dsbt.supershell=false"))
+  )
 #+END_SRC
 *** Metals
 #+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
-;; Enable sbt mode for executing sbt commands
-(use-package sbt-mode
-  :commands sbt-start sbt-command
-  :config
-  ;; WORKAROUND: https://github.com/ensime/emacs-sbt-mode/issues/31
-  ;; allows using SPACE when in the minibuffer
-  (substitute-key-definition
-   'minibuffer-complete-word
-   'self-insert-command
-   minibuffer-local-completion-map)
-   ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
-   (setq sbt:program-options '("-Dsbt.supershell=false"))
-)
+  ;;  Enable nice rendering of diagnostics like compile errors.
+    (use-package flycheck
+      :init (global-flycheck-mode))
 
-;; Enable nice rendering of diagnostics like compile errors.
-(use-package flycheck
-  :init (global-flycheck-mode))
+    (use-package lsp-mode
+      ;; Optional - enable lsp-mode automatically in scala files
+      :hook  (scala-mode . lsp)
+             (lsp-mode . lsp-lens-mode)
+      :config
+         ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
+         (setq gc-cons-threshold 100000000) ;; 100mb
+         (setq read-process-output-max (* 1024 1024)) ;; 1mb
+         (setq lsp-idle-delay 0.500)
+         (setq lsp-log-io nil)
+         (setq lsp-completion-provider :capf)
+         (setq lsp-prefer-flymake nil)
+    )
 
-(use-package lsp-mode
-  ;; Optional - enable lsp-mode automatically in scala files
-  :hook  (scala-mode . lsp)
-         (lsp-mode . lsp-lens-mode)
-  :config
-  ;; Uncomment following section if you would like to tune lsp-mode performance according to
-  ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
-  ;;       (setq gc-cons-threshold 100000000) ;; 100mb
-  ;;       (setq read-process-output-max (* 1024 1024)) ;; 1mb
-  ;;       (setq lsp-idle-delay 0.500)
-  ;;       (setq lsp-log-io nil)
-  ;;       (setq lsp-completion-provider :capf)
-  (setq lsp-prefer-flymake nil))
+    (use-package company
+      :ensure t
+      :config
+      (setq company-idle-delay 0)
+      (setq company-minimum-prefix-length 1))
 
-;; Add metals backend for lsp-mode
-(use-package lsp-metals
-  :config (setq lsp-metals-treeview-show-when-views-received t))
+    ;; Add metals backend for lsp-mode
+    (use-package lsp-metals
+      :config (setq lsp-metals-treeview-show-when-views-received t))
 
-;; Enable nice rendering of documentation on hover
-;;   Warning: on some systems this package can reduce your emacs responsiveness significally.
-;;   (See: https://emacs-lsp.github.io/lsp-mode/page/performance/)
-;;   In that case you have to not only disable this but also remove from the packages since
-;;   lsp-mode can activate it automatically.
-(use-package lsp-ui)
+    ;; Enable nice rendering of documentation on hover
+    (use-package lsp-ui)
 
-;; lsp-mode supports snippets, but in order for them to work you need to use yasnippet
-;; If you don't want to use snippets set lsp-enable-snippet to nil in your lsp-mode settings
-;;   to avoid odd behavior with snippets and indentation
-(use-package yasnippet)
+    ;; lsp-mode supports snippets, but in order for them to work you need to use yasnippet
+    (use-package yasnippet)
 
-;; Add company-lsp backend for metals.
-;;   (depending on your lsp-mode version it may be outdated see:
-;;    https://github.com/emacs-lsp/lsp-mode/pull/1983)
-(use-package company-lsp)
+    ;; Use the Debug Adapter Protocol for running tests and debugging
+    ;; Posframe is a pop-up tool that must be manually installed for dap-mode
+    (use-package posframe)
+    (use-package dap-mode
+      :hook
+        (lsp-mode . dap-mode)
+        (lsp-mode . dap-ui-mode)
+      )
 
-;; Use the Debug Adapter Protocol for running tests and debugging
-(use-package posframe
-  ;; Posframe is a pop-up tool that must be manually installed for dap-mode
-  )
-(use-package dap-mode
-  :hook
-  (lsp-mode . dap-mode)
-  (lsp-mode . dap-ui-mode)
-  )
+  ;; (defun lsp-find-workspace (server-id &optional file-name)
+  ;;     "Find workspace for SERVER-ID for FILE-NAME."
+  ;;     (-when-let* ((session (lsp-session))
+  ;;                  (folder->servers (lsp-session-folder->servers session))
+  ;;                  (workspaces (if file-name
+  ;;                                  (let* ((folder (lsp-find-session-folder session file-name))
+  ;;                                         (folder-last-char (substring folder (- (length folder) 1) (length folder)))
+  ;;                                         (key (if (string= folder-last-char "/") (substring folder 0 (- (length folder) 1)) folder)))
+  ;;                                    (gethash key folder->servers))
+  ;;                                (lsp--session-workspaces session))))
+
+  ;;       (--first (eq (lsp--client-server-id (lsp--workspace-client it)) server-id) workspaces)))
 #+END_SRC
+
 ** Elixir
 
 #+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
@@ -1199,6 +1211,119 @@ JavaScript, CSS, HTML ...
     :ensure t)
 #+END_SRC
 
+** JSON
+#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+;; json mode
+  (use-package json-mode
+    :ensure t
+    :config
+    (add-to-list 'auto-mode-alist '("\\.json\\'\\|\\.jshintrc\\'" . json-mode)
+    (setq js-indent-level 2)))
+#+END_SRC
+
+** Old golang
+
+# To install first:
+# - `go get golang.org/x/tools/cmd/...`
+# - `go get github.com/rogpeppe/godef`
+# - `go get -u github.com/nsf/gocode`
+# - `go get golang.org/x/tools/cmd/goimports`
+# - `go get -u github.com/dougm/goflymake`
+
+# #+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+#   ;; golang
+#   (use-package go-mode)
+#   (use-package go-autocomplete )
+#   (use-package auto-complete-config )
+#   (use-package go-eldoc)
+#   (use-package go-guru
+#      :ensure t)
+
+#   ;; (when (memq window-system '(mac ns))
+#   ;;   (exec-path-from-shell-initialize)
+#   ;;   (exec-path-from-shell-copy-env "GOPATH"))
+
+#   (ac-config-default)
+
+#   (defun my-go-mode-hook ()
+#     (set (make-local-variable 'company-backends) '(company-go))
+#     (go-eldoc-setup)
+#     ;; Go guru
+#     (require 'go-guru)
+#     (add-hook 'go-mode-hook #'go-guru-hl-identifier-mode)
+#     ;; Use goimports instead of go-fmt
+#     (setq gofmt-command "goimports")
+#     ;; Call Gofmt before saving
+#     (add-hook 'before-save-hook 'gofmt-before-save)
+#     ;; Godef jump key binding
+#     (local-set-key (kbd "M-.") 'godef-jump)
+#     (local-set-key (kbd "M-,") 'pop-tag-mark)
+#   )
+#   (add-hook 'go-mode-hook 'my-go-mode-hook)
+#   (defun auto-complete-for-go ()
+#     (auto-complete-mode 1))
+#   (add-hook 'go-mode-hook 'auto-complete-for-go)
+#   ;; (with-eval-after-load 'go-mode
+#   ;; (require 'go-autocomplete))
+# #+END_SRC
+** Golang
+#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+  (setq lsp-gopls-staticcheck t)
+  (setq lsp-eldoc-render-all t)
+  (setq lsp-gopls-complete-unimported t)
+  (use-package lsp-mode
+    :ensure t
+    :commands (lsp lsp-deferred)
+    :hook (go-mode . lsp-deferred))
+
+  ;;Set up before-save hooks to format buffer and add/delete imports.
+  ;;Make sure you don't have other gofmt/goimports hooks enabled.
+
+  (defun lsp-go-install-save-hooks ()
+    (add-hook 'before-save-hook #'lsp-format-buffer t t)
+    (add-hook 'before-save-hook #'lsp-organize-imports t t))
+  (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+
+  ;;Optional - provides fancier overlays.
+
+  (use-package lsp-ui
+    :ensure t
+    :commands lsp-ui-mode
+    :init
+  )
+
+  ;;Company mode is a standard completion package that works well with lsp-mode.
+  ;;company-lsp integrates company mode completion with lsp-mode.
+  ;;completion-at-point also works out of the box but doesn't support snippets.
+
+  (use-package company
+    :ensure t
+    :config
+    (setq company-idle-delay 0)
+    (setq company-minimum-prefix-length 1))
+
+  ;; (use-package company-lsp
+  ;;   :ensure t
+  ;;   :commands company-lsp)
+
+  ;;Optional - provides snippet support.
+
+  (use-package yasnippet
+    :ensure t
+    :commands yas-minor-mode
+    :hook (go-mode . yas-minor-mode))
+
+  ;;lsp-ui-doc-enable is false because I don't like the popover that shows up on the right
+  ;;I'll change it if I want it back
+
+
+  (setq lsp-ui-doc-enable nil
+        lsp-ui-peek-enable t
+        lsp-ui-sideline-enable t
+        lsp-ui-imenu-enable t
+        lsp-ui-flycheck-enable t)
+
+#+END_SRC
 ** Provide
 
 Providing *programming-language-settings.el*
