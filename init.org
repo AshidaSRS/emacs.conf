@@ -628,66 +628,83 @@ Providing *custom-settings.el*
 :END:
 Concrete language settings
 ** Web
-
+Install:
+- add-node-modules-path
+- prettier-js
 JavaScript, CSS, HTML ...
 
 #+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
-;; php mode
-(use-package php-mode
-  :ensure t
-  :config
-  (add-to-list 'auto-mode-alist '("\\.php[345]?\\'\\|\\.inc\\'" . php-mode)))
+  ;; php mode
+  (use-package php-mode
+    :ensure t
+    :config
+    (add-to-list 'auto-mode-alist '("\\.php[345]?\\'\\|\\.inc\\'" . php-mode)))
 
-;; json mode
-(use-package json-mode
-  :ensure t
-  :config
-  (add-to-list 'auto-mode-alist '("\\.json\\'\\|\\.jshintrc\\'" . json-mode)))
+  ;; json mode
+  (use-package json-mode
+    :ensure t
+    :config
+    (add-to-list 'auto-mode-alist '("\\.json\\'\\|\\.jshintrc\\'" . json-mode)))
 
-;; Web mode
-(use-package web-mode
-  :ensure t
+  ;; Web mode
+  (use-package web-mode
+    :ensure t
 
-  :init
-  (defun my-web-mode-hook ()
-    "Hooks for Web mode."
-    (setq web-mode-markup-indent-offset 2)
-    (setq web-mode-css-indent-offset 2)
-    (setq web-mode-code-indent-offset 4)
-    (setq web-mode-enable-auto-pairing t)
-    (setq web-mode-enable-css-colorization t)
-    (setq web-mode-enable-current-element-highlight t)
-    (setq web-mode-enable-current-column-highlight t)
-    (setq web-mode-enable-auto-expanding t))
+    :init
+    (defun my-web-mode-hook ()
+      "Hooks for Web mode."
+      (setq web-mode-markup-indent-offset 2)
+      (setq web-mode-css-indent-offset 2)
+      (setq web-mode-code-indent-offset 4)
+      (setq web-mode-enable-auto-pairing t)
+      (setq web-mode-enable-css-colorization t)
+      (setq web-mode-enable-current-element-highlight t)
+      (setq web-mode-enable-current-column-highlight t)
+      (setq web-mode-enable-auto-expanding t)
+      (setq web-mode-markup-indent-offset 4))
+      ;; (add-node-modules-path)
+      ;; (prettier-js-mode)
+      ;; (setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'"))
+      ;; (setq web-mode-content-types-alist '(("tsx" . "\\.ts[x]?\\'")))
 
-  :config
-  (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.json\\'" . web-mode))
-  (add-hook 'web-mode-hook 'my-web-mode-hook)
-  )
+    :config
+    (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.json\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+    )
 
-;; Emmet mode
-(use-package emmet-mode
-  :ensure t
-  :config
-  (add-hook 'web-mode-hook 'emmet-mode))
+  (require 'flycheck)
+  (setq-default flycheck-disabled-checkers
+                (append flycheck-disabled-checkers
+                        '(javascript-jshint json-jsonlist)))
+  ;; Enable eslint checker for web-mode
+  (flycheck-add-mode 'javascript-eslint 'web-mode)
+  ;; Enable flycheck globally
+  (add-hook 'after-init-hook #'global-flycheck-mode)
+  (add-hook 'flycheck-mode-hook 'add-node-modules-path)
+  ;; Emmet mode
+  (use-package emmet-mode
+    :ensure t
+    :config
+    (add-hook 'web-mode-hook 'emmet-mode))
 
-;; Node repl
-(use-package nodejs-repl
-  :ensure t
-  :config
-  (defun my-jscallback ()
-    (local-set-key (kbd "C-c C-e") 'nodejs-repl-send-buffer))
+  ;; Node repl
+  (use-package nodejs-repl
+    :ensure t
+    :config
+    (defun my-jscallback ()
+      (local-set-key (kbd "C-c C-e") 'nodejs-repl-send-buffer))
 
-  (add-hook 'js-mode-hook 'my-jscallback))
+    (add-hook 'js-mode-hook 'my-jscallback))
 #+END_SRC
 
 ** JavaScript
@@ -843,6 +860,30 @@ JavaScript, CSS, HTML ...
   (flycheck-add-mode 'javascript-eslint 'web-mode)
 #+END_SRC
 
+** React
+#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+(setq package-selected-packages '(lsp-mode yasnippet lsp-treemacs helm-lsp projectile hydra flycheck company avy which-key helm-xref dap-mode json-mode))
+(when (cl-find-if-not #'package-installed-p package-selected-packages)
+  (package-refresh-contents)
+  (mapc #'package-install package-selected-packages))
+(helm-mode)
+(require 'helm-xref)
+(define-key global-map [remap find-file] #'helm-find-files)
+(define-key global-map [remap execute-extended-command] #'helm-M-x)
+(define-key global-map [remap switch-to-buffer] #'helm-mini)
+(which-key-mode)
+(add-hook 'prog-mode-hook #'lsp)
+(setq gc-cons-threshold (* 100 1024 1024)
+      read-process-output-max (* 1024 1024)
+      company-idle-delay 0.0
+      company-minimum-prefix-length 1
+      create-lockfiles nil) ;; lock files will kill `npm start'
+(with-eval-after-load 'lsp-mode
+  (require 'dap-chrome)
+  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
+  (yas-global-mode))
+
+#+END_SRC
 ** Python
 
 #+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
@@ -1324,6 +1365,72 @@ JavaScript, CSS, HTML ...
         lsp-ui-flycheck-enable t)
 
 #+END_SRC
+** Purescript
+
+#+begin_src elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+(use-package purescript-mode
+  :ensure t
+  :mode ("\\.purs\\'" . purescript-mode)
+  :init
+  (setq purescript-indent-offset 2
+        purescript-align-imports-pad-after-name t)
+  :config
+  (my/define-major-mode-key 'purescript-mode "a" 'my/purescript-sort-and-align-imports)
+  (my/define-major-mode-key 'purescript-mode "i" 'purescript-navigate-imports)
+  (my/define-major-mode-key 'purescript-mode "s" 'my/purescript-format-and-save)
+  (my/define-major-mode-key 'purescript-mode "/" 'engine/search-pursuit)
+  (add-hook
+   'purescript-mode-hook
+   (lambda ()
+     (setq evil-shift-width 2)
+     (turn-on-purescript-indentation)
+     (turn-on-purescript-decl-scan)
+     ;; (turn-on-purescript-font-lock)
+     (push '(?# . ("{- " . " -}")) evil-surround-pairs-alist)
+     (subword-mode 1)
+     (make-variable-buffer-local 'find-tag-default-function)
+     (setq find-tag-default-function (lambda () (current-word t t)))
+     ))
+  ;; xref for purescript works a bit weird with qualified identifiers
+  ;; (define-key purescript-mode-map (kbd "M-.")
+  ;; #'(lambda () (interactive) (xref-find-definitions (current-word t t))))
+  )
+
+(defvar my/purescript-align-stuff t)
+
+(defun my/purescript-sort-and-align-imports ()
+  (interactive)
+  (save-excursion
+    (goto-line 1)
+    (while (purescript-navigate-imports)
+      (progn
+        (purescript-sort-imports)
+        (when my/purescript-align-stuff (purescript-align-imports))))
+    (purescript-navigate-imports-return)))
+
+(defun my/purescript-format-and-save ()
+  "Formats the import statements using haskell-stylish and saves
+the current file."
+  (interactive)
+  (my/purescript-sort-and-align-imports)
+  (save-buffer))
+
+;; This needs to exist in the `load-path'
+;; (use-package custom-purescript-font-lock
+;;   :after purescript-mode)
+
+;; copy these into the purescript-mode definition
+;; (setq-local font-lock-defaults
+;;             '((purescript-font-lock-keywords)
+;;               nil nil nil nil
+;;               (font-lock-syntactic-face-function
+;;                . purescript-syntactic-face-function)
+;;               (parse-sexp-lookup-properties . t)
+;;               (font-lock-extra-managed-props . (composition purescript-type))))
+;; (setq-local font-lock-multiline t)
+
+#+end_src
+
 ** Provide
 
 Providing *programming-language-settings.el*
