@@ -1,1596 +1,1102 @@
 * Init
-:PROPERTIES:
-:tangle: ~/.emacs.d/init.el
-:END:
-#+BEGIN_SRC elisp :tangle "~/.emacs.d/init.el"
-(add-to-list 'load-path "~/.emacs.d/settings/")
-(add-to-list 'load-path "~/.emacs.d/plugins/")
+  :PROPERTIES:
+  :tangle:   ~/.emacs.d/init.el
+  :END:
+  #+BEGIN_SRC elisp :tangle "~/.emacs.d/init.el"
+    (add-to-list 'load-path "~/.emacs.d/settings/")
+    (add-to-list 'load-path "~/.emacs.d/plugins/")
 
-(require 'package-management-settings)
+    (require 'package-management-settings)
 
-(require 'interface-settings)
+    (require 'interface-settings)
 
-(require 'editing-settings)
+    (require 'editing-settings)
 
-(require 'programming-settings)
+    (require 'programming-settings)
 
-(require 'programming-language-settings)
+    (require 'programming-language-settings)
 
-(require 'custom-settings)
+    (require 'custom-settings)
 
-(require 'reveal-settings)
+    (require 'magit-settings)
 
-(require 'magit-settings)
+    (require 'clean-buffers)
 
-(require 'clean-buffers)
+    (require 'open-notes)
 
-(require 'mix-format)
+    (require 'color-hex)
 
-(require 'open-notes)
-
-(require 'restclient-settings)
-
-(require 'dockerfile-settings)
-#+END_SRC
+  #+END_SRC
 * Package Management
-:PROPERTIES:
-:tangle: ~/.emacs.d/settings/package-management-settings.el
-:END:
-** Melpa, marmalade
+  :PROPERTIES:
+  :tangle:   ~/.emacs.d/settings/package-management-settings.el
+  :END:
+** Melpa
 
-Milkypostman’s Emacs Lisp Package Archive - https://melpa.org/#/
+   Melpa and melpa stable
+   https://melpa.org/#/
+   https://stable.melpa.org/#/
 
-Adding ~melpa stable~ to avoid conflicts.
+   #+BEGIN_SRC elisp :tangle ./settings/package-management-settings.el :mkdirp yes
 
-#+BEGIN_SRC elisp :tangle ./settings/package-management-settings.el :mkdirp yes
+     (require 'package)
 
-(require 'package)
+     (add-to-list
+      'package-archives
+      '("melpa" . "http://melpa.org/packages/") t)
+     (add-to-list
+      'package-archives
+      '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 
-(add-to-list
-   'package-archives
-   '("melpa" . "http://melpa.org/packages/") t)
-(add-to-list
-   'package-archives
-   '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-
-#+END_SRC
+   #+END_SRC
 
 ** Use-package
 
-~Use-package~ is a magic package that allow us to configure packages
-and ensure to download them before configuring.
+   ~Use-package~ to ensure that the package is downloaded if you don't have it.
+   https://github.com/jwiegley/use-package
 
-https://github.com/jwiegley/use-package
+   #+BEGIN_SRC elisp :tangle ./settings/package-management-settings.el :mkdirp yes
 
-#+BEGIN_SRC elisp :tangle ./settings/package-management-settings.el :mkdirp yes
+     (unless (featurep 'use-package)
+       (package-refresh-contents)
+       (package-install 'use-package)
+       )
 
-(unless (featurep 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package)
-  )
-
-#+END_SRC
+   #+END_SRC
 
 ** Backup files
 
-Backup `~` ended files in ~.emacs.d/backup/~.
+   Backup `~` ended files in ~.emacs.d/backup/~.
 
-#+BEGIN_SRC elisp :tangle ./settings/package-management-settings.el :mkdirp yes
+   #+BEGIN_SRC elisp :tangle ./settings/package-management-settings.el :mkdirp yes
 
-(setq make-backup-files nil) ;; Hello GIT
+     (setq make-backup-files nil)
+     (setq backup-directory-alist '(("" . "~/.emacs.d/backup")))
 
-(setq backup-directory-alist '(("" . "~/.emacs.d/backup")))
+   #+END_SRC
 
-#+END_SRC
-
-** PATH for mac
-#+BEGIN_SRC elisp :tangle ./settings/package-management-settings.el :mkdirp yes
-(setq-default default-directory (expand-file-name "~/" (file-name-directory load-file-name)))
-(when (memq window-system '(mac ns))
-  (setenv "SHELL" "/bin/zsh")
-  (exec-path-from-shell-initialize)
-  (exec-path-from-shell-copy-envs
-   '("PATH")))
-#+END_SRC
 ** Provide
-Provide *package-management-settings.el*
+   Provide *package-management-settings.el*
 
-#+BEGIN_SRC elisp :tangle ./settings/package-management-settings.el :mkdirp yes
-(provide 'package-management-settings)
-#+END_SRC
+   #+BEGIN_SRC elisp :tangle ./settings/package-management-settings.el :mkdirp yes
+     (provide 'package-management-settings)
+   #+END_SRC
 
 * Interface
-:PROPERTIES:
-:tangle:   ~/.emacs.d/settings/interface-settings.el
-:END:
-** Session
-
-This let us save buffers from one session to another.
-
-#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
-;; (desktop-save-mode 1)
-#+END_SRC
-
+  :PROPERTIES:
+  :tangle:   ~/.emacs.d/settings/interface-settings.el
+  :END:
 ** Emacs bars
 
-Cleaner interface, cleaner life.
+   Cleaner interface.
 
-#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+   #+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
 
-(tooltip-mode -1)
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
+     (tooltip-mode -1)
+     (tool-bar-mode -1)
+     (menu-bar-mode -1)
+     (scroll-bar-mode -1)
 
-#+END_SRC
+   #+END_SRC
 
 ** Theme
-Gotham theme
-#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
-  ;; (use-package gotham-theme
-  ;;   :ensure t
-  ;;   :config (load-theme 'gotham t))
-(use-package badger-theme
-  :ensure t
-  :config (load-theme 'badger t))
-#+END_SRC
+   Gotham theme
+   #+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+     (use-package doom-themes
+       :ensure t
+       :config
+       ;; Global settings (defaults)
+       (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+             doom-themes-enable-italic t) ; if nil, italics is universally disabled
+       (load-theme 'doom-nord t)
+
+       ;; Enable flashing mode-line on errors
+       (doom-themes-visual-bell-config)
+       ;; Enable custom neotree theme (all-the-icons must be installed!)
+       (doom-themes-neotree-config)
+       ;; or for treemacs users
+       (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+       (doom-themes-treemacs-config)
+       ;; Corrects (and improves) org-mode's native fontification.
+       (doom-themes-org-config))
+   #+END_SRC
 ** Powerline
 
-#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
-  (use-package powerline
-    :ensure t
-    :config (powerline-default-theme))
-#+END_SRC
+   #+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+     (use-package powerline
+       :ensure t
+       :config (powerline-default-theme))
+   #+END_SRC
 
-** Window movement
+** Buffer movement
 
-I wanted a symbol in the left hand so I con move with *<symbol> +
-<arrow>*
+   Change from one bugger to another using
+   Control + . + arrow
 
-#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+   #+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
 
-(use-package windmove
-  :bind (("C-. <up>" . windmove-up)
-         ("C-. <left>" . windmove-left)
-         ("C-. <right>" . windmove-right)
-         ("C-. <down>" . windmove-down))
-  )
-#+END_SRC
-
-** Helm
-#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
-;; helm things
-(use-package helm
-  :ensure t
-  :diminish helm-mode
-  :init
-  (progn
-    (require 'helm-config)
-    (setq helm-candidate-number-limit 100)
-    ;; From https://gist.github.com/antifuchs/9238468
-    (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
-          helm-input-idle-delay 0.01  ; this actually updates things
-                                        ; reeeelatively quickly.
-          helm-yas-display-key-on-candidate t
-          helm-quick-update t
-          helm-M-x-requires-pattern nil
-          helm-ff-skip-boring-files t)
-    (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
-          helm-buffers-fuzzy-matching           t ; fuzzy matching buffer names when non--nil
-          helm-recentf-fuzzy-match              t
-          helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
-          helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
-          helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
-          helm-ff-file-name-history-use-recentf t
-          helm-M-x-fuzzy-match t)  ;; optional fuzzy matching for helm-M-x
-    (helm-mode))
-  :config
-  (progn
-    ;; rebind tab to run persistent action
-    (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-    ;; make TAB works in terminal
-    (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
-    ;; list actions using C-z
-    (define-key helm-map (kbd "C-z")  'helm-select-action))
-  :bind (("C-x C-f" . helm-find-files)
-         ("C-x C-b" . helm-buffers-list)
-         ("C-x b" . helm-mini)
-         ("M-y" . helm-show-kill-ring)
-         ("M-x" . helm-M-x)
-         ("C-h a" . helm-apropos)
-         ("C-x c o" . helm-occur)
-         ("C-x c y" . helm-yas-complete)
-         ("C-x c Y" . helm-yas-create-snippet-on-region)
-         ("C-x c SPC" . helm-all-mark-rings)
-         ("C-c h g" . helm-google-suggest)))
-
-(ido-mode -1)
-
-(use-package helm-descbinds
-  :ensure t
-  :bind (("C-h b" . helm-descbinds)
-         ("C-h w" . helm-descbinds)))
-
-(use-package helm-swoop
-  ;; :disabled t
-  :ensure t
-  :bind (("M-i" . helm-swoop)
-         ("M-I" . helm-swoop-back-to-last-point)
-         ("C-c M-i" . helm-multi-swoop)
-         ("C-x M-i" . helm-multi-swoop-all)))
-
-(use-package ace-jump-helm-line
-  ;; :disabled t
-  :ensure t
-  :commands helm-mode
-  :init (define-key helm-map (kbd "C-'") 'ace-jump-helm-line))
-
-;; Change the keybinds to whatever you like :)
-(defun set-helm-swoop ())
-
-(defun set-helm-ace-jump ())
-#+END_SRC
+     (use-package windmove
+       :bind (("C-. <up>" . windmove-up)
+              ("C-. <left>" . windmove-left)
+              ("C-. <right>" . windmove-right)
+              ("C-. <down>" . windmove-down))
+       )
+   #+END_SRC
 
 ** Rainbow
-Rainbow delimeters lets you see where starts and ends each pair of
-parentheses painting them with different collors by pairs.
+   Rainbow delimeters lets you see where starts and ends each pair of
+   parentheses painting them with different collors by pairs.
 
-Rainbow mode lets you see hex colors in /.css/ files.
+   #+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+     ;; Rainbow delimeters
+     (use-package rainbow-delimiters
+       :ensure t
+       :init
+       (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+       )
+     ;; Rainbow mode
+     (use-package rainbow-mode
+       :ensure t
+       :mode "\\.css\\'"
+       )
 
-#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
-;; Rainbow delimeters
-(use-package rainbow-delimiters
-  :ensure t
-  :init
-  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-  )
-
-;; Rainbow mode
-(use-package rainbow-mode
-  :ensure t
-  :mode "\\.css\\'"
-  )
-#+END_SRC
+   #+END_SRC
 
 ** Maximized
 
-Start Emacs maximized
+   Start Emacs maximized
 
-#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-#+END_SRC
+   #+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+     (add-to-list 'default-frame-alist '(fullscreen . maximized))
+   #+END_SRC
 
+** Line numbers
+   #+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+     (global-linum-mode t)
+   #+END_SRC
 ** Pretty dashboard
 
-#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
-  ;; Remove initial buffer
-  (setq inhibit-startup-screen t)
+   Show recent files, agenda and projects as start buffer
 
-  (use-package projectile
-    :ensure t)
+   #+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+     ;; Remove initial buffer
+     (setq inhibit-startup-screen t)
 
-  (use-package page-break-lines
-    :ensure t)
+     (use-package projectile
+       :ensure t)
 
-  (use-package dashboard
-    :ensure t
-    :config
-    (dashboard-setup-startup-hook)
-    (setq dashboard-startup-banner nil)
-    (setq dashboard-items '((recents  . 5)
-                            (projects . 5)
-                            (agenda . 5))))
-#+END_SRC
+     (use-package page-break-lines
+       :ensure t)
+
+     (use-package dashboard
+       :ensure t
+       :config
+       (dashboard-setup-startup-hook)
+       (setq dashboard-startup-banner nil)
+       (setq dashboard-items '((recents  . 5)
+                               (projects . 5)
+                               (agenda . 5))))
+   #+END_SRC
 
 ** Emojify
-Turn icons into REAL icons
+   Turn icons into REAL icons
 
-#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
-  (use-package emojify
-    :ensure t
-    :config
-    (add-hook 'after-init-hook #'global-emojify-mode))
-#+END_SRC
+   #+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+     (use-package emojify
+       :ensure t
+       :config
+       (add-hook 'after-init-hook #'global-emojify-mode))
+   #+END_SRC
 ** All the icons!
-Needed for NeoTree :D
+   Needed for NeoTree
 
-#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
-  (use-package all-the-icons
-    :ensure t)
-#+END_SRC
+   #+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+     (use-package all-the-icons
+       :ensure t)
+   #+END_SRC
 ** NeoTree
-#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
-  (use-package neotree
-    :ensure t
-    :config
-    (global-set-key "\M-n" 'neotree-toggle)
-    (setq neo-theme 'icons))
-#+END_SRC
+
+   Clikable tree file in a buffer
+
+   #+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+     (use-package neotree
+       :ensure t
+       :config
+       (global-set-key "\M-n" 'neotree-toggle)
+       (setq neo-theme 'icons))
+   #+END_SRC
 
 ** Font
-Source Code Pro font with size (100 -> 10) :D
+   Font size to 120 and Monaco
 
-#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
-;;(set-face-attribute 'default nil
-;;                    :family "Hack"
-;;                    :height 110
-;;                    :weight 'normal
-;;                    :width 'normal)
-(set-face-attribute 'mode-line nil :height 120)
-#+END_SRC
+   #+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+     (set-face-attribute 'mode-line nil :height 120)
+     (set-frame-font "Monaco-10" nil t)
+     (set-face-font 'fixed-pitch-serif "Monaco")
+   #+END_SRC
 ** Bell
-#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
-(setq ring-bell-function 'ignore)
-#+END_SRC
+   #+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+     (setq ring-bell-function 'ignore)
+   #+END_SRC
 ** Company icons
-#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
-;; With use-package:
-(use-package company-box
-  :hook (company-mode . company-box-mode))
-#+END_SRC
-** Provide
-Provide *interface-settings.el*
+   #+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+     ;; With use-package:
+     (use-package company-box
+       :hook (company-mode . company-box-mode))
+   #+END_SRC
+** Vertico
+   #+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+     ;; Enable vertico
+     (use-package vertico
+       :ensure t
+       :bind (:map minibuffer-local-map ("C-l" . backward-kill-word))
+       :init
+       (vertico-mode)
+       (setq vertico-cycle t))
 
-#+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
-(provide 'interface-settings)
-#+END_SRC
+     (use-package orderless
+       :ensure t
+       :init
+       (setq completion-styles '(orderless)
+             completion-category-defaults nil
+             completion-category-overrides '((file (styles . (partial-completion))))))
+
+     ;; Persist history over Emacs restarts. Vertico sorts by history position.
+     (use-package savehist
+       :init
+       (savehist-mode))
+
+     (use-package marginalia
+       :after vertico
+       :ensure t
+       :custom
+       (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
+       :init
+       (marginalia-mode))
+
+     (global-set-key (kbd "C-x C-b") 'switch-to-buffer)
+     (global-set-key (kbd "M-y") 'helm-show-kill-ring)
+   #+END_SRC
+** Ligatures
+   #+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+     (use-package xah-math-input
+       :ensure t
+       :config (global-xah-math-input-mode 1)
+       )
+   #+END_SRC
+** DOOM modeline
+   #+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+     (use-package doom-modeline
+       :ensure t
+       :hook (after-init . doom-modeline-mode)
+       :config (setq doom-modeline-height 10))
+   #+END_SRC
+** Provide
+   Provide *interface-settings.el*
+
+   #+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
+     (provide 'interface-settings)
+   #+END_SRC
 
 * Editing
-:PROPERTIES:
-:tangle:   ~/.emacs.d/settings/editing-settings.el
-:END:
+  :PROPERTIES:
+  :tangle:   ~/.emacs.d/settings/editing-settings.el
+  :END:
 ** Mutiple cursors
 
-Just a lot of cursors at the same time.
+   Just a lot of cursors at the same time. Using Control + Shift + crocodile!
 
-#+BEGIN_SRC elisp :tangle ./settings/editing-settings.el :mkdirp yes
-;; Multiple cursors
-(use-package multiple-cursors
-  :ensure t
-  :bind (("C-S-c C-S-c" . mc/edit-lines)
-         ("C->" . mc/mark-next-like-this)
-         ("C-<" . mc/mark-previous-like-this)
-         ("C-c C-<" . mc/mark-all-like-this))
-  )
-#+END_SRC
+   #+BEGIN_SRC elisp :tangle ./settings/editing-settings.el :mkdirp yes
+     ;; Multiple cursors
+     (use-package multiple-cursors
+       :ensure t
+       :bind (("C-S-c C-S-c" . mc/edit-lines)
+              ("C->" . mc/mark-next-like-this)
+              ("C-<" . mc/mark-previous-like-this)
+              ("C-c C-<" . mc/mark-all-like-this))
+       )
+   #+END_SRC
 
-** Pretty icons
-Locating the cursor right after "->" and pressing ~Shift + Space~ transforms it into "→"
+** Unicode fonts
 
-#+BEGIN_SRC elisp :tangle ./settings/editing-settings.el :mkdirp yes
-  (use-package xah-math-input
-    :ensure t)
-#+END_SRC
+   #+BEGIN_SRC elisp :tangle ./settings/editing-settings.el :mkdirp yes
 
+     (use-package unicode-fonts
+       :ensure t
+       :config
+       (unicode-fonts-setup)
+       )
+
+   #+END_SRC
 ** Undo
 
-Glorious undo with `C-z` and redoo with `C-S-z`.
+   Glorious undo with `C-z` and redoo with `C-S-z`.
 
-#+BEGIN_SRC elisp :tangle ./settings/editing-settings.el
-;; Undo
-(use-package undo-tree
-  :ensure t
-  :init
-  (defalias 'redo 'undo-tree-redo)
-  :config
-  (global-undo-tree-mode 1)
-  (global-set-key (kbd "C-z") 'undo)
-  (global-set-key (kbd "C-S-z") 'redo)
-  )
-#+END_SRC
+   #+BEGIN_SRC elisp :tangle ./settings/editing-settings.el
+     ;; Undo
+     (use-package undo-tree
+       :ensure t
+       :init
+       (defalias 'redo 'undo-tree-redo)
+       :config
+       (global-undo-tree-mode 1)
+       (global-set-key (kbd "C-z") 'undo)
+       (global-set-key (kbd "C-S-z") 'redo)
+       )
+   #+END_SRC
 
 ** Indent buffer
 
-Function made by @skgsergio that indents the whole buffer.
+   Function made by @skgsergio that indents the whole buffer.
 
-#+BEGIN_SRC elisp :tangle ./settings/editing-settings.el :mkdirp yes
-;; Indent Fucking Whole Buffer (by github.com/skgsergio)
-(defun iwb ()
-  "Indent whole buffer"
-  (interactive)
-  (delete-trailing-whitespace)
-  (indent-region (point-min) (point-max) nil)
-  (untabify (point-min) (point-max))
-  (message "Indent buffer: Done.")
-  )
+   #+BEGIN_SRC elisp :tangle ./settings/editing-settings.el :mkdirp yes
+     ;; Indent Fucking Whole Buffer (by github.com/skgsergio)
+     (defun iwb ()
+       "Indent whole buffer"
+       (interactive)
+       (delete-trailing-whitespace)
+       (indent-region (point-min) (point-max) nil)
+       (untabify (point-min) (point-max))
+       (message "Indent buffer: Done.")
+       )
 
-(global-set-key "\M-i" 'iwb)
-#+END_SRC
+     (global-set-key "\M-i" 'iwb)
+   #+END_SRC
 
 ** Key bind fill paragraph
 
-#+BEGIN_SRC elisp :tangle ./settings/editing-settings.el :mkdirp yes
-(global-set-key "\M-q" 'fill-paragraph)
-#+END_SRC
+   #+BEGIN_SRC elisp :tangle ./settings/editing-settings.el :mkdirp yes
+     (global-set-key "\M-q" 'fill-paragraph)
+   #+END_SRC
 
 ** Move text
 
-#+BEGIN_SRC elisp :tangle ./settings/editing-settings.el :mkdirp yes
-;; Move text
-(use-package move-text
-  :ensure t
-  :config
-  (global-set-key [(control shift up)]  'move-text-up)
-  (global-set-key [(control shift down)]  'move-text-line-down)
-  )
-#+END_SRC
+   #+BEGIN_SRC elisp :tangle ./settings/editing-settings.el :mkdirp yes
+     ;; Move text
+     (use-package move-text
+       :ensure t
+       :config
+       (global-set-key [(control shift up)]  'move-text-up)
+       (global-set-key [(control shift down)]  'move-text-line-down)
+       )
+   #+END_SRC
 
 ** Indent with spaces
 
-INDENT WITH SPACES!!
+   Indent with spaces pls.
 
-#+BEGIN_SRC elisp :tangle ./settings/editing-settings.el :mkdirp yes
-;; Don't indent with tabs ffs!
-(setq-default indent-tabs-mode nil)
-#+END_SRC
+   #+BEGIN_SRC elisp :tangle ./settings/editing-settings.el :mkdirp yes
+     ;; Don't indent with tabs ffs!
+     (setq-default indent-tabs-mode nil)
+   #+END_SRC
 
 ** White space clean up
-Just before saving, erase the whitespaces left at the end of lines.
+   Just before saving, erase the whitespaces left at the end of lines.
 
-#+BEGIN_SRC elisp :tangle ./settings/editing-settings.el :mkdirp yes
-;; Clean my file pl0x!
-(add-hook 'before-save-hook 'whitespace-cleanup)
-#+END_SRC
+   #+BEGIN_SRC elisp :tangle ./settings/editing-settings.el :mkdirp yes
+     (add-hook 'before-save-hook 'whitespace-cleanup)
+   #+END_SRC
 
 ** Sudo edit
-Edit with root user, open a file and execute ~M-x sudo-edit~
+   Edit with root user, open a file and execute ~M-x sudo-edit~
 
-#+BEGIN_SRC elisp :tangle ./settings/editing-settings.el :mkdirp yes
-  (use-package sudo-edit
-    :ensure t)
-#+END_SRC
+   #+BEGIN_SRC elisp :tangle ./settings/editing-settings.el :mkdirp yes
+     (use-package sudo-edit
+       :ensure t)
+   #+END_SRC
 
 ** Provide
-Provide *editing-settings.el*
+   Provide *editing-settings.el*
 
-#+BEGIN_SRC elisp :tangle ./settings/editing-settings.el :mkdirp yes
-(provide 'editing-settings)
-#+END_SRC
+   #+BEGIN_SRC elisp :tangle ./settings/editing-settings.el :mkdirp yes
+     (provide 'editing-settings)
+   #+END_SRC
 
 * Programming
-:PROPERTIES:
-:tangle:   ~/.emacs.d/settings/programming-settings.el
-:END:
-
+  :PROPERTIES:
+  :tangle:   ~/.emacs.d/settings/programming-settings.el
+  :END:
 ** Yasnippets
 
-Completion for all languages
+   Completion for all languages
 
-#+BEGIN_SRC elisp :tangle ./settings/programming-settings.el :mkdirp yes
-;; Yasnippets
-(use-package yasnippet
-  :ensure t
-  :init (yas-global-mode 1)
-  :config
-  (define-key yas-minor-mode-map (kbd "<tab>") nil)
-  (define-key yas-minor-mode-map (kbd "TAB") nil)
-  (define-key yas-minor-mode-map (kbd "<C-tab>") 'yas-expand)
-  )
-#+END_SRC
+   #+BEGIN_SRC elisp :tangle ./settings/programming-settings.el :mkdirp yes
+     ;; Yasnippets
+     (use-package yasnippet
+       :ensure t
+       :init (yas-global-mode 1)
+       :config
+       (define-key yas-minor-mode-map (kbd "<tab>") nil)
+       (define-key yas-minor-mode-map (kbd "TAB") nil)
+       (define-key yas-minor-mode-map (kbd "<C-tab>") 'yas-expand)
+       )
+   #+END_SRC
 
 ** Smart Parens
 
-Good stuff with parens (https://github.com/Fuco1/smartparens)
+   Good stuff with parens (https://github.com/Fuco1/smartparens)
 
-#+BEGIN_SRC elisp :tangle ./settings/programming-settings.el :mkdirp yes
-;; SmartParents
-(use-package smartparens
-  :ensure t
-  :init (smartparens-global-mode t))
-#+END_SRC
+   #+BEGIN_SRC elisp :tangle ./settings/programming-settings.el :mkdirp yes
+     ;; SmartParents
+     (use-package smartparens
+       :ensure t
+       :init (smartparens-global-mode t))
+   #+END_SRC
 
 ** Aggressive Indent
 
-Indent everything
+   Indent everything
 
-#+BEGIN_SRC elisp :tangle ./settings/programming-settings.el :mkdirp yes
-;; Aggressive indent
-(use-package aggressive-indent
-  :ensure t
-  :init
-  (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
-  (add-hook 'css-mode-hook #'aggressive-indent-mode)
-  )
-#+END_SRC
-
-** Auto Complete
-
-Well...
-
-#+BEGIN_SRC elisp :tangle ./settings/programming-settings.el :mkdirp yes
-;; Auto complete
-(use-package auto-complete
-  :ensure t
-  :config (ac-config-default))
-#+END_SRC
+   #+BEGIN_SRC elisp :tangle ./settings/programming-settings.el :mkdirp yes
+     ;; Aggressive indent
+     (use-package aggressive-indent
+       :ensure t
+       :init
+       (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
+       (add-hook 'css-mode-hook #'aggressive-indent-mode)
+       )
+   #+END_SRC
 
 ** Flycheck
 
-A lot of well...
+   #+BEGIN_SRC elisp :tangle ./settings/programming-settings.el :mkdirp yes
+     ;; Flycheck
+     (use-package flycheck
+       :ensure t
+       :init (global-flycheck-mode))
+   #+END_SRC
 
-#+BEGIN_SRC elisp :tangle ./settings/programming-settings.el :mkdirp yes
-;; Flycheck
-(use-package flycheck
-  :ensure t
-  :init (global-flycheck-mode))
-#+END_SRC
+** LSP
+   #+BEGIN_SRC elisp :tangle ./settings/programming-settings.el :mkdirp yes
+     ;; Enable nice rendering of documentation on hover
+     (use-package lsp-ui
+       :ensure t
+       :commands lsp-ui-mode
+       :config
+       (setq lsp-ui-doc-enable t)
+       (setq lsp-ui-peek-enable t)
+       (setq lsp-ui-sideline-enable t)
+       (setq lsp-ui-imenu-enable t)
+       (setq lsp-ui-flycheck-enable t)
+       )
 
+     (defun lsp-config ()
+       "Different configurations for lsp"
+       (interactive)
+       (setq gc-cons-threshold 100000000 ;; 100mb
+             lsp-idle-delay 0.500
+             lsp-log-io nil
+             lsp-completion-provider :capf
+             lsp-prefer-flymake nil
+             lsp-gopls-staticcheck t
+             lsp-eldoc-render-all t
+             lsp-gopls-complete-unimported t
+             )
+       )
+
+     (defun lsp-hooks ()
+       "Common hooks for lsp"
+       (interactive)
+       (before-save . lsp-format-buffer)
+       (lsp-mode . lsp-enable-which-key-integration)
+       (lsp-mode . lsp-lens-mode)
+       )
+
+     ;; Use the Debug Adapter Protocol for running tests and debugging
+     ;; Posframe is a pop-up tool that must be manually installed for dap-mode
+     (use-package posframe)
+     (use-package dap-mode
+       :hook
+       (lsp-mode . dap-mode)
+       (lsp-mode . dap-ui-mode)
+       )
+
+
+   #+END_SRC
+** Company
+   #+BEGIN_SRC elisp :tangle ./settings/programming-settings.el :mkdirp yes
+     (use-package company
+       :ensure t
+       :init (global-company-mode)
+       :config
+       (setq company-idle-delay 0)
+       (setq company-minimum-prefix-length 1)
+       )
+
+     (use-package company-box
+       :ensure t
+       :hook (company-mode . company-box-mode))
+
+     ;; aligns annotation to the right hand side
+     (setq company-tooltip-align-annotations t)
+
+   #+END_SRC
 ** Provide
 
-Providing *programming-settings.el*
+   Providing *programming-settings.el*
 
-#+BEGIN_SRC elisp :tangle ./settings/programming-settings.el :mkdirp yes
-(provide 'programming-settings)
-#+END_SRC
+   #+BEGIN_SRC elisp :tangle ./settings/programming-settings.el :mkdirp yes
+     (provide 'programming-settings)
+   #+END_SRC
 
 * Custom
-:PROPERTIES:
-:tangle:   ~/.emacs.d/settings/custom-settings.el
-:END::PROPERTIIES:
+  :PROPERTIES:
+  :tangle:   ~/.emacs.d/settings/custom-settings.el
+  :END::PROPERTIIES:
 ** Popup
-#+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yes
-(use-package popup
-  :pin melpa-stable)
-#+END_SRC
-** Counsel-proyectile
-#+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yes
-(use-package counsel-projectile
-  :ensure t)
-#+END_SRC
+   #+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yes
+     (use-package popup
+       :pin melpa-stable)
+   #+END_SRC
 ** Expand-region
-#+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yes
-(use-package expand-region
-  :ensure t
-  :config
-  (global-set-key (kbd "C-=") 'er/expand-region)
-)
-#+END_SRC
+   #+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yes
+     (use-package expand-region
+       :ensure t
+       :config
+       (global-set-key (kbd "C-=") 'er/expand-region)
+       )
+   #+END_SRC
 ** CSV
-#+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yes
-(defun testfn ()
-  (interactive)
-  (csv-align-mode t)
-  (toggle-truncate-lines 1)
-  (csv-header-line t)
-  )
+   #+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yes
+     (defun csvHook ()
+       (interactive)
+       (csv-align-mode t)
+       (toggle-truncate-lines 1)
+       (csv-header-line t)
+       )
 
-(use-package csv-mode
-  :mode (".tsv" ".csv" ".tabular" ".vcf")
-  :custom
-  (csv-comment-start "##")
-  :hook
-  (csv-mode . (lambda ()
-                (run-at-time 1 nil 'testfn))))
-#+END_SRC
+     (use-package csv-mode
+       :mode (".tsv" ".csv" ".tabular" ".vcf")
+       :custom
+       (csv-comment-start "##")
+       :hook
+       (csv-mode . (lambda ()
+                     (run-at-time 1 nil 'csvHook))))
+   #+END_SRC
 ** Org
-#+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yes
-;; Block parent TODOs if child is not completed
+   #+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yes
      (setq  org-enforce-todo-dependencies t
-      org-export-dispatch-use-expert-ui t ; non-intrusive export dispatch
-      ;; update TODO cookies recursively
-      ;; use property, ":COOKIE_DATA: todo recursive"
-      ;; to set this only for a single subtree
-      org-hierarchical-todo-statistics nil
-      ;; open link in same window
-      org-link-frame-setup '((gnus . org-gnus-no-new-news)
-                             (file . find-file))
-      ;; custom links
-      org-link-abbrev-alist
-      '(("google" . "https://www.google.com/search?q=%s")
-        ("jira" . "https://pagofx-holdco.atlassian.net/browse/%s"))
-      ;; log time for TODO state changes
-      org-log-done 'time
-      ;; log time on rescheduling and changing deadlines
-      org-log-reschedule 'time
-      org-log-redeadline 'time
-      ;; on links `RET' follows the link
-      org-return-follows-link t
-      org-reverse-note-order t
-      ;; Note that using TODO keyword/tags list matches children tasks
-      org-stuck-projects '("+LEVEL=2&+SCHEDULED<\"<-1m>\"/!-DONE"
-                           nil nil "^\\*\\+ \\+\\(DONE|FIXD|CNCL\\)")
-      org-todo-keywords ; @ - time stamp with note, ! - only time stamp
-      '((sequence "TODO(t)" "DOING" "REVIEW(r)" "|" "DONE(d)" "CANCELED(c)")
-        ;; (type "TEST(e!)" "DBUG(b@)" "LEAK(l@)" "SEGF(s@)" "|" "FIXD(f@/!)")
-        )
-      )
-      ;; Setting Colours (faces) for todo states to give clearer view of work
-      (setq org-todo-keyword-faces
-      '(("TODO" . org-warning)
-      ("DOING" . "yellow")
-      ("REVIEW" . "orange")
-      ("DONE" . "green")
-      ("CANCELED" .  "blue")))
-#+END_SRC
-** Ripgrep
-#+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yes
-;; Ripgrep (ag alternative)
-(use-package
-  helm-rg
-  :ensure t
-  :config (global-set-key (kbd "C-c C-s") 'helm-rg))
-(use-package
-  rg
-  :ensure t
-  :config (global-set-key (kbd "C-c s") 'rg-menu))
-#+END_SRC
-** Provide
-
-Providing *custom-settings.el*
-
-#+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yes
-(provide 'custom-settings)
-#+END_SRC
-
-* Languages
-:PROPERTIES:
-:tangle:   ~/.emacs.d/settings/programming-language-settings.el
-:END:
-Concrete language settings
-** Web
-Install:
-- add-node-modules-path
-- prettier-js
-JavaScript, CSS, HTML ...
-
-#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
-  ;; php mode
-  (use-package php-mode
-    :ensure t
-    :config
-    (add-to-list 'auto-mode-alist '("\\.php[345]?\\'\\|\\.inc\\'" . php-mode)))
-
-  ;; json mode
-  (use-package json-mode
-    :ensure t
-    :config
-    (add-to-list 'auto-mode-alist '("\\.json\\'\\|\\.jshintrc\\'" . json-mode)))
-
-  ;; Web mode
-  (use-package web-mode
-    :ensure t
-
-    :init
-    (defun my-web-mode-hook ()
-      "Hooks for Web mode."
-      (setq web-mode-markup-indent-offset 2)
-      (setq web-mode-css-indent-offset 2)
-      (setq web-mode-code-indent-offset 4)
-      (setq web-mode-enable-auto-pairing t)
-      (setq web-mode-enable-css-colorization t)
-      (setq web-mode-enable-current-element-highlight t)
-      (setq web-mode-enable-current-column-highlight t)
-      (setq web-mode-enable-auto-expanding t)
-      (setq web-mode-markup-indent-offset 4))
-      ;; (add-node-modules-path)
-      ;; (prettier-js-mode)
-      ;; (setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'"))
-      ;; (setq web-mode-content-types-alist '(("tsx" . "\\.ts[x]?\\'")))
-
-    :config
-    (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.json\\'" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
-    )
-
-  (require 'flycheck)
-  (setq-default flycheck-disabled-checkers
-                (append flycheck-disabled-checkers
-                        '(javascript-jshint json-jsonlist)))
-  ;; Enable eslint checker for web-mode
-  (flycheck-add-mode 'javascript-eslint 'web-mode)
-  ;; Enable flycheck globally
-  (add-hook 'after-init-hook #'global-flycheck-mode)
-  (add-hook 'flycheck-mode-hook 'add-node-modules-path)
-  ;; Emmet mode
-  (use-package emmet-mode
-    :ensure t
-    :config
-    (add-hook 'web-mode-hook 'emmet-mode))
-
-  ;; Node repl
-  (use-package nodejs-repl
-    :ensure t
-    :config
-    (defun my-jscallback ()
-      (local-set-key (kbd "C-c C-e") 'nodejs-repl-send-buffer))
-
-    (add-hook 'js-mode-hook 'my-jscallback))
-#+END_SRC
-
-** JavaScript
-
-#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
-  ;;----------------------;
-  ;;; Javascript & Web ;;;
-  ;;----------------------;
-
-  (defun load-tern ()
-    (use-package tern
-      :ensure t
-      :diminish tern-mode
-      :config
-      (defun ternhook ()
-        (tern-mode t)
-        (auto-complete-mode))
-      (add-hook 'js2-mode-hook 'ternhook)
-      (add-hook 'web-mode-hook 'ternhook)
-      (require 'tern-auto-complete)
-      (tern-ac-setup))
-
-    (defun delete-tern-process ()
-      (interactive)
-      (delete-process "Tern")))
-
-  (defun js-flycheck ()
-    (use-package flycheck
-      :ensure t
-      :diminish flycheck-mode
-      :config
-      (add-hook 'js-mode-hook 'flycheck-mode)
-      (add-hook 'web-mode-hook 'flycheck-mode)
-      (flycheck-add-mode 'javascript-jshint 'web-mode)
-      (flycheck-add-mode 'html-tidy 'web-mode)))
-
-  (defun use-js2 ()
-    (use-package js2-mode
-      :ensure t
-      :init
-      (setq js-indent-level 4)
-      (setq js2-indent-level 4)
-      (setq-default js2-basic-offset 4)
-      (setq ac-js2-evaluate-calls t)
-      (setq js2-highlight-level 3)
-      :config
-      (add-hook 'js2-mode-hook 'ac-js2-mode)
-      (add-hook 'js2-mode-hook 'jasminejs-mode)
-      (use-package js2-refactor
-        :ensure t
-        :config
-        (add-hook 'js2-mode-hook #'js2-refactor-mode)
-        (js2r-add-keybindings-with-prefix "C-c C-m"))
-
-      (js2-imenu-extras-mode)
-      (apply #'derived-mode-p '(org-mode web-mode))
-
-      (add-to-list 'auto-mode-alist '("\\.js[x]?\\'" . js2-jsx-mode))
-
-      (add-hook 'js2-post-parse-callbacks
-                (lambda ()
-                  (when (> (buffer-size) 0)
-                    (let ((btext (replace-regexp-in-string
-                                  ": *true" " "
-                                  (replace-regexp-in-string "[\n\t ]+" " " (buffer-substring-no-properties 1 (buffer-size)) t t))))
-                      (mapc (apply-partially 'add-to-list 'js2-additional-externs)
-                            (split-string
-                             (if (string-match "/\\* *global *\\(.*?\\) *\\*/" btext) (match-string-no-properties 1 btext) "")
-                             " *, *" t))
-                      )))))
-
-    (use-package php-mode
-      :ensure t
-      :config
-      (add-to-list 'auto-mode-alist '("\\.php[345]?\\'\\|\\.inc\\'" . php-mode)))
-
-    (use-package json-mode
-      :ensure t
-      :config
-      (add-to-list 'auto-mode-alist '("\\.json\\'\\|\\.jshintrc\\'" . json-mode)))
-
-    (use-package jasminejs-mode
-      :ensure t
-      :diminish jasminejs-mode
-      :config
-      (add-hook 'jasminejs-mode-hook (lambda () (jasminejs-add-snippets-to-yas-snippet-dirs))))
-
-    (use-package js2-refactor
-      :ensure t
-      :diminish js2-refactor-mode)
-
-    (add-to-list 'auto-mode-alist
-                 '("\\.p?html\\(\\.[a-z]\\{2\\}\\)?\\'" . html-mode)))
-
-  (defun load-web-mode ()
-    (defun my-web-mode-hook ()
-      "Hooks for Web mode."
-      (setq web-mode-markup-indent-offset 2)
-      (setq web-mode-css-indent-offset 2)
-      (setq web-mode-code-indent-offset 4)
-      (set-face-attribute 'web-mode-css-at-rule-face nil :foreground "Pink3")
-      (setq web-mode-enable-auto-pairing t)
-      (setq web-mode-enable-css-colorization t)
-      (setq web-mode-enable-current-element-highlight t)
-      (setq web-mode-enable-current-column-highlight t)
-      (setq web-mode-enable-auto-expanding t))
-
-    (use-package web-mode
-      :ensure t
-      :init
-      (setq web-mode-content-types-alist
-            '(("jsx" . "\\.js[x]?\\'")))
-      :config
-      (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-      (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
-      (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
-      (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-      (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-      (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-      (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
-      (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
-      (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
-      (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . web-mode))
-      (add-to-list 'auto-mode-alist '("\\.json\\'" . web-mode))
-      (add-hook 'web-mode-hook  'my-web-mode-hook))
-    )
-
-  (use-package emmet-mode
-    :ensure t
-    :config
-    (defun emmet-hook()
-      (emmet-mode)
-      (local-set-key (kbd "M-TAB") 'emmet-expand-line))
-    ;; Auto-start on any markup modes
-    (add-hook 'sgml-mode-hook 'emmet-hook)
-    ;; enable Emmet's css abbreviation.
-    (add-hook 'css-mode-hook  'emmet-hook))
-
-  (use-package nodejs-repl
-    :ensure t
-    :config
-    (defun my-jscallback ()
-      (local-set-key (kbd "C-c C-e") 'nodejs-repl-send-buffer))
-
-    (add-hook 'js-mode-hook 'my-jscallback))
-
-  ;; set web content type to jsx in js files, this will solve the indent problem I mentioned in my first post.
-  (setq web-mode-content-types-alist
-        '(("jsx" . ".*\\.js\\'"))
-        )
-
-  ;; for flycheck work in web-mode
-  (flycheck-add-mode 'javascript-eslint 'web-mode)
-#+END_SRC
-
-** React
-#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
-(setq package-selected-packages '(lsp-mode yasnippet lsp-treemacs helm-lsp projectile hydra flycheck company avy which-key helm-xref dap-mode json-mode))
-(when (cl-find-if-not #'package-installed-p package-selected-packages)
-  (package-refresh-contents)
-  (mapc #'package-install package-selected-packages))
-(helm-mode)
-(require 'helm-xref)
-(define-key global-map [remap find-file] #'helm-find-files)
-(define-key global-map [remap execute-extended-command] #'helm-M-x)
-(define-key global-map [remap switch-to-buffer] #'helm-mini)
-(which-key-mode)
-(add-hook 'prog-mode-hook #'lsp)
-(setq gc-cons-threshold (* 100 1024 1024)
-      read-process-output-max (* 1024 1024)
-      company-idle-delay 0.0
-      company-minimum-prefix-length 1
-      create-lockfiles nil) ;; lock files will kill `npm start'
-(with-eval-after-load 'lsp-mode
-  (require 'dap-chrome)
-  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
-  (yas-global-mode))
-
-#+END_SRC
-** Python
-
-#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
-(package-initialize)
-(use-package elpy
-  :ensure t
-  :config (elpy-enable)
-)
-#+END_SRC
-
-** Scala
-#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
-  (use-package scala-mode
-    :ensure t
-    :interpreter
-      ("scala" . scala-mode))
-  ;; Enable sbt mode for executing sbt commands
-  (use-package sbt-mode
-    :commands sbt-start sbt-command
-    :custom
-      (sbt:default-command "compile")
-    :config
-      ;; WORKAROUND: https://github.com/ensime/emacs-sbt-mode/issues/31
-      ;; allows using SPACE when in the minibuffer
-      (substitute-key-definition
-      'minibuffer-complete-word
-      'self-insert-command
-      minibuffer-local-completion-map)
-      ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
-      (setq sbt:program-options '("-Dsbt.supershell=false"))
-  )
-#+END_SRC
-*** Metals
-#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
-  ;;  Enable nice rendering of diagnostics like compile errors.
-    (use-package flycheck
-      :init (global-flycheck-mode))
-
-    (use-package lsp-mode
-      ;; Optional - enable lsp-mode automatically in scala files
-      :hook  (scala-mode . lsp)
-             (lsp-mode . lsp-lens-mode)
-      :config
-         ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
-         (setq gc-cons-threshold 100000000) ;; 100mb
-         (setq read-process-output-max (* 1024 1024)) ;; 1mb
-         (setq lsp-idle-delay 0.500)
-         (setq lsp-log-io nil)
-         (setq lsp-completion-provider :capf)
-         (setq lsp-prefer-flymake nil)
-    )
-
-    (use-package company
-      :ensure t
-      :config
-      (setq company-idle-delay 0)
-      (setq company-minimum-prefix-length 1))
-
-    ;; Add metals backend for lsp-mode
-    (use-package lsp-metals
-      :config (setq lsp-metals-treeview-show-when-views-received t))
-
-    ;; Enable nice rendering of documentation on hover
-    (use-package lsp-ui)
-
-    ;; lsp-mode supports snippets, but in order for them to work you need to use yasnippet
-    (use-package yasnippet)
-
-    ;; Use the Debug Adapter Protocol for running tests and debugging
-    ;; Posframe is a pop-up tool that must be manually installed for dap-mode
-    (use-package posframe)
-    (use-package dap-mode
-      :hook
-        (lsp-mode . dap-mode)
-        (lsp-mode . dap-ui-mode)
-      )
-
-  ;; (defun lsp-find-workspace (server-id &optional file-name)
-  ;;     "Find workspace for SERVER-ID for FILE-NAME."
-  ;;     (-when-let* ((session (lsp-session))
-  ;;                  (folder->servers (lsp-session-folder->servers session))
-  ;;                  (workspaces (if file-name
-  ;;                                  (let* ((folder (lsp-find-session-folder session file-name))
-  ;;                                         (folder-last-char (substring folder (- (length folder) 1) (length folder)))
-  ;;                                         (key (if (string= folder-last-char "/") (substring folder 0 (- (length folder) 1)) folder)))
-  ;;                                    (gethash key folder->servers))
-  ;;                                (lsp--session-workspaces session))))
-
-  ;;       (--first (eq (lsp--client-server-id (lsp--workspace-client it)) server-id) workspaces)))
-#+END_SRC
-
-** Elixir
-
-#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
-  (use-package alchemist
-    :ensure t)
-
-  ;; elixir-mode hook
-  (add-hook 'elixir-mode-hook
-            (lambda () (add-hook 'before-save-hook 'mix-format-before-save)))
-
-  ;; yasnippets
-  (use-package elixir-yasnippets
-    :ensure t)
-#+END_SRC
-
-*** Mix Format
-#+BEGIN_SRC elisp :tangle ./plugins/mix-format.el :mkdirp yes
-  ;;; mix-format.el --- Emacs plugin to mix format Elixir files
-
-  ;; Copyright (C) 2017 Anil Wadghule
-
-  ;; Author: Anil Wadghule <anildigital@gmail.com>
-  ;; URL: https://github.com/anildigital/mix-format
-
-  ;; This file is NOT part of GNU Emacs.
-
-  ;; This program is free software; you can redistribute it and/or modify
-  ;; it under the terms of the GNU General Public License as published by
-  ;; the Free Software Foundation; either version 2, or (at your option)
-  ;; any later version.
-
-  ;; This program is distributed in the hope that it will be useful,
-  ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  ;; GNU General Public License for more details.
-
-  ;;; Commentary:
-
-  ;; The mix-format function formats the elixir files with Elixir's `mix format`
-  ;; command
-
-  ;; e.g.
-  ;;
-  ;; (require 'mix-format)
-  ;; M-x mix-format
-  ;;
-
-  (defcustom mixfmt-elixir "elixir"
-    "Path to the Elixir interpreter."
-    :type 'string
-    :group 'mix-format)
-
-  (defcustom mixfmt-mix "/usr/bin/mix"
-    "Path to the 'mix' executable."
-    :type 'string
-    :group 'mix-format)
-
-  (defcustom mixfmt-args nil
-    "Additional arguments to 'mix format'"
-    :type '(repeat string)
-    :group 'mix-format)
-
-  (defcustom mix-format-hook nil
-    "Hook called by `mix-format'."
-    :type 'hook
-    :group 'mix-format)
-
-
-  ;;; Code
-
-  ;;;###autoload
-  (defun mix-format-before-save ()
-    "Add this to .emacs to run mix format on the current buffer when saving:
-  \(add-hook 'before-save-hook 'mix-format-before-save).
-  Note that this will cause ‘elixir-mode’ to get loaded the first time
-  you save any file, kind of defeating the point of autoloading."
-
-    (interactive)
-    (when (eq major-mode 'elixir-mode) (mix-format)))
-
-
-  (defun mixfmt--goto-line (line)
-    (goto-char (point-min))
-    (forward-line (1- line)))
-
-  (defun mixfmt--delete-whole-line (&optional arg)
-    "Delete the current line without putting it in the `kill-ring'.
-  Derived from function `kill-whole-line'.  ARG is defined as for that
-  function.
-  Shamelessly stolen from go-mode (https://github.com/dominikh/go-mode.el)"
-    (setq arg (or arg 1))
-    (if (and (> arg 0)
-             (eobp)
-             (save-excursion (forward-visible-line 0) (eobp)))
-        (signal 'end-of-buffer nil))
-    (if (and (< arg 0)
-             (bobp)
-             (save-excursion (end-of-visible-line) (bobp)))
-        (signal 'beginning-of-buffer nil))
-    (cond ((zerop arg)
-           (delete-region (progn (forward-visible-line 0) (point))
-                          (progn (end-of-visible-line) (point))))
-          ((< arg 0)
-           (delete-region (progn (end-of-visible-line) (point))
-                          (progn (forward-visible-line (1+ arg))
-                                 (unless (bobp)
-                                   (backward-char))
-                                 (point))))
-          (t
-           (delete-region (progn (forward-visible-line 0) (point))
-                          (progn (forward-visible-line arg) (point))))))
-
-  (defun mixfmt--apply-rcs-patch (patch-buffer)
-    "Apply an RCS-formatted diff from PATCH-BUFFER to the current buffer.
-  Shamelessly stolen from go-mode (https://github.com/dominikh/go-mode.el)"
-
-    (let ((target-buffer (current-buffer))
-          ;; Relative offset between buffer line numbers and line numbers
-          ;; in patch.
-          ;;
-          ;; Line numbers in the patch are based on the source file, so
-          ;; we have to keep an offset when making changes to the
-          ;; buffer.
-          ;;
-          ;; Appending lines decrements the offset (possibly making it
-          ;; negative), deleting lines increments it. This order
-          ;; simplifies the forward-line invocations.
-          (line-offset 0))
-      (save-excursion
-        (with-current-buffer patch-buffer
-          (goto-char (point-min))
-          (while (not (eobp))
-            (unless (looking-at "^\\([ad]\\)\\([0-9]+\\) \\([0-9]+\\)")
-              (error "Invalid rcs patch or internal error in mixfmt--apply-rcs-patch"))
-            (forward-line)
-            (let ((action (match-string 1))
-                  (from (string-to-number (match-string 2)))
-                  (len  (string-to-number (match-string 3))))
-              (cond
-               ((equal action "a")
-                (let ((start (point)))
-                  (forward-line len)
-                  (let ((text (buffer-substring start (point))))
-                    (with-current-buffer target-buffer
-                      (cl-decf line-offset len)
-                      (goto-char (point-min))
-                      (forward-line (- from len line-offset))
-                      (insert text)))))
-               ((equal action "d")
-                (with-current-buffer target-buffer
-                  (mixfmt--goto-line (- from line-offset))
-                  (cl-incf line-offset len)
-                  (mixfmt--delete-whole-line len)))
-               (t
-                (error "Invalid rcs patch or internal error in mixfmt--apply-rcs-patch"))))))))
-    )
-
-  ;;;###autoload
-  (defun mix-format (&optional is-interactive)
-    (interactive "p")
-
-    (let ((outbuff (get-buffer-create "*mix-format-output*"))
-          (errbuff (get-buffer-create "*mix-format-errors*"))
-          (tmpfile (make-temp-file "mix-format" nil ".ex"))
-          (our-mixfmt-args (list mixfmt-mix "format"))
-          (output nil))
-
-      (unwind-protect
-          (save-restriction
-            (with-current-buffer outbuff
-              (erase-buffer))
-
-            (with-current-buffer errbuff
-              (setq buffer-read-only nil)
-              (erase-buffer))
-
-            (write-region nil nil tmpfile)
-
-            (run-hooks 'mix-format-hook)
-
-            (when mixfmt-args
-              (setq our-mixfmt-args (append our-mixfmt-args mixfmt-args)))
-            (setq our-mixfmt-args (append our-mixfmt-args (list tmpfile)))
-
-            (if (zerop (apply #'call-process mixfmt-elixir nil errbuff nil our-mixfmt-args))
-                (progn
-                  (if (zerop (call-process-region (point-min) (point-max) "diff" nil outbuff nil "-n" "-" tmpfile))
-                      (message "File is already formatted")
-                    (progn
-                      (mixfmt--apply-rcs-patch outbuff)
-                      (message "mix format applied")))
-                  (kill-buffer errbuff))
-
-              (progn
-                (with-current-buffer errbuff
-                  (setq buffer-read-only t)
-                  (ansi-color-apply-on-region (point-min) (point-max))
-                  (special-mode))
-
-                (if is-interactive
-                    (display-buffer errbuff)
-                  (message "mix-format failed: see %s" (buffer-name errbuff)))))
-
-            (delete-file tmpfile)
-            (kill-buffer outbuff)))))
-
-
-
-  (provide 'mix-format)
-
-  ;;; mix-format.el ends here
-#+END_SRC
-
-** Yaml
-
-#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
-  (use-package yaml-mode
-    :ensure t)
-#+END_SRC
-
-** Angular 2
-#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
-  (use-package ng2-mode
-    :ensure t)
-#+END_SRC
-
-** Lua
-#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
-  (use-package lua-mode
-    :ensure t)
-#+END_SRC
-
-** TypeScript
-#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
-  (use-package tide
-    :ensure t
-    :config
-    (defun setup-tide-mode ()
-      (interactive)
-      (tide-setup)
-      (flycheck-mode +1)
-      (setq flycheck-check-syntax-automatically '(save mode-enabled))
-      (eldoc-mode +1)
-      (tide-hl-identifier-mode +1)
-      ;; company is an optional dependency. You have to
-      ;; install it separately via package-install
-      ;; `M-x package-install [ret] company`
-      (company-mode +1))
-
-    ;; aligns annotation to the right hand side
-    (setq company-tooltip-align-annotations t)
-
-    ;; formats the buffer before saving
-    (add-hook 'before-save-hook 'tide-format-before-save)
-
-    (add-hook 'typescript-mode-hook #'setup-tide-mode)
-    )
-#+END_SRC
-
-** Elm
-#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
-  (use-package elm-mode
-    :ensure t)
-#+END_SRC
-
-** Haskell
-#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
-  (use-package haskell-mode
-    :ensure t)
-#+END_SRC
-
-** Nginx Config Files
-#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
-  (use-package nginx-mode
-    :ensure t)
-#+END_SRC
-
+            org-export-dispatch-use-expert-ui t ; non-intrusive export dispatch
+            ;; update TODO cookies recursively
+            ;; use property, ":COOKIE_DATA: todo recursive"
+            ;; to set this only for a single subtree
+            org-hierarchical-todo-statistics nil
+            ;; open link in same window
+            org-link-frame-setup '((gnus . org-gnus-no-new-news)
+                                   (file . find-file))
+            ;; custom links
+            org-link-abbrev-alist
+            '(("google" . "https://www.google.com/search?q=%s")
+              ("jira" . "https://pagofx-holdco.atlassian.net/browse/%s"))
+            ;; log time for TODO state changes
+            org-log-done 'time
+            ;; log time on rescheduling and changing deadlines
+            org-log-reschedule 'time
+            org-log-redeadline 'time
+            ;; on links `RET' follows the link
+            org-return-follows-link t
+            org-reverse-note-order t
+            ;; Note that using TODO keyword/tags list matches children tasks
+            org-stuck-projects '("+LEVEL=2&+SCHEDULED<\"<-1m>\"/!-DONE"
+                                 nil nil "^\\*\\+ \\+\\(DONE|FIXD|CNCL\\)")
+            org-todo-keywords ; @ - time stamp with note, ! - only time stamp
+            '((sequence "TODO(t)" "DOING" "REVIEW(r)" "|" "DONE(d)" "CANCELED(c)")
+              ;; (type "TEST(e!)" "DBUG(b@)" "LEAK(l@)" "SEGF(s@)" "|" "FIXD(f@/!)")
+              )
+            )
+     ;; Setting Colours (faces) for todo states to give clearer view of work
+     (setq org-todo-keyword-faces
+           '(("TODO" . org-warning)
+             ("DOING" . "yellow")
+             ("REVIEW" . "orange")
+             ("DONE" . "green")
+             ("CANCELED" .  "blue")))
+
+   #+END_SRC
 ** JSON
-#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
-;; json mode
-  (use-package json-mode
-    :ensure t
-    :config
-    (add-to-list 'auto-mode-alist '("\\.json\\'\\|\\.jshintrc\\'" . json-mode)
-    (setq js-indent-level 2)))
-#+END_SRC
+   #+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yes
+     ;; json mode
+     (use-package json-mode
+       :ensure t
+       :config
+       (add-to-list 'auto-mode-alist '("\\.json\\'\\|\\.jshintrc\\'" . json-mode)
+                    (setq js-indent-level 2)))
+   #+END_SRC
+** Ripgrep
+   #+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yes
+     ;;Ripgrep (ag alternative)
+     (use-package
+       helm-rg
+       :ensure t
+       :config (global-set-key (kbd "C-c C-s") 'helm-rg))
+     (use-package
+       rg
+       :ensure t
+       :config (global-set-key (kbd "C-c s") 'rg-menu))
+   #+END_SRC
+** Dockerfiles
+   #+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yes
+     (use-package dockerfile-mode
+       :ensure t)
 
-** Old golang
+     (provide 'dockerfile-settings)
+   #+END_SRC
+** Clean Buffers
 
-# To install first:
-# - `go get golang.org/x/tools/cmd/...`
-# - `go get github.com/rogpeppe/godef`
-# - `go get -u github.com/nsf/gocode`
-# - `go get golang.org/x/tools/cmd/goimports`
-# - `go get -u github.com/dougm/goflymake`
+   Kill all buffers
 
-# #+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
-#   ;; golang
-#   (use-package go-mode)
-#   (use-package go-autocomplete )
-#   (use-package auto-complete-config )
-#   (use-package go-eldoc)
-#   (use-package go-guru
-#      :ensure t)
+   #+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yesn
+     (defun kill-buffers()
+       (let (buffer buffers)
+         (setq buffers (buffer-list))
+         (dotimes (i (length buffers))
+           (setq buffer (pop buffers))
+           (if (not (string-equal (buffer-name buffer) "*scratch*")) (kill-buffer buffer) nil))))
 
-#   ;; (when (memq window-system '(mac ns))
-#   ;;   (exec-path-from-shell-initialize)
-#   ;;   (exec-path-from-shell-copy-env "GOPATH"))
-
-#   (ac-config-default)
-
-#   (defun my-go-mode-hook ()
-#     (set (make-local-variable 'company-backends) '(company-go))
-#     (go-eldoc-setup)
-#     ;; Go guru
-#     (require 'go-guru)
-#     (add-hook 'go-mode-hook #'go-guru-hl-identifier-mode)
-#     ;; Use goimports instead of go-fmt
-#     (setq gofmt-command "goimports")
-#     ;; Call Gofmt before saving
-#     (add-hook 'before-save-hook 'gofmt-before-save)
-#     ;; Godef jump key binding
-#     (local-set-key (kbd "M-.") 'godef-jump)
-#     (local-set-key (kbd "M-,") 'pop-tag-mark)
-#   )
-#   (add-hook 'go-mode-hook 'my-go-mode-hook)
-#   (defun auto-complete-for-go ()
-#     (auto-complete-mode 1))
-#   (add-hook 'go-mode-hook 'auto-complete-for-go)
-#   ;; (with-eval-after-load 'go-mode
-#   ;; (require 'go-autocomplete))
-# #+END_SRC
-** Golang
-#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
-  (setq lsp-gopls-staticcheck t)
-  (setq lsp-eldoc-render-all t)
-  (setq lsp-gopls-complete-unimported t)
-  (use-package lsp-mode
-    :ensure t
-    :commands (lsp lsp-deferred)
-    :hook (go-mode . lsp-deferred))
-
-  ;;Set up before-save hooks to format buffer and add/delete imports.
-  ;;Make sure you don't have other gofmt/goimports hooks enabled.
-
-  (defun lsp-go-install-save-hooks ()
-    (add-hook 'before-save-hook #'lsp-format-buffer t t)
-    (add-hook 'before-save-hook #'lsp-organize-imports t t))
-  (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
-
-  ;;Optional - provides fancier overlays.
-
-  (use-package lsp-ui
-    :ensure t
-    :commands lsp-ui-mode
-    :init
-  )
-
-  ;;Company mode is a standard completion package that works well with lsp-mode.
-  ;;company-lsp integrates company mode completion with lsp-mode.
-  ;;completion-at-point also works out of the box but doesn't support snippets.
-
-  (use-package company
-    :ensure t
-    :config
-    (setq company-idle-delay 0)
-    (setq company-minimum-prefix-length 1))
-
-  ;; (use-package company-lsp
-  ;;   :ensure t
-  ;;   :commands company-lsp)
-
-  ;;Optional - provides snippet support.
-
-  (use-package yasnippet
-    :ensure t
-    :commands yas-minor-mode
-    :hook (go-mode . yas-minor-mode))
-
-  ;;lsp-ui-doc-enable is false because I don't like the popover that shows up on the right
-  ;;I'll change it if I want it back
-
-
-  (setq lsp-ui-doc-enable nil
-        lsp-ui-peek-enable t
-        lsp-ui-sideline-enable t
-        lsp-ui-imenu-enable t
-        lsp-ui-flycheck-enable t)
-
-#+END_SRC
-** Purescript
-
-#+begin_src elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
-(use-package purescript-mode
-  :ensure t
-  :mode ("\\.purs\\'" . purescript-mode)
-  :init
-  (setq purescript-indent-offset 2
-        purescript-align-imports-pad-after-name t)
-  :config
-  (my/define-major-mode-key 'purescript-mode "a" 'my/purescript-sort-and-align-imports)
-  (my/define-major-mode-key 'purescript-mode "i" 'purescript-navigate-imports)
-  (my/define-major-mode-key 'purescript-mode "s" 'my/purescript-format-and-save)
-  (my/define-major-mode-key 'purescript-mode "/" 'engine/search-pursuit)
-  (add-hook
-   'purescript-mode-hook
-   (lambda ()
-     (setq evil-shift-width 2)
-     (turn-on-purescript-indentation)
-     (turn-on-purescript-decl-scan)
-     ;; (turn-on-purescript-font-lock)
-     (push '(?# . ("{- " . " -}")) evil-surround-pairs-alist)
-     (subword-mode 1)
-     (make-variable-buffer-local 'find-tag-default-function)
-     (setq find-tag-default-function (lambda () (current-word t t)))
-     ))
-  ;; xref for purescript works a bit weird with qualified identifiers
-  ;; (define-key purescript-mode-map (kbd "M-.")
-  ;; #'(lambda () (interactive) (xref-find-definitions (current-word t t))))
-  )
-
-(defvar my/purescript-align-stuff t)
-
-(defun my/purescript-sort-and-align-imports ()
-  (interactive)
-  (save-excursion
-    (goto-line 1)
-    (while (purescript-navigate-imports)
-      (progn
-        (purescript-sort-imports)
-        (when my/purescript-align-stuff (purescript-align-imports))))
-    (purescript-navigate-imports-return)))
-
-(defun my/purescript-format-and-save ()
-  "Formats the import statements using haskell-stylish and saves
-the current file."
-  (interactive)
-  (my/purescript-sort-and-align-imports)
-  (save-buffer))
-
-;; This needs to exist in the `load-path'
-;; (use-package custom-purescript-font-lock
-;;   :after purescript-mode)
-
-;; copy these into the purescript-mode definition
-;; (setq-local font-lock-defaults
-;;             '((purescript-font-lock-keywords)
-;;               nil nil nil nil
-;;               (font-lock-syntactic-face-function
-;;                . purescript-syntactic-face-function)
-;;               (parse-sexp-lookup-properties . t)
-;;               (font-lock-extra-managed-props . (composition purescript-type))))
-;; (setq-local font-lock-multiline t)
-
-#+end_src
-
-** Provide
-
-Providing *programming-language-settings.el*
-
-#+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
-(provide 'programming-language-settings)
-#+END_SRC
-
-* Reveal
-:PROPERTIES:
-:tangle:   ~/.emacs.d/settings/reveal-settings.el
-:END:
-
-Make beautiful slides with ox-reveal
-
-** Settings
-#+BEGIN_SRC elisp :tangle ./settings/reveal-settings.el :mkdirp yes
-  ;; (use-package org
-  ;;   :ensure t)
-  ;; (use-package ox-reveal
-  ;;   :ensure t
-  ;;   :config
-  ;;   (setq org-reveal-root "file:///home/ironjanowar/reveal.js"))
-  ;; (use-package htmlize
-  ;;   :ensure t)
-#+END_SRC
-
-** Provide
-
-Providing *reveal-settings.el*
-#+BEGIN_SRC elisp :tangle ./settings/reveal-settings.el :mkdirp yes
-(provide 'reveal-settings)
-#+END_SRC
-
-* Magit
-:PROPERTIES:
-:tangle:   ~/.emacs.d/settings/magit-settings.el
-:END:
-
-Magit is a lovely mode for git.
-
-** Settings
-
-#+BEGIN_SRC elisp :tangle ./settings/magit-settings.el :mkdirp yes
-;; Magit
-(use-package magit
-  :ensure t
-  :bind (("C-c g" . magit-status)
-         ("C-x M-g" . magit-dispatch-popup))
-  )
-#+END_SRC
-
-** Provide
-
-Providing *magit-settings.el*
-
-#+BEGIN_SRC elisp :tangle ./settings/magit-settings.el :mkdirp yes
-(provide 'magit-settings)
-#+END_SRC
-
-* Clean Buffers
-
-Kill all buffers
-
-#+BEGIN_SRC elisp :tangle ./plugins/clean-buffers.el :mkdirp yesn
-(defun kill-buffers()
-  (let (buffer buffers)
-    (setq buffers (buffer-list))
-    (dotimes (i (length buffers))
-      (setq buffer (pop buffers))
-      (if (not (string-equal (buffer-name buffer) "*scratch*")) (kill-buffer buffer) nil))))
-
-(defun clean-buffers()
+     (defun clean-buffers()
        (interactive)
        (if (yes-or-no-p "Do you really want to clean all buffers? ")
            (kill-buffers) nil))
 
-(global-set-key (kbd "C-x C-k") 'clean-buffers)
+     (global-set-key (kbd "C-x C-k") 'clean-buffers)
 
-(provide 'clean-buffers)
-#+END_SRC
+     (provide 'clean-buffers)
+   #+END_SRC
+** PATH for mac
+   #+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yes
+     (setq-default default-directory (expand-file-name "~/" (file-name-directory load-file-name)))
+     (when (memq window-system '(mac ns))
+       (setenv "SHELL" "/bin/zsh")
+       (exec-path-from-shell-initialize)
+       (exec-path-from-shell-copy-envs
+        '("PATH")))
+   #+END_SRC
+** SSH keys
+   #+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yes
+     (use-package exec-path-from-shell
+       :ensure t
+       :config
+       (exec-path-from-shell-copy-env "SSH_AGENT_PID")
+       (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
+   #+END_SRC
 
-* Rest Client
+** Provide
 
-#+BEGIN_SRC elisp :tangle ./plugins/restclient-settings.el :mkdirp yes
-  (use-package restclient
-    :ensure t)
+   Providing *custom-settings.el*
 
-  (provide 'restclient-settings)
-#+END_SRC
+   #+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yes
+     (provide 'custom-settings)
+   #+END_SRC
 
-* Dockerfiles
-#+BEGIN_SRC elisp :tangle ./plugins/dockerfile-settings.el :mkdirp yes
-  (use-package dockerfile-mode
-    :ensure t)
+* Languages
+  :PROPERTIES:
+  :tangle:   ~/.emacs.d/settings/programming-language-settings.el
+  :END:
+  Concrete language settings
+** Web
+   Install:
+   - add-node-modules-path
+   - prettier-js
+   JavaScript, CSS, HTML ...
 
-  (provide 'dockerfile-settings)
-#+END_SRC
+   #+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+     ;; php mode
+     (use-package php-mode
+       :ensure t
+       :config
+       (add-to-list 'auto-mode-alist '("\\.php[345]?\\'\\|\\.inc\\'" . php-mode)))
+
+     (use-package add-node-modules-path
+       :ensure t)
+
+     (use-package  exec-path-from-shell
+       :ensure t)
+
+     ;; Web mode
+     (use-package web-mode
+       :ensure t
+
+       :init
+       (defun my-web-mode-hook ()
+         "Hooks for Web mode."
+         (setq web-mode-markup-indent-offset 2)
+         (setq web-mode-css-indent-offset 2)
+         (setq web-mode-code-indent-offset 4)
+         (setq web-mode-enable-auto-pairing t)
+         (setq web-mode-enable-css-colorization t)
+         (setq web-mode-enable-current-element-highlight t)
+         (setq web-mode-enable-current-column-highlight t)
+         (setq web-mode-enable-auto-expanding t)
+         (setq web-mode-markup-indent-offset 4))
+
+       :config
+       (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+       (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
+       (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+       (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+       (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+       (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+       (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+       (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
+       (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+       (add-to-list 'auto-mode-alist '("\\.json\\'" . web-mode))
+       (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
+       (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+       )
+
+     (setq-default flycheck-disabled-checkers
+                   (append flycheck-disabled-checkers
+                           '(javascript-jshint json-jsonlist)))
+     ;; Enable eslint checker for web-mode
+     (flycheck-add-mode 'javascript-eslint 'web-mode)
+     (add-hook 'flycheck-mode-hook 'add-node-modules-path)
+     ;; Emmet mode
+     (use-package emmet-mode
+       :ensure t
+       :config
+       (add-hook 'web-mode-hook 'emmet-mode))
+
+     ;; Node repl
+     (use-package nodejs-repl
+       :ensure t
+       :config
+       (defun my-jscallback ()
+         (local-set-key (kbd "C-c C-e") 'nodejs-repl-send-buffer))
+
+       (add-hook 'js-mode-hook 'my-jscallback))
+   #+END_SRC
+
+** React
+   #+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+     (setq package-selected-packages '(
+                                       lsp-mode
+                                       yasnippet
+                                       lsp-treemacs
+                                       projectile
+                                       hydra
+                                       company
+                                       avy
+                                       which-key
+                                       dap-mode
+                                       ))
+
+     (when (cl-find-if-not #'package-installed-p package-selected-packages)
+       (package-refresh-contents)
+       (mapc #'package-install package-selected-packages))
+
+     (which-key-mode)
+     (add-hook 'prog-mode-hook #'lsp)
+
+     (setq gc-cons-threshold (* 100 1024 1024)
+           read-process-output-max (* 1024 1024)
+           company-idle-delay 0.0
+           company-minimum-prefix-length 1
+           create-lockfiles nil) ;; lock files will kill `npm start'
+
+     (with-eval-after-load 'lsp-mode
+       (require 'dap-chrome)
+       (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
+       (yas-global-mode))
+
+   #+END_SRC
+** Python
+
+   #+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+     (package-initialize)
+     (use-package elpy
+       :ensure t
+       :config (elpy-enable)
+       )
+   #+END_SRC
+
+** Scala
+   #+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+     (use-package scala-mode
+       :ensure t
+       :interpreter
+       ("scala" . scala-mode))
+
+     ;; Enable sbt mode for executing sbt commands
+     (use-package sbt-mode
+       :commands sbt-start sbt-command
+       :custom
+       (sbt:default-command "compile")
+       :config
+       ;; WORKAROUND: https://github.com/ensime/emacs-sbt-mode/issues/31
+       ;; allows using SPACE when in the minibuffer
+       (substitute-key-definition
+        'minibuffer-complete-word
+        'self-insert-command
+        minibuffer-local-completion-map)
+       ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
+       (setq sbt:program-options '("-Dsbt.supershell=false"))
+       )
+
+     (use-package lsp-mode
+       :ensure t
+       ;; Optional - enable lsp-mode automatically in scala files
+       :hook  (scala-mode . lsp)
+       (lsp-mode . lsp-lens-mode)
+       :config (lsp-config)
+       )
+
+     ;; Add metals backend for lsp-mode
+     (use-package lsp-metals
+       :ensure t
+       :config (setq lsp-metals-treeview-show-when-views-received t))
+
+   #+END_SRC
+
+** Elixir
+
+   #+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+     (use-package elixir-mode
+       :ensure t)
+
+     (setq lsp-keymap-prefix "M-s")
+
+     (use-package which-key
+       :ensure t)
+
+     (use-package lsp-mode
+       :ensure t
+       :hook ((elixir-mode . lsp)
+              (lsp-hooks)
+              )
+       :commands lsp
+       :init
+       (add-to-list 'exec-path "~/.emacs.d/settings/elixir-ls/elixir-ls-1.11")
+       (setq lsp-enable-file-watchers nil)
+       :config (lsp-config)
+       )
+
+     (use-package helm-lsp
+       :ensure t
+       :diminish lsp-mode
+       :commands helm-lsp-workspace-symbol)
+
+     (use-package elixir-yasnippets
+       :ensure t)
+   #+END_SRC
+
+** Yaml
+
+   #+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+     (use-package yaml-mode
+       :ensure t
+       :config
+       (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+       (add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-mode))
+       )
+   #+END_SRC
+
+** TypeScript
+   #+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+     (use-package tide
+       :ensure t
+       :config
+       (defun setup-tide-mode ()
+         (interactive)
+         (tide-setup)
+         (flycheck-mode +1)
+         (setq flycheck-check-syntax-automatically '(save mode-enabled))
+         (eldoc-mode +1)
+         (tide-hl-identifier-mode +1)
+         )
+
+       ;; formats the buffer before saving
+       (add-hook 'before-save-hook 'tide-format-before-save)
+       (add-hook 'typescript-mode-hook #'setup-tide-mode)
+       )
+   #+END_SRC
+
+** Haskell
+
+   Install haskell server
+   https://github.com/haskell/haskell-language-server
+
+   #+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+     (use-package haskell-mode
+       :ensure t)
+     (use-package lsp-mode
+       :ensure t
+       ;; Optional - enable lsp-mode automatically in scala files
+       :hook  (haskell-mode . lsp)
+       (lsp-hooks)
+       :config
+       (add-hook 'haskell-mode-hook #'lsp)
+       (add-hook 'haskell-literate-mode-hook #'lsp)
+       (lsp-config)
+       )
+   #+END_SRC
+
+** Nginx
+   #+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+     (use-package nginx-mode
+       :ensure t)
+   #+END_SRC
+
+** Golang
+   #+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+
+     (use-package lsp-mode
+       :ensure t
+       :commands (lsp lsp-deferred)
+       :hook (go-mode . lsp-deferred) (lsp-hooks)
+       :config (lsp-config))
+
+     ;;Set up before-save hooks to format buffer and add/delete imports.
+     ;;Make sure you don't have other gofmt/goimports hooks enabled.
+
+     (defun lsp-go-install-save-hooks ()
+       (add-hook 'before-save-hook #'lsp-format-buffer t t)
+       (add-hook 'before-save-hook #'lsp-organize-imports t t))
+
+     (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+
+
+   #+END_SRC
+** Purescript
+
+   #+begin_src elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+     (use-package purescript-mode
+       :ensure t
+       :mode ("\\.purs\\'" . purescript-mode)
+       :init
+       (setq purescript-indent-offset 2
+             purescript-align-imports-pad-after-name t)
+       :config
+       (my/define-major-mode-key 'purescript-mode "a" 'my/purescript-sort-and-align-imports)
+       (my/define-major-mode-key 'purescript-mode "i" 'purescript-navigate-imports)
+       (my/define-major-mode-key 'purescript-mode "s" 'my/purescript-format-and-save)
+       (my/define-major-mode-key 'purescript-mode "/" 'engine/search-pursuit)
+       (add-hook
+        'purescript-mode-hook
+        (lambda ()
+          (setq evil-shift-width 2)
+          (turn-on-purescript-indentation)
+          (turn-on-purescript-decl-scan)
+          (push '(?# . ("{- " . " -}")) evil-surround-pairs-alist)
+          (subword-mode 1)
+          (make-variable-buffer-local 'find-tag-default-function)
+          (setq find-tag-default-function (lambda () (current-word t t)))
+          )))
+
+
+     (defvar my/purescript-align-stuff t)
+
+     (defun my/purescript-sort-and-align-imports ()
+       (interactive)
+       (save-excursion
+         (goto-line 1)
+         (while (purescript-navigate-imports)
+           (progn
+             (purescript-sort-imports)
+             (when my/purescript-align-stuff (purescript-align-imports))))
+         (purescript-navigate-imports-return)))
+
+     (defun my/purescript-format-and-save ()
+       "Formats the import statements using haskell-stylish and saves
+     the current file."
+       (interactive)
+       (my/purescript-sort-and-align-imports)
+       (save-buffer))
+
+   #+end_src
+
+** Provide
+
+   Providing *programming-language-settings.el*
+
+   #+BEGIN_SRC elisp :tangle ./settings/programming-language-settings.el :mkdirp yes
+     (provide 'programming-language-settings)
+   #+END_SRC
+
+* Magit
+  :PROPERTIES:
+  :tangle:   ~/.emacs.d/settings/magit-settings.el
+  :END:
+
+  Magit just in case.
+
+** Settings
+
+   #+BEGIN_SRC elisp :tangle ./settings/magit-settings.el :mkdirp yes
+     ;; Magit
+     (use-package magit
+       :ensure t
+       :bind (("C-c g" . magit-status)
+              ("C-x M-g" . magit-dispatch-popup))
+       )
+   #+END_SRC
+
+** Provide
+
+   Providing *magit-settings.el*
+
+   #+BEGIN_SRC elisp :tangle ./settings/magit-settings.el :mkdirp yes
+     (provide 'magit-settings)
+   #+END_SRC
 
 * Open Notes
-Opens a buffer to take notes
+  Opens a buffer to take notes
 
-By: [[https://gist.github.com/prathik][@prathik]]
+  #+BEGIN_SRC elisp :tangle ./plugins/open-notes.el :mkdirp yes
+    (defun new-scratch-buffer-new-window ()
+      "Create a new scratch buffer in a
+      new window. I generally take a lot of notes
+      in different topics. For each new topic hit
+      C-c C-s and start taking your notes.
+      Most of these notes don't need to be
+      saved but are used like quick post it
+      notes."
+      (interactive)
+      (let (($buf (generate-new-buffer "notes")))
+        (split-window-right)
+        (other-window 1)
+        (balance-windows)
+        (switch-to-buffer $buf)
+        (org-mode)
+        (insert "# Notes\n\n")
+        $buf
+        ))
 
-#+BEGIN_SRC elisp :tangle ./plugins/open-notes.el :mkdirp yes
-  (defun new-scratch-buffer-new-window ()
-    "Create a new scratch buffer in a
-    new window. I generally take a lot of notes
-    in different topics. For each new topic hit
-    C-c C-s and start taking your notes.
-    Most of these notes don't need to be
-    saved but are used like quick post it
-    notes."
-    (interactive)
-    (let (($buf (generate-new-buffer "notes")))
-      (split-window-right)
-      (other-window 1)
-      (balance-windows)
-      (switch-to-buffer $buf)
-      (org-mode)
-      (insert "# Notes\n\n")
-      $buf
-      ))
+    (global-set-key
+     (kbd "C-c C-n")
+     'new-scratch-buffer-new-window
+     )
 
-  (global-set-key
-   (kbd "C-c C-n")
-   'new-scratch-buffer-new-window
-   )
+    (provide 'open-notes)
+  #+END_SRC
 
-  (provide 'open-notes)
-#+END_SRC
-macs.d/init.el
-:END:
-#+BEGIN_SRC elisp :tangle "~/.emacs.d/init.el"
-(add-to-list 'load-path "~/.emacs.d/settings/")
-(add-to-list 'load-path "~/.emacs.d/plugins/")
-
-(require 'package-management-settings)
-
-(require 'interface-settings)
-
-(require 'editing-settings)
-
-(require 'programming-settings)
-
-(require 'custom-settings)
-
-(require 'programming-language-settings)
-
-(require 'reveal-settings)
-
-(require 'magit-settings)
-
-(require 'clean-buffers)
-
-(require 'mix-format)
-
-(require 'open-notes)
-
-(require 'restclient-settings)
-
-(require 'dockerfile-settings)
-#+END_SRC
+* Colors in buffers
+  #+BEGIN_SRC elisp :tangle ./plugins/color-hex.el :mkdirp yes
+    (defun xah-syntax-color-hex ()
+      "Syntax color text of the form 「#ff1100」 and 「#abc」 in current buffer.
+    URL `http://ergoemacs.org/emacs/emacs_CSS_colors.html'
+    Version 2017-03-12"
+      (interactive)
+      (font-lock-add-keywords
+       nil
+       '(("#[[:xdigit:]]\\{3\\}"
+          (0 (put-text-property
+              (match-beginning 0)
+              (match-end 0)
+              'face (list :background
+                          (let* (
+                                 (ms (match-string-no-properties 0))
+                                 (r (substring ms 1 2))
+                                 (g (substring ms 2 3))
+                                 (b (substring ms 3 4)))
+                            (concat "#" r r g g b b))))))
+         ("#[[:xdigit:]]\\{6\\}"
+          (0 (put-text-property
+              (match-beginning 0)
+              (match-end 0)
+              'face (list :background (match-string-no-properties 0)))))))
+      (font-lock-flush))
+    (add-hook 'css-mode-hook 'xah-syntax-color-hex)
+    (add-hook 'php-mode-hook 'xah-syntax-color-hex)
+    (add-hook 'html-mode-hook 'xah-syntax-color-hex)
+    (provide 'color-hex)
+  #+END_SRC
