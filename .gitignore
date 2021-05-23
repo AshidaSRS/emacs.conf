@@ -48,3 +48,13 @@ flycheck_*.el
 .dir-locals.el
 
 # End of https://www.gitignore.io/api/emacs
+
+# Logs
+logs
+*.log
+
+.lsp-session-v1
+.dap-breakpoints
+.DS_Store
+.mc-lists.el
+.cache
