@@ -1,0 +1,44 @@
+Info 0    [10:54:23.585] Starting TS Server
+Info 1    [10:54:23.586] Version: 3.9.5
+Info 2    [10:54:23.586] Arguments: /Users/ashida/.nvm/versions/node/v9.10.0/bin/node /Users/ashida/.nvm/versions/node/v9.10.0/bin/tsserver --logFile /Users/ashida/git/emacs.conf/.log/tsserver.log --logVerbosity info --cancellationPipeName /private/var/folders/xt/jrtfl4fd347c8vljv1n067hc0000gn/T/2e1c6f77127ea1851bcc9b31ecb9cffd/tscancellation*
+Info 3    [10:54:23.586] Platform: darwin NodeVersion: 9 CaseSensitive: false
+Info 4    [10:54:23.610] Search path: /Users/ashida/git/emacs.conf/.cache/lsp/npm/typescript-language-server/lib/node_modules/typescript-language-server/lib
+Info 5    [10:54:23.612] For info: /Users/ashida/git/emacs.conf/.cache/lsp/npm/typescript-language-server/lib/node_modules/typescript-language-server/lib/utils.js :: No config files found.
+Info 6    [10:54:23.627] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 7    [10:54:25.875] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: true Elapsed: 2247ms
+Info 8    [10:54:25.875] Project '/dev/null/inferredProject1*' (Inferred)
+Info 9    [10:54:25.875] 	Files (85)
+
+Info 10   [10:54:25.875] -----------------------------------------------
+Info 11   [10:54:26.110] Before ensureProjectForOpenFiles:
+Info 12   [10:54:26.110] After ensureProjectForOpenFiles:
+Info 13   [10:54:26.111] got projects updated in background, updating diagnostics for /Users/ashida/git/emacs.conf/.cache/lsp/npm/typescript-language-server/lib/node_modules/typescript-language-server/lib/utils.js
+Info 14   [10:54:32.945] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 15   [10:54:32.948] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 2 structureChanged: false Elapsed: 2ms
+Info 16   [10:54:35.190] Before ensureProjectForOpenFiles:
+Info 17   [10:54:35.190] After ensureProjectForOpenFiles:
+Info 18   [10:54:35.190] got projects updated in background, updating diagnostics for /Users/ashida/git/emacs.conf/.cache/lsp/npm/typescript-language-server/lib/node_modules/typescript-language-server/lib/utils.js
+Info 19   [10:54:37.301] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 20   [10:54:37.319] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 3 structureChanged: false Elapsed: 18ms
+Info 21   [10:54:37.320] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 22   [10:54:49.772] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 23   [10:54:49.791] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 4 structureChanged: false Elapsed: 19ms
+Info 24   [10:54:49.792] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 25   [10:54:52.335] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 26   [10:54:52.351] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 5 structureChanged: false Elapsed: 16ms
+Info 27   [10:54:52.351] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 28   [10:54:53.200] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 29   [10:54:53.239] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 6 structureChanged: false Elapsed: 39ms
+Info 30   [10:54:53.240] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 31   [10:54:53.249] getCompletionData: Get current token: 0
+Info 32   [10:54:53.249] getCompletionData: Is inside comment: 0
+Info 33   [10:54:53.249] getCompletionData: Get previous token 1: 0
+Info 34   [10:54:53.251] getCompletionsAtPosition: isCompletionListBlocker: 1
+Info 35   [10:54:53.275] getSymbolsFromOtherSourceFileExports: Recomputing list
+Info 36   [10:54:53.336] forEachExternalModuleToImportFrom: filtered out 6 modules by package.json contents
+Info 37   [10:54:53.337] getSymbolsFromOtherSourceFileExports: 62
+Info 38   [10:54:53.340] getCompletionData: Semantic work: 89
+Info 39   [10:54:53.372] getCompletionsAtPosition: getCompletionEntriesFromSymbols: 29
+Info 40   [10:54:54.88] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 41   [10:54:54.99] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 7 structureChanged: false Elapsed: 11ms
+Info 42   [10:54:54.99] Different program with same set of files:: oldProgram.structureIsReused:: 2
