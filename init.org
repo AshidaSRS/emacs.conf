@@ -25,8 +25,6 @@
 
     (require 'open-notes)
 
-    (require 'color-hex)
-
   #+END_SRC
 * Package Management
   :PROPERTIES:
@@ -618,7 +616,7 @@
              ("REVIEW" . "#9d86c2")
              ("DONE" . "#60d1b9")
              ("CANCELED" .  "#d18888")))
-
+     (add-hook 'org-mode-hook 'rainbow-mode)
    #+END_SRC
 ** JSON
    #+BEGIN_SRC elisp :tangle ./settings/custom-settings.el :mkdirp yes
@@ -699,7 +697,7 @@
   :PROPERTIES:
   :tangle:   ~/.emacs.d/settings/programming-language-settings.el
   :END:
-  Concrete language settings
+  Specific language settings
 ** Web
    Install:
    - add-node-modules-path
@@ -757,6 +755,7 @@
      ;; Enable eslint checker for web-mode
      (flycheck-add-mode 'javascript-eslint 'web-mode)
      (add-hook 'flycheck-mode-hook 'add-node-modules-path)
+     (add-hook 'web-mode-hook 'rainbow-mode)
      ;; Emmet mode
      (use-package emmet-mode
        :ensure t
@@ -1076,36 +1075,4 @@
      )
 
     (provide 'open-notes)
-  #+END_SRC
-
-* Colors in buffers
-  #+BEGIN_SRC elisp :tangle ./plugins/color-hex.el :mkdirp yes
-    (defun xah-syntax-color-hex ()
-      "Syntax color text of the form 「#ff1100」 and 「#abc」 in current buffer.
-    URL `http://ergoemacs.org/emacs/emacs_CSS_colors.html'
-    Version 2017-03-12"
-      (interactive)
-      (font-lock-add-keywords
-       nil
-       '(("#[[:xdigit:]]\\{3\\}"
-          (0 (put-text-property
-              (match-beginning 0)
-              (match-end 0)
-              'face (list :background
-                          (let* (
-                                 (ms (match-string-no-properties 0))
-                                 (r (substring ms 1 2))
-                                 (g (substring ms 2 3))
-                                 (b (substring ms 3 4)))
-                            (concat "#" r r g g b b))))))
-         ("#[[:xdigit:]]\\{6\\}"
-          (0 (put-text-property
-              (match-beginning 0)
-              (match-end 0)
-              'face (list :background (match-string-no-properties 0)))))))
-      (font-lock-flush))
-    (add-hook 'css-mode-hook 'xah-syntax-color-hex)
-    (add-hook 'php-mode-hook 'xah-syntax-color-hex)
-    (add-hook 'html-mode-hook 'xah-syntax-color-hex)
-    (provide 'color-hex)
   #+END_SRC
