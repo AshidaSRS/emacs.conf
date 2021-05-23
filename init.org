@@ -613,11 +613,11 @@
             )
      ;; Setting Colours (faces) for todo states to give clearer view of work
      (setq org-todo-keyword-faces
-           '(("TODO" . org-warning)
-             ("DOING" . "yellow")
-             ("REVIEW" . "orange")
-             ("DONE" . "green")
-             ("CANCELED" .  "blue")))
+           '(("TODO" . "#dbb78f")
+             ("DOING" . "#4cede8")
+             ("REVIEW" . "#9d86c2")
+             ("DONE" . "#60d1b9")
+             ("CANCELED" .  "#d18888")))
 
    #+END_SRC
 ** JSON
@@ -845,6 +845,7 @@
        ;; Optional - enable lsp-mode automatically in scala files
        :hook  (scala-mode . lsp)
        (lsp-mode . lsp-lens-mode)
+       (lsp-hooks)
        :config (lsp-config)
        )
 

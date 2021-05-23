@@ -36,7 +36,7 @@
 ;;   https://marmalade-repo.org
 ;; MELPA
 ;;   https://melpa.org
-;;   https://stable.melpa.org
+;;   https://stable.melpa.orgsp
 
 ;;; Code:
 
@@ -660,9 +660,9 @@
    `(cider-result-overlay-face ((t (:background unspecified))))
 
    ;; > Org
-   `(org-level-1 ((,class (:foreground ,nord7 :weight extra-bold))))
+   `(org-level-1 ((,class (:foreground ,nord9 :weight extra-bold))))
    `(org-level-2 ((,class (:foreground ,nord8 :weight bold))))
-   `(org-level-3 ((,class (:foreground ,nord9 :weight semi-bold))))
+   `(org-level-3 ((,class (:foreground ,nord7 :weight semi-bold))))
    `(org-level-4 ((,class (:foreground ,nord10 :weight normal))))
    `(org-level-5 ((,class (:inherit org-level-4))))
    `(org-level-6 ((,class (:inherit org-level-4))))
@@ -673,12 +673,12 @@
    `(org-agenda-done ((,class (:foreground ,nord14))))
    `(org-agenda-dimmed-todo-face ((,class (:background ,nord13))))
    `(org-block ((,class (:foreground ,nord4))))
-   `(org-block-background ((,class (:background ,nord0))))
+   `(org-block-background ((,class (:background ,nord1))))
    `(org-block-begin-line ((,class (:foreground ,nord7))))
    `(org-block-end-line ((,class (:foreground ,nord7))))
    `(org-checkbox ((,class (:foreground ,nord9))))
    `(org-checkbox-statistics-done ((,class (:foreground ,nord10))))
-   `(org-checkbox-statistics-todo ((,class (:foreground ,nord13))))
+   `(org-checkbox-statistics-todo ((,class (:foreground ,nord7))))
    `(org-code ((,class (:foreground ,nord7))))
    `(org-column ((,class (:background ,nord2))))
    `(org-column-title ((,class (:inherit org-column :weight bold :underline t))))
@@ -742,4 +742,4 @@
 ;; indent-tabs-mode: nil
 ;; End:
 
-;;; nord-theme.el ends here
+;;; custom-nord-theme.el ends here
