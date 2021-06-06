@@ -289,10 +289,10 @@
    #+END_SRC
 ** Ligatures
    #+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
-     (use-package xah-math-input
-       :ensure t
-       :config (global-xah-math-input-mode 1)
-       )
+     ;; (use-package xah-math-input
+     ;;   :ensure t
+     ;;   :config (global-xah-math-input-mode 1)
+     ;;   )
    #+END_SRC
 ** DOOM modeline
    #+BEGIN_SRC elisp :tangle ./settings/interface-settings.el :mkdirp yes
